@@ -25,4 +25,10 @@ public class DateCalculationsUtil {
         return  cal.getTime();
 
     }
+
+    public static java.sql.Date stringToSQLDate (String ipDate){
+        java.util.Date startDate = DateCalculationsUtil.stringToDateParse(ipDate);
+        java.sql.Date startDateSql = new java.sql.Date(startDate.getTime());
+        return startDateSql;
+    }
 }

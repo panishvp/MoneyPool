@@ -39,6 +39,8 @@ public class Utils {
     public static String poolMeetUp = "pool_meetup_date";
     public static String poolDepositDate = "pool_deposit_date";
     public static String poolLateFees = "pool_late_fee_charge";
+    public static String poolWinnerFlag = "pool_winner_flag";
+    public static String memberPayementDate = "pool_payment_date";
 
 
     public static String alertUserIsPresent = "The Entered Email is already Regestered \n Please Regester with a different Email Id";

@@ -6,11 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.paneesh.moneypool.DateCalculationsUtil;
 import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.model.Member;
 import com.example.paneesh.moneypool.model.PoolDetails;
+import com.example.paneesh.moneypool.model.PoolTransactions;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
 public class MemberOperations  extends SQLiteOpenHelper{
@@ -123,4 +127,98 @@ public class MemberOperations  extends SQLiteOpenHelper{
         db.insert(Utils.poolDetailsTable, null, contentValues);
     }
 
+    public PoolDetails fetchPoolDetails (int poolID){
+        db = this.getWritableDatabase();
+        PoolDetails pool = new PoolDetails();
+        Cursor cursor = db.rawQuery("Select * from "+Utils.poolDetailsTable+" where "+Utils.poolId+" = "+poolID, null );
+
+        if (cursor.moveToFirst()){
+            pool.setPoolId(cursor.getInt(0));
+            pool.setPoolAdminId(cursor.getInt(1));
+            pool.setPoolName(cursor.getString(2));
+            pool.setPoolDuration(cursor.getInt(3));
+            pool.setPoolStrength(cursor.getInt(4));
+            pool.setPoolCurrentCounter(cursor.getInt(5));
+            pool.setPoolIndividualShare(cursor.getDouble(6));
+            pool.setPoolMonthlyTakeAway(cursor.getDouble(7));
+            pool.setPoolStartDate(DateCalculationsUtil.stringToSQLDate(cursor.getString(8)));
+            pool.setPoolEndDate(DateCalculationsUtil.stringToSQLDate(cursor.getString(9)));
+            pool.setPoolMeetUpDate(cursor.getInt(10));
+            pool.setPoolDepositDate(cursor.getInt(11));
+            pool.setPoolLateFeeCharge(cursor.getInt(12));
+
+        }else{
+
+        }
+        return pool;
+    }
+
+    public boolean isMemberInThepool(int memberId, int poolId) {
+
+        boolean status = false;
+
+        db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("Select count(*) From "+Utils.poolTransactions+" Where "+Utils.poolId+" = "+poolId+" and "
+                +Utils.poolCurrentCounter+"= -1 and " + Utils.poolWinnerFlag + "= 99 and " +Utils.memberId + "= "+memberId,null);
+        int count = cursor.getInt(1);
+
+        if (count!=0){
+            status = true;
+        }else {
+            status = false;
+        }
+
+        return status;
+    }
+
+    private int getCountRegisteredMembers(int poolID) {
+        int numberOfMembersRegistered = 0;
+
+        db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from " +Utils.poolTransactions+" " +
+                "where "+Utils.poolId+" = " + poolID + " and "+Utils.poolCurrentCounter + " =-1 " +
+                "and " + Utils.memberPayementDate + " is null ",null);
+        numberOfMembersRegistered = cursor.getInt(1);
+
+        return numberOfMembersRegistered;
+    }
+
+    private int getStrenghtOfPool (int poolID) {
+        int strength = 0;
+
+        db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("select Strength from "+ Utils.poolDetailsTable + " where " + Utils.poolId +" = " +poolID ,null);
+
+        strength = cursor.getInt(1);
+
+        return strength;
+    }
+
+    public boolean isValidPoolJoin(int poolID){
+        boolean valid;
+        int numberOfMembersRegistered = getCountRegisteredMembers(poolID);
+        int strength = getStrenghtOfPool(poolID);
+
+        if (numberOfMembersRegistered < strength) valid = true;
+        else valid =  false;
+        return valid;
+    }
+
+    private void enrollMember(PoolTransactions enrollMember) {
+        if (!(isMemberInThepool(enrollMember.getPoolMemberId(),enrollMember.getPoolId())) & isValidPoolJoin(enrollMember.getPoolId()) ) {
+
+            db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Utils.poolId,enrollMember.getPoolId());
+            contentValues.put(Utils.memberId,enrollMember.getPoolMemberId());
+            contentValues.put(Utils.poolCurrentCounter,-1);
+            contentValues.put(Utils.poolWinnerFlag,99);
+
+            db.insert(Utils.poolTransactions, null, contentValues);
+
+            }
+    }
+
 }
+
+
