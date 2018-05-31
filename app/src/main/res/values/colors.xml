@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#FF4081</color>
+    <color name="primary">#E43F3F</color>
+    <color name="primary_dark">#E12929</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="primary_darker">#CC1D1D</color>
+    <color name="black">#000000</color>
+    <color name="darkBlue">#f34c80f1</color>
+    <color name="white">#ffffff</color>
+    <color name="jet">#23C2C2</color>
+    <color name="oil">#23C2C2</color>
+    <color name="monsoon">#777777</color>
+    <color name="jumbo">#CCCCCC</color>
+    <color name="aluminum">#7fffd4</color>
+    <color name="base">#AAAAAA</color>
+    <color name="iron">#CCCCCC</color>
+    <color name="blackColor">#000000</color>
+    <color name="gridColor">#ae1609</color>
+    <color name="colorRow1">#fcc367</color>
+    <color name="colorRow2">#84b8ec</color>
+    <color name="colorRow3">#f57e82</color>
+    <color name="colorRow4">#67cdf2</color>
+    <color name="colorRow5">#d4f570</color>
+    <color name="colorRow6">#f739f4</color>
+    <color name="colorRow7">#bc7ae7</color>
+    <color name="colorRow8">#f34c80f1</color>
+    <color name="colorRow9">#f4cf3d</color>
+    <color name="colorTextBlack">#000000</color>
+    <color name="colorTextWhite">#FFFFFF</color>
+    <color name="colorGrey">#FF9E9C9C</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="blueBackground">#108cb0</color>
+    <color name="cardViewBackground">#53b6d3</color>
+    <item name="green" type="color">#FF99CC00</item>
+    <color name="appUi">#23C2C2</color>
+    <color name="appBackground">#ffffff</color>
+
+</resources>

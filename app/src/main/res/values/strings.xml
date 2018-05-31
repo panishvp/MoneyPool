@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">Money Pool</string>
+    <string name="user_email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="register_next">Next</string>
+    <string name="button_login">Login</string>
+    <string name="registration_success">Registration Successful</string>
+    <string name="click_to_login">Click here to Login</string>
+    
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="address">Address</string>
+    <string name="iban">IBAN</string>
+    <string name="swift_code">Swift Code</string>
+    <string name="nominee">Nominee Name</string>
+    <string name="phone_number">Phone Number</string>
+
+    <string name="email_regex">^[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,4}$</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!--array-->
+    <string-array name="tab_headers">
+        <item>Home</item>
+        <item>My Pools</item>
+        <item>Admin Pools</item>
+    </string-array>
+
+<!---Home Screen-->
+    <string name="my_profile">My Profile</string>
+    <string name="hello">Hallo !</string>
+
+    <!--MemberValues Update -->
+    <string name="ask_update">Please edit the fields you want to update </string>
+    <string name="new_value_to_update">Please Enter the new Value to Update</string>
+    <string name="update">Update</string>
+
+
+    <!--- Create Pool-->
+
+    <string name="pool_name">Pool Name</string>
+    <string name="pool_duration">Pool Duration</string>
+    <string name="pool_strength">Pool Strength</string>
+    <string name="pool_current_counter">Pool Current COunter</string>
+    <string name="pool_individualShare">Pool Individual Share</string>
+    <string name="pool_start_date">Pool Start Date</string>
+    <string name="pool_end_date">Pool End Date</string>
+    <string name="pool_meet_up">MeetUp Date</string>
+    <string name="pool_deposit_date">Deposite Date</string>
+    <string name="pool_late_fee">Late Fee</string>
+    <string name="pool_months">Months</string>
+    <string name="pool_monthly_takeaway">Monthly TakeAway</string>
+
+    <string name="date_format">dd-mm-yyyy</string>
+    <string name="only_date">date only(dd)</string>
+    <string name="create_pool">Create Pool</string>
+
+
+    <string-array name="member_details">
+        <item>Select</item>
+        <item>First Name</item>
+        <item>Last Name</item>
+        <item>Email</item>
+        <item>Password</item>
+        <item>Address</item>
+        <item>Iban</item>
+        <item>SwiftCode</item>
+        <item>Phone Number</item>
+        <item>Nominee</item>
+    </string-array>
+
+
+
+</resources>

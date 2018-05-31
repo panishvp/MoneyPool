@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "61328896166",
+    "firebase_url": "https://moneypool-235df.firebaseio.com",
+    "project_id": "moneypool-235df",
+    "storage_bucket": "moneypool-235df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61328896166:android:25280c69670ea3fe",
+        "android_client_info": {
+          "package_name": "com.example.paneesh.moneypool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "61328896166-8l9i45363o2jivlaooajosgrpkbvh2sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
