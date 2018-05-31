@@ -52,7 +52,7 @@
     <string name="pool_meet_up">MeetUp Date</string>
     <string name="pool_deposit_date">Deposite Date</string>
     <string name="pool_late_fee">Late Fee</string>
-    <string name="pool_months">Months</string>
+    <string name="pool_months">In months</string>
     <string name="pool_monthly_takeaway">Monthly TakeAway</string>
 
     <string name="date_format">dd-mm-yyyy</string>
