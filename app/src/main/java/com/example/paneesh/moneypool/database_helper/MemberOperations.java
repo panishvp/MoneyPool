@@ -187,7 +187,7 @@ public class MemberOperations  extends SQLiteOpenHelper{
         int strength = 0;
 
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("select Strength from "+ Utils.poolDetailsTable + " where " + Utils.poolId +" = " +poolID ,null);
+        Cursor cursor = db.rawQuery("select "+Utils.poolStrength+" from "+ Utils.poolDetailsTable + " where " + Utils.poolId +" = " +poolID ,null);
 
         strength = cursor.getInt(1);
 
@@ -204,7 +204,7 @@ public class MemberOperations  extends SQLiteOpenHelper{
         return valid;
     }
 
-    private void enrollMember(PoolTransactions enrollMember) {
+    public void enrollMember(PoolTransactions enrollMember) {
         if (!(isMemberInThepool(enrollMember.getPoolMemberId(),enrollMember.getPoolId())) & isValidPoolJoin(enrollMember.getPoolId()) ) {
 
             db = this.getWritableDatabase();
@@ -219,6 +219,100 @@ public class MemberOperations  extends SQLiteOpenHelper{
             }
     }
 
-}
+
+
+    public void updatePoolName(String newPoolName,int poolID) {
+
+        db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Utils.poolName,newPoolName);
+        db.update(Utils.poolDetailsTable,contentValues,Utils.poolId+ " = " +poolID,null);
+
+    }
+
+    private int getCounterFromPoolDetails (int poolID) {
+        int countFetched = 0;
+
+        db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("select "+Utils.poolCurrentCounter+" from "+ Utils.poolDetailsTable + " where " + Utils.poolId +" = " +poolID ,null);
+
+        countFetched = cursor.getInt(1);
+
+     return countFetched;
+    }
+
+
+    public void updateDuration(int newDuration,int poolID) {
+        int currentCounter = getCounterFromPoolDetails(poolID);
+
+        if (currentCounter == -1){
+            db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Utils.poolDuration,newDuration);
+            db.update(Utils.poolDetailsTable,contentValues,Utils.poolId+ " = " +poolID,null);
+
+        }
+    }
+
+    public void updateIndividualShare(double newShare,int poolID) {
+        int currentCounter = getCounterFromPoolDetails(poolID);
+        if (currentCounter == -1){
+            db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Utils.poolIndividualShare,newShare);
+            db.update(Utils.poolDetailsTable,contentValues,Utils.poolId+ " = " +poolID,null);
+
+        }
+    }
+
+    public void updateStartDate(String newStartDate,int poolID) {
+        int currentCounter = getCounterFromPoolDetails(poolID);
+        if (currentCounter == -1){
+            db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Utils.poolStartDate,newStartDate);
+            db.update(Utils.poolDetailsTable,contentValues,Utils.poolId+ " = " +poolID,null);
+
+        }
+    }
+
+    public void updateMeetupDate (int newMeetupDate,int poolID){
+        int currentCounter = getCounterFromPoolDetails(poolID);
+        if (currentCounter == -1){
+            db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Utils.poolMeetUp,newMeetupDate);
+            db.update(Utils.poolDetailsTable,contentValues,Utils.poolId+ " = " +poolID,null);
+
+        }
+    }
+
+    public void updateDepositDate (int newDepositDate,int poolID){
+        int currentCounter = getCounterFromPoolDetails(poolID);
+        if (currentCounter == -1){
+            db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Utils.poolDepositDate,newDepositDate);
+            db.update(Utils.poolDetailsTable,contentValues,Utils.poolId+ " = " +poolID,null);
+
+        }
+    }
+
+
+    public void updateLateFeeCharge (double newLateFeeCharge,int poolID){
+        int currentCounter = getCounterFromPoolDetails(poolID);
+        if (currentCounter == -1){
+            db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Utils.poolLateFees,newLateFeeCharge);
+            db.update(Utils.poolDetailsTable,contentValues,Utils.poolId+ " = " +poolID,null);
+
+        }
+    }
+
+
+
+
+}//end
 
 
