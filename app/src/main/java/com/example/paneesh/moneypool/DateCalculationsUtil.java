@@ -26,9 +26,18 @@ public class DateCalculationsUtil {
 
     }
 
+    public static Date addDay(Date date, int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DAY_OF_YEAR, i);
+        return cal.getTime();
+    }
+
     public static java.sql.Date stringToSQLDate (String ipDate){
         java.util.Date startDate = DateCalculationsUtil.stringToDateParse(ipDate);
         java.sql.Date startDateSql = new java.sql.Date(startDate.getTime());
         return startDateSql;
     }
+
+
 }

@@ -41,10 +41,14 @@ public class Utils {
     public static String poolLateFees = "pool_late_fee_charge";
     public static String poolWinnerFlag = "pool_winner_flag";
     public static String memberPayementDate = "pool_payment_date";
+    public static String poolDelayFlag = "pool_delay_flag";
+    public static String poolDelayPaymentAmt = "pool_delay_payment_amount";
+    public static String poolPickerFlag = "pool_picker_flag";
+    public static String poolPickerTakeawayDate = "pool_takeaway_date";
 
 
-    public static String alertUserIsPresent = "The Entered Email is already Regestered \n Please Regester with a different Email Id";
-    public static String alertUserForValidInput = "Please fill the feilds with Valid Input";
+    public static String alertUserIsPresent = "The Entered Email is already Registered \n Please Register with a different Email Id";
+    public static String alertUserForValidInput = "Please fill the fields with Valid Input";
 
     public static  String datePattern = "dd-mm-yyyy";
 }
