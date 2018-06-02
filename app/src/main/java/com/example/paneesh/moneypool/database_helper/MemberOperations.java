@@ -32,12 +32,54 @@ public class MemberOperations  extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("create table "+Utils.memberTable+" ( member_id  int primary key, member_first_name varchar(45), member_last_name varchar(45), member_email varchar(45), member_password varchar(45)," +
-                "member_address varchar(45), member_iban varchar(45), member_swift varchar(45), member_nominee varchar(45), member_phone_number varchar(45) )");
-        db.execSQL("create table "+Utils.poolDetailsTable +" ( pool_id  int primary key, pool_admin_id int, pool_name varchar(45), pool_duration int, pool_strength int, " +
-                "pool_current_counter int, pool_individual_share double, pool_monthly_takeaway double, pool_start_date datetime, pool_end_date datetime, pool_meetup_date int, pool_deposit_date int, pool_late_fee_charge int )");
-        db.execSQL("create table "+Utils.poolTransactions+"(uid int primary key, pool_id int, member_id int, pool_current_counter int, pool_individual_monthly_share double, pool_winner_flag int, " +
-                "pool_delay_flag int, pool_delay_payment_amount double, pool_take_away_amount double, pool_payment_date date, pool_takeaway_date date, pool_picker_flag int, auction_takeaway double)");
+        db.execSQL("create table "+Utils.memberTable+" " +
+                "( member_id  INTEGER  unique primary key AUTOINCREMENT," +
+                " member_first_name varchar(45)," +
+                " member_last_name varchar(45), " +
+                "member_email varchar(45) not null, " +
+                "member_password varchar(45) not null," +
+                "member_address varchar(45), " +
+                "member_iban varchar(45), " +
+                "member_swift varchar(45), " +
+                "member_nominee varchar(45), " +
+                "member_phone_number varchar(45) )");
+
+        db.execSQL("create table "+Utils.poolDetailsTable +
+                " ( pool_id  int unique primary key AUTOINCREMENT," +
+                " pool_admin_id int not null," +
+                " pool_name varchar(45) not null," +
+                " pool_duration int not null, " +
+                "pool_strength int, " +
+                "pool_current_counter int not null," +
+                " pool_individual_share double not null," +
+                " pool_monthly_takeaway double," +
+                " pool_start_date datetime not null," +
+                " pool_end_date datetime," +
+                " pool_meetup_date int not null," +
+                " pool_deposit_date int not null," +
+                " pool_late_fee_charge int not null)");
+
+        db.execSQL("create table "+Utils.poolTransactions+
+                "(uid int unique primary key AUTOINCREMENT," +
+                " pool_id int not null," +
+                " member_id int not null," +
+                " pool_current_counter int default '-1' not null," +
+                " pool_individual_monthly_share double," +
+                " pool_winner_flag int default '99', " +
+                "pool_delay_flag int default '0'," +
+                " pool_delay_payment_amount double default '0', " +
+                "pool_take_away_amount double, " +
+                "pool_payment_date date, " +
+                "pool_takeaway_date date," +
+                " pool_picker_flag int default '0', " +
+                "auction_takeaway double," +
+                "constraint PoolTransactions_pooldetails_PoolID_fk" +
+                "  foreign key (pool_id) references poolDetailsTable (pool_id)," +
+                "  constraint PoolTransactions_member_member_id_fk" +
+                "  foreign key (member_id) references memberTable (member_id))"
+
+
+        );
     }
 
     @Override
