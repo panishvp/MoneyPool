@@ -73,6 +73,7 @@ public class FragmentHome extends Fragment {
         mTextViewNominee.setText(member.getMemberNominee());
         mTextViewSwiftCode.setText(member.getMemberSwiftCode());
         mTextViewPhoneNumber.setText(member.getMemberPhoneNumber());
+
         saveInSharedPrefs(member.getMemberID());
 
     }

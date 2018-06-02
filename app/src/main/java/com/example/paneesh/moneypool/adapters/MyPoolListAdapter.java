@@ -38,11 +38,12 @@ public class MyPoolListAdapter extends RecyclerView.Adapter<MyPoolListAdapter.My
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
 
         holder.mTextViewPoolName.setText(poolDetailsArrayList.get(position).getPoolName());
-//        holder.mTextViewTotalMembersInPool.setText(poolDetailsArrayList.get(position).getPoolStrength());
+        holder.mTextViewPoolId.setText(poolDetailsArrayList.get(position).getPoolId()+"");
+        holder.mTextViewPoolDuration.setText(poolDetailsArrayList.get(position).getPoolDuration()+" months");
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               mOnPoolItemClickListener.onItemClick(holder.mTextViewPoolName.getText().toString());
+               mOnPoolItemClickListener.onItemClick(holder.mTextViewPoolId.getText().toString());
             }
         });
 
@@ -55,16 +56,19 @@ public class MyPoolListAdapter extends RecyclerView.Adapter<MyPoolListAdapter.My
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mTextViewPoolName;
-        TextView mTextViewTotalMembersInPool;
+        TextView mTextViewPoolId;
+        TextView mTextViewPoolDuration;
         LinearLayout linearLayout;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
             this.mTextViewPoolName = mTextViewPoolName;
-            this.mTextViewTotalMembersInPool = mTextViewTotalMembersInPool;
-            mTextViewPoolName = itemView.findViewById(R.id.tv_my_pool_name);
-            mTextViewTotalMembersInPool = itemView.findViewById(R.id.tv_my_pool_total_people);
+            this.mTextViewPoolId = mTextViewPoolId;
+            this.mTextViewPoolDuration = mTextViewPoolDuration;
+            mTextViewPoolName = itemView.findViewById(R.id.tv_admin_pool_name);
+            mTextViewPoolId = itemView.findViewById(R.id.tv_admin_pool_id);
+            mTextViewPoolDuration = itemView.findViewById(R.id.tv_admin_pool_duration);
             linearLayout = itemView.findViewById(R.id.ll_my_pool_list);
 
         }

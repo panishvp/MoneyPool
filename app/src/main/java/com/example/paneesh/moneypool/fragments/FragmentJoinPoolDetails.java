@@ -5,21 +5,22 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
-
-import org.slf4j.helpers.Util;
+import com.example.paneesh.moneypool.model.PoolTransactions;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class FragmentAdminPoolDetails extends Fragment {
+public class FragmentJoinPoolDetails extends Fragment {
 
     private View mView;
     private TextView mTextViewPoolName;
@@ -37,7 +38,11 @@ public class FragmentAdminPoolDetails extends Fragment {
     private SharedPreferences mSharedPrefs;
     private MemberOperations dataBaseHelper;
     private PoolDetails poolDetails;
-    private int  adminId;
+    private PoolTransactions poolTransactions;
+    private Button mButtonJoinPool;
+    private Button mButtonSearchAnotherPool;
+    private int poolId;
+    private int memberId;
 
 
     @Nullable
@@ -46,12 +51,26 @@ public class FragmentAdminPoolDetails extends Fragment {
         mView = inflater.inflate(R.layout.fragment_pool_details, container, false);
         initUI();
         Bundle bundle = getArguments();
-        int poolId = Integer.parseInt(bundle.getString(Utils.poolId));
+        final int poolId = Integer.parseInt(bundle.getString(Utils.poolId));
         poolDetails = dataBaseHelper.fetchPoolDetails(poolId);
         displayPoolDetails(poolDetails);
+        mButtonSearchAnotherPool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadJoinPoolFragment();
+            }
+        });
+
+        mButtonJoinPool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             poolTransactions.setPoolMemberId(memberId);
+             poolTransactions.setPoolId(poolId);
+            dataBaseHelper.enrollMember(poolTransactions);
+            }
+        });
         return mView;
     }
-
 
     private void initUI(){
         mTextViewPoolName = mView.findViewById(R.id.tv_pool_name);
@@ -67,9 +86,13 @@ public class FragmentAdminPoolDetails extends Fragment {
         mTextViewPoolDepositDate = mView.findViewById(R.id.tv_pool_deposite_date);
         mTextViewPoolLateFee = mView.findViewById(R.id.tv_pool_late_fee);
         mSharedPrefs = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
-        adminId = mSharedPrefs.getInt(Utils.poolId, 0);
+        poolId = mSharedPrefs.getInt(Utils.poolId, 0);
+        memberId = mSharedPrefs.getInt(Utils.memberId, 0);
+        poolTransactions = new PoolTransactions();
         poolDetails = new PoolDetails();
         dataBaseHelper = new MemberOperations(getContext());
+        mButtonJoinPool = mView.findViewById(R.id.bt__join_pool);
+        mButtonSearchAnotherPool = mView.findViewById(R.id.bt_deny_join_pool);
     }
 
 
@@ -87,6 +110,13 @@ public class FragmentAdminPoolDetails extends Fragment {
         mTextViewPoolMeetUpDate.setText(poolDetails.getPoolMeetUpDate()+" of Every Month");
         mTextViewPoolDepositDate.setText(poolDetails.getPoolDepositDate()+" of Every Month");
         mTextViewPoolLateFee.setText(poolDetails.getPoolLateFeeCharge()+"%");
+    }
+
+    private void loadJoinPoolFragment() {
+        FragmentJoinPools fragmentJoinPools = new FragmentJoinPools();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fl_member_home, fragmentJoinPools);
+        fragmentTransaction.commit();
     }
 
 }

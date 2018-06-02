@@ -8,7 +8,7 @@ import java.util.Date;
 public class DateCalculationsUtil {
 
     public static Date stringToDateParse (String ipDate){
-        SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
         Calendar IPdate = Calendar.getInstance();
         try {
             IPdate.setTime(format.parse(ipDate));

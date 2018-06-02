@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.paneesh.moneypool.R;
+import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.activities.PoolDetailsContainer;
 import com.example.paneesh.moneypool.adapters.MyPoolListAdapter;
+import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
     private MyPoolListAdapter adapter;
     private ArrayList<PoolDetails> poolDetailsArrayList;
     private FloatingActionButton mFloatingActionButton;
+    private MemberOperations databaseHelper;
 
     @Nullable
     @Override
@@ -53,7 +56,7 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
     private void initUI() {
         mMyPoolRecyclerView = mView.findViewById(R.id.rv_my_pool_list);
         mFloatingActionButton = mView.findViewById(R.id.fab_join_pool);
-
+        databaseHelper = new MemberOperations(getContext());
     }
 
     private void loadData() {
@@ -68,11 +71,13 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
     @Override
     public void onItemClick(String name) {
         Bundle bundle = new Bundle();
-        Intent intent = new Intent(getContext(), PoolDetailsContainer.class);
-        bundle.putString("poolName", name);
-        bundle.putString("role", "member");
-        intent.putExtras(bundle);
-        startActivity(intent);
+        bundle.putString(Utils.poolId, name);
+        FragmentMyPoolDetails fragmentMyPoolDetails = new FragmentMyPoolDetails();
+        fragmentMyPoolDetails.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fl_member_home, fragmentMyPoolDetails);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     private void loadJoinPoolFragment() {

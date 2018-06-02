@@ -14,14 +14,12 @@ import com.example.paneesh.moneypool.R;
 public class FragmentMyPoolDetails extends Fragment {
 
     private View mView;
-    private TextView textView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_pool_details, container, false);
-        textView = mView.findViewById(R.id.tv_pool_details);
-        textView.setText("Member");
+
         return mView;
     }
 

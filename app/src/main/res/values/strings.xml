@@ -38,11 +38,13 @@
     <string name="ask_update">Please edit the fields you want to update </string>
     <string name="new_value_to_update">Please Enter the new Value to Update</string>
     <string name="update">Update</string>
+    <string name="old_password">Old Password</string>
 
 
     <!--- Create Pool-->
 
     <string name="pool_name">Pool Name</string>
+    <string name="pool_id">Pool Id</string>
     <string name="pool_duration">Pool Duration</string>
     <string name="pool_strength">Pool Strength</string>
     <string name="pool_current_counter">Pool Current COunter</string>
@@ -62,9 +64,6 @@
 
     <string-array name="member_details">
         <item>Select</item>
-        <item>First Name</item>
-        <item>Last Name</item>
-        <item>Email</item>
         <item>Password</item>
         <item>Address</item>
         <item>Iban</item>
@@ -73,6 +72,9 @@
         <item>Nominee</item>
     </string-array>
 
+<!--- Join Pool -->
 
+    <string name="join_pool">Join Pool</string>
+    <string name="search_another">Search Another Pool</string>
 
 </resources>
