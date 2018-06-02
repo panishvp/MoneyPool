@@ -16,6 +16,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Random;
 
 public class MemberOperations extends SQLiteOpenHelper {
@@ -267,7 +268,27 @@ public class MemberOperations extends SQLiteOpenHelper {
     }
 
 
-    public void fetchMypools(){
+    public HashMap<Integer,String> fetchMypools(int memberID){
+        HashMap<Integer,String> myPools = new HashMap<>();
+
+        /*select pd.PoolID,pd.PoolName
+            from pooltransactions pt
+              JOIN
+              pooldetails pd
+              ON pt.PoolID = pd.PoolID
+            where pt.MemberID = 8 and pt.WinnerFlag = 99 and pt.CurrentCounter = -1*/
+
+        db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(" select pd." + Utils.poolId + ",pd." +Utils.poolName + " from " + Utils.poolTransactions + " pt" + " JOIN " + Utils.poolDetailsTable  + " pd" +
+                " ON " + "pt." +Utils.poolId + "= pd." + Utils.poolId +
+                " where "
+                + Utils.memberId + " = " + memberID + " and " + Utils.poolWinnerFlag + " = 99"+ " and " + Utils.poolCurrentCounter + " = -1" , null);
+
+        while (cursor.moveToNext()) {
+            myPools.put(cursor.getInt(1),cursor.getString(1));
+        }
+
+        return myPools ;
     }
 
     public void updateMemberDetails(String columnName, String value, int memberId) {
