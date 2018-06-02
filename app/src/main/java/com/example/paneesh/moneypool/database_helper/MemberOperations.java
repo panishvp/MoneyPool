@@ -743,6 +743,61 @@ public class MemberOperations extends SQLiteOpenHelper {
         }
     }
 
+
+    private Collection<Integer> getPoolMemberForCurrentCycle(PoolDetails activePool){
+        Collection<Integer> poolMemberWhoWonForCurrentCycle = new ArrayList<>();
+            //select MemberID from pooltransactions WHERE PoolID = ? AND WinnerFlag = ? and CurrentCounter = ?");
+        db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(" select " + Utils.memberId + " from " + Utils.poolTransactions + " where "
+                + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.poolWinnerFlag + " = 1 ",null);
+
+        while(cursor.moveToNext()){
+            poolMemberWhoWonForCurrentCycle.add(cursor.getInt(1));
+        }
+        return poolMemberWhoWonForCurrentCycle;
+    }
+
+    public Collection<Integer> printPoolMemberRemainingToWin(PoolDetails activePool){
+        Collection<Integer> allPoolMembers = getPoolMembers(activePool);
+        Collection<Integer> poolMembersWhoWon = getPoolMembersWhoWon(activePool);
+        Collection<Integer> poolMemberWhoWonForCurrentCycle = getPoolMemberForCurrentCycle(activePool);
+        allPoolMembers.removeAll(poolMembersWhoWon);
+        allPoolMembers.removeAll(poolMemberWhoWonForCurrentCycle);
+
+        return allPoolMembers;
+
+    }
+
+    public void addPicker(PoolDetails activePool ,int pickerMemberID,double auctionPercent) {
+        long millis=System.currentTimeMillis();
+        java.sql.Date currentDate = new java.sql.Date(millis);
+
+        double takeAwayAmount = activePool.getPoolMonthlyTakeAway();
+        double winnerTakeaway = (auctionPercent*takeAwayAmount)/100;
+        double pickerTakeaway = ((100-auctionPercent)*takeAwayAmount)/100;
+
+            //UPDATE pooltransactions set PickerFlag = 1,TakeawayAmount = ? ,TakeawayDate = ? where PoolID = ? and CurrentCounter = ? and MemberID = ?");
+
+            db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Utils.poolMonthlyTakeAway,pickerTakeaway);
+            contentValues.put(Utils.poolPickerTakeawayDate, String.valueOf(currentDate));
+            contentValues.put(Utils.poolPickerFlag,1);
+            db.update(Utils.poolTransactions,contentValues,Utils.poolId+ " = " +activePool.getPoolId() + " and "
+                    +Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.memberId + " = " + pickerMemberID  ,null);
+
+            //UPDATE pooltransactions set TakeawayAmount = ?,TakeawayDate = ? where PoolID = ? and CurrentCounter = ? and WinnerFlag = ?");
+
+            db = this.getWritableDatabase();
+            ContentValues restContentValues = new ContentValues();
+            contentValues.put(Utils.poolMonthlyTakeAway,winnerTakeaway);
+            contentValues.put(Utils.poolPickerTakeawayDate, String.valueOf(currentDate));
+
+            db.update(Utils.poolTransactions,contentValues,Utils.poolId+ " = " +activePool.getPoolId() + " and "
+                    +Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.poolWinnerFlag + " = 1" ,null);
+
+    }
+
 }//end
 
 
