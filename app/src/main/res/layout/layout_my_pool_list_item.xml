@@ -44,7 +44,7 @@
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="My Pool Name"
-                        style="@style/font15Blue" />
+                        style="@style/font25Blue" />
 
                 </TableRow>
 
@@ -63,7 +63,7 @@
                         android:id="@+id/tv_admin_pool_id"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        style="@style/font15Blue"
+                        style="@style/font25Blue"
                         android:gravity="center_horizontal"
                         android:text="8"
                         android:textSize="15dp" />
@@ -71,27 +71,6 @@
 
 
                 </TableRow>
-
-                <TableRow
-                    android:padding="10dp"
-                    android:weightSum="1" >
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.5"
-                        android:text="Pool Duration"
-                        style="@style/font15Black"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:id="@+id/tv_admin_pool_duration"
-                        android:layout_weight="0.5"
-                        android:text="pool NAme"
-                        style="@style/font15Blue"
-                        android:layout_height="wrap_content"/>
-
-                </TableRow>
-
-
 
             </TableLayout>
 

@@ -95,7 +95,7 @@ public class FragmentRegistrationPageTwo extends Fragment {
         mPhoneNumber = mView.findViewById(R.id.et_phone_number);
         mRegister = mView.findViewById(R.id.bt_register);
         mTextViewAlertUser = mView.findViewById(R.id.tv_alert_register_two);
-        memberOperations = new MemberOperations(getContext());
+        memberOperations = MemberOperations.getInstance(getContext());
 
     }
 

@@ -1,6 +1,7 @@
 package com.example.paneesh.moneypool.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +20,11 @@ import com.example.paneesh.moneypool.adapters.MyPoolListAdapter;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoolItemClickListener {
 
@@ -29,7 +34,8 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
     private MyPoolListAdapter adapter;
     private ArrayList<PoolDetails> poolDetailsArrayList;
     private FloatingActionButton mFloatingActionButton;
-    private MemberOperations databaseHelper;
+    private MemberOperations memberOperations;
+    private SharedPreferences mSharedPrefs;
 
     @Nullable
     @Override
@@ -39,6 +45,7 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
         loadData();
         layoutManager = new LinearLayoutManager(getContext());
         mMyPoolRecyclerView.setLayoutManager(layoutManager);
+
         adapter = new MyPoolListAdapter(poolDetailsArrayList);
         adapter.setOnItemClickListener(this);
         mMyPoolRecyclerView.setAdapter(adapter);
@@ -56,16 +63,13 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
     private void initUI() {
         mMyPoolRecyclerView = mView.findViewById(R.id.rv_my_pool_list);
         mFloatingActionButton = mView.findViewById(R.id.fab_join_pool);
-        databaseHelper = new MemberOperations(getContext());
+        memberOperations = MemberOperations.getInstance(getContext());
     }
 
     private void loadData() {
-
-        poolDetailsArrayList = new ArrayList<>();
-
-        for (int i = 1; i <= 20; i++) {
-            poolDetailsArrayList.add(new PoolDetails());
-        }
+        mSharedPrefs = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
+        int memberId = mSharedPrefs.getInt(Utils.memberId, 0);
+       poolDetailsArrayList = memberOperations.fetchMypools(memberId);
     }
 
     @Override

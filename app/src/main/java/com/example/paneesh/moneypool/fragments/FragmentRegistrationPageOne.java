@@ -92,7 +92,7 @@ public class FragmentRegistrationPageOne extends Fragment {
         mPassword = mView.findViewById(R.id.et_register_password);
         mNext = mView.findViewById(R.id.bt_register_next);
         member = new Member();
-        databaseHelper = new MemberOperations(getContext());
+        databaseHelper = MemberOperations.getInstance(getContext());
         mTextViewAlertUser= mView.findViewById(R.id.tv_alert_register_one);
     }
 

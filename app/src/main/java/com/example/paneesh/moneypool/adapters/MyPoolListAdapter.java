@@ -39,7 +39,6 @@ public class MyPoolListAdapter extends RecyclerView.Adapter<MyPoolListAdapter.My
 
         holder.mTextViewPoolName.setText(poolDetailsArrayList.get(position).getPoolName());
         holder.mTextViewPoolId.setText(poolDetailsArrayList.get(position).getPoolId()+"");
-        holder.mTextViewPoolDuration.setText(poolDetailsArrayList.get(position).getPoolDuration()+" months");
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +56,6 @@ public class MyPoolListAdapter extends RecyclerView.Adapter<MyPoolListAdapter.My
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mTextViewPoolName;
         TextView mTextViewPoolId;
-        TextView mTextViewPoolDuration;
         LinearLayout linearLayout;
 
 
@@ -65,10 +63,8 @@ public class MyPoolListAdapter extends RecyclerView.Adapter<MyPoolListAdapter.My
             super(itemView);
             this.mTextViewPoolName = mTextViewPoolName;
             this.mTextViewPoolId = mTextViewPoolId;
-            this.mTextViewPoolDuration = mTextViewPoolDuration;
             mTextViewPoolName = itemView.findViewById(R.id.tv_admin_pool_name);
             mTextViewPoolId = itemView.findViewById(R.id.tv_admin_pool_id);
-            mTextViewPoolDuration = itemView.findViewById(R.id.tv_admin_pool_duration);
             linearLayout = itemView.findViewById(R.id.ll_my_pool_list);
 
         }

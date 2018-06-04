@@ -111,7 +111,7 @@ public class FragmentCreatePool extends Fragment {
         mMonthlyTakeAway = mView.findViewById(R.id.tv_create_pool_takeaway);
         mRegisterPool = mView.findViewById(R.id.bt_create_pool);
         mSharedPreferences = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
-        databaseHelper = new MemberOperations(getContext());
+        databaseHelper = MemberOperations.getInstance(getContext());
     }
 
 

@@ -59,7 +59,7 @@ public class FragmentAdminPool extends Fragment implements MyPoolListAdapter.onP
     private void initUI() {
         mMyPoolRecyclerView = mView.findViewById(R.id.rv_admin_pool_list);
         mFloatingActionButton = mView.findViewById(R.id.fab_create_pool);
-        memberOperations = new MemberOperations(getContext());
+        memberOperations =  MemberOperations.getInstance(getContext());
     }
 
     private void loadData(){

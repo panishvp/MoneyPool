@@ -21,10 +21,17 @@ import java.util.Random;
 
 public class MemberOperations extends SQLiteOpenHelper {
 
+    private static MemberOperations memberOperationsInstance = null;
     private SQLiteDatabase db;
 
+    public static MemberOperations getInstance(Context context){
+        if(memberOperationsInstance == null){
+            memberOperationsInstance = new MemberOperations(context);
+        }
+        return memberOperationsInstance;
+    }
 
-    public MemberOperations(Context context) {
+    private MemberOperations(Context context) {
         super(context, Utils.databaseName, null, 8);
     }
 
@@ -268,8 +275,8 @@ public class MemberOperations extends SQLiteOpenHelper {
     }
 
 
-    public HashMap<Integer,String> fetchMypools(int memberID){
-        HashMap<Integer,String> myPools = new HashMap<>();
+    public ArrayList<PoolDetails> fetchMypools(int memberID){
+        ArrayList<PoolDetails> myPools = new ArrayList<>();
 
         /*select pd.PoolID,pd.PoolName
             from pooltransactions pt
@@ -282,10 +289,13 @@ public class MemberOperations extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(" select pd." + Utils.poolId + ",pd." +Utils.poolName + " from " + Utils.poolTransactions + " pt" + " JOIN " + Utils.poolDetailsTable  + " pd" +
                 " ON " + "pt." +Utils.poolId + "= pd." + Utils.poolId +
                 " where "
-                + Utils.memberId + " = " + memberID + " and " + Utils.poolWinnerFlag + " = 99"+ " and " + Utils.poolCurrentCounter + " = -1" , null);
+                +"pt."+ Utils.memberId + " = " + memberID + " and " +"pt."+ Utils.poolWinnerFlag + " = 99"+ " and " +"pt."+ Utils.poolCurrentCounter + " = -1" , null);
 
         while (cursor.moveToNext()) {
-            myPools.put(cursor.getInt(1),cursor.getString(1));
+            PoolDetails poolDetails = new PoolDetails();
+            poolDetails.setPoolId(cursor.getInt(0));
+            poolDetails.setPoolName(cursor.getString(1));
+            myPools.add(poolDetails);
         }
 
         return myPools ;

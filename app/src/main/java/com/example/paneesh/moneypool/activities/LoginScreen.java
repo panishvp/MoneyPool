@@ -92,7 +92,7 @@ public class LoginScreen extends AppCompatActivity {
         mPassword = findViewById(R.id.et_login_password);
         mLogin = findViewById(R.id.bt_login);
         mTextViewAlert = findViewById(R.id.tv_alert_login);
-        databaseOperations = new MemberOperations(this);
+        databaseOperations =  MemberOperations.getInstance(this);
 
     }
 

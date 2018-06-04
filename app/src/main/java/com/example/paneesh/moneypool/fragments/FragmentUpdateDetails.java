@@ -69,7 +69,7 @@ public class FragmentUpdateDetails extends Fragment {
     private void initUI() {
         mSpinnerUpdateField = mView.findViewById(R.id.sp_update_member);
         mLinearLayout = mView.findViewById(R.id.ll_update_dialog);
-        databaseOperations = new MemberOperations(getContext());
+        databaseOperations = MemberOperations.getInstance(getContext());
         mTextFieldToUpdate = mView.findViewById(R.id.tv_selected_field_to_update);
         mTextViewDataOfField = mView.findViewById(R.id.tv_data_from_db);
         mSharedPreferences = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);

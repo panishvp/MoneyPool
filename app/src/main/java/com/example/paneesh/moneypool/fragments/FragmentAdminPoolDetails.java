@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.paneesh.moneypool.R;
@@ -34,6 +35,8 @@ public class FragmentAdminPoolDetails extends Fragment {
     private TextView mTextViewPoolMeetUpDate;
     private TextView mTextViewPoolDepositDate;
     private TextView mTextViewPoolLateFee;
+    private Button mButtonJoinPool;
+    private Button mButtonSearchAnotherPool;
     private SharedPreferences mSharedPrefs;
     private MemberOperations dataBaseHelper;
     private PoolDetails poolDetails;
@@ -69,7 +72,11 @@ public class FragmentAdminPoolDetails extends Fragment {
         mSharedPrefs = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         adminId = mSharedPrefs.getInt(Utils.poolId, 0);
         poolDetails = new PoolDetails();
-        dataBaseHelper = new MemberOperations(getContext());
+        dataBaseHelper = MemberOperations.getInstance(getContext());
+        mButtonJoinPool = mView.findViewById(R.id.bt__join_pool);
+        mButtonJoinPool.setVisibility(View.GONE);
+        mButtonSearchAnotherPool = mView.findViewById(R.id.bt_deny_join_pool);
+        mButtonSearchAnotherPool.setVisibility(View.GONE);
     }
 
 

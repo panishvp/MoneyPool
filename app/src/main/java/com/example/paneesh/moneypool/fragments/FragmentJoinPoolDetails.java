@@ -90,7 +90,7 @@ public class FragmentJoinPoolDetails extends Fragment {
         memberId = mSharedPrefs.getInt(Utils.memberId, 0);
         poolTransactions = new PoolTransactions();
         poolDetails = new PoolDetails();
-        dataBaseHelper = new MemberOperations(getContext());
+        dataBaseHelper = MemberOperations.getInstance(getContext());
         mButtonJoinPool = mView.findViewById(R.id.bt__join_pool);
         mButtonSearchAnotherPool = mView.findViewById(R.id.bt_deny_join_pool);
     }

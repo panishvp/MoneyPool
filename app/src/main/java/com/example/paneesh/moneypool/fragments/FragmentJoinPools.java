@@ -47,7 +47,7 @@ public class FragmentJoinPools extends Fragment {
     private void initUI(){
     mEditTextPoolId = mView.findViewById(R.id.et_join_pool_id);
     mButtonJoinPool = mView.findViewById(R.id.bt_search_pool);
-    memberOperations = new MemberOperations(getContext());
+    memberOperations = MemberOperations.getInstance(getContext());
     poolDetails = new PoolDetails();
     }
 

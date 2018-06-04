@@ -53,7 +53,7 @@ public class FragmentHome extends Fragment {
         mTextViewPhoneNumber = mView.findViewById(R.id.tv_phone_number);
         mTextViewMemberName = mView.findViewById(R.id.tv_member_name);
         mTextViewEmail = mView.findViewById(R.id.tv_email);
-        databaseHelper = new MemberOperations(getActivity());
+        databaseHelper = MemberOperations.getInstance(getContext());
         mSharedPreferences = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
 
     }

@@ -30,6 +30,8 @@
         <item name="android:textColor">#23C2C2</item>
     </style>
 
+
+
     <style name="font15Black">
         <item name="android:textSize">15dp</item>
         <item name="android:textColor">#000000</item>
