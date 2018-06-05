@@ -36,6 +36,7 @@ public class FragmentAdminPoolDetails extends Fragment {
     private TextView mTextViewPoolDepositDate;
     private TextView mTextViewPoolLateFee;
     private Button mButtonJoinPool;
+    private Button mButtonPickWinner;
     private Button mButtonSearchAnotherPool;
     private Button mButtonRecordPayment;
     private SharedPreferences mSharedPrefs;
@@ -56,7 +57,16 @@ public class FragmentAdminPoolDetails extends Fragment {
         mButtonRecordPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragmentRecordPayment();
+                FragmentRecordPayment fragmentRecordPayment = new FragmentRecordPayment();
+                loadFragmentPayment(fragmentRecordPayment);
+            }
+        });
+
+        mButtonPickWinner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentPickWinner fragmentPickWinner = new FragmentPickWinner();
+                loadFragmentPayment(fragmentPickWinner);
             }
         });
         return mView;
@@ -77,6 +87,8 @@ public class FragmentAdminPoolDetails extends Fragment {
         mTextViewPoolDepositDate = mView.findViewById(R.id.tv_pool_deposite_date);
         mButtonRecordPayment = mView.findViewById(R.id.bt_record_payment);
         mButtonRecordPayment.setVisibility(View.VISIBLE);
+        mButtonPickWinner = mView.findViewById(R.id.bt_pick_winner_fragment);
+        mButtonPickWinner.setVisibility(View.VISIBLE);
         mTextViewPoolLateFee = mView.findViewById(R.id.tv_pool_late_fee);
         mSharedPrefs = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         adminId = mSharedPrefs.getInt(Utils.poolId, 0);
@@ -105,18 +117,16 @@ public class FragmentAdminPoolDetails extends Fragment {
         mTextViewPoolLateFee.setText(poolDetails.getPoolLateFeeCharge()+"%");
     }
 
-    private void loadFragmentRecordPayment(){
-        FragmentRecordPayment fragmentRecordPayment = new FragmentRecordPayment();
+    private void loadFragmentPayment(Fragment fragment ){
         Bundle bundle = new Bundle();
         bundle.putSerializable(Utils.poolDetailsTable,poolDetails);
-        fragmentRecordPayment.setArguments(bundle);
+        fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_member_home, fragmentRecordPayment);
+        fragmentTransaction.replace(R.id.fl_member_home, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
 
     }
-
 
 }

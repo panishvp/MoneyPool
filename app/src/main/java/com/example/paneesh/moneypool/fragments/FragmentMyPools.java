@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
@@ -36,6 +37,7 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
     private FloatingActionButton mFloatingActionButton;
     private MemberOperations memberOperations;
     private SharedPreferences mSharedPrefs;
+    private FrameLayout frameLayout;
 
     @Nullable
     @Override
@@ -64,6 +66,7 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
         mMyPoolRecyclerView = mView.findViewById(R.id.rv_my_pool_list);
         mFloatingActionButton = mView.findViewById(R.id.fab_join_pool);
         memberOperations = MemberOperations.getInstance(getContext());
+
     }
 
     private void loadData() {

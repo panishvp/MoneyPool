@@ -15,8 +15,6 @@ import com.example.paneesh.moneypool.model.PoolTransactions;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Random;
 
 public class MemberOperations extends SQLiteOpenHelper {
@@ -116,7 +114,6 @@ public class MemberOperations extends SQLiteOpenHelper {
 
     public boolean loginMember(String email, String password) {
         db = this.getWritableDatabase();
-        Member member = new Member();
           cursor = db.rawQuery("Select * from " + Utils.memberTable + " where " + Utils.memberEmail + " = ? And " + Utils.memberPassword + " = ?", new String[]{email, password});
         if (cursor.getCount() > 0) {
             return true;
@@ -170,7 +167,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         contentValues.put(Utils.poolStrength, poolDetails.getPoolStrength());
         contentValues.put(Utils.poolCurrentCounter, poolDetails.getPoolCurrentCounter());
         contentValues.put(Utils.poolIndividualShare, poolDetails.getPoolIndividualShare());
-        contentValues.put(Utils.poolMonthlyTakeAway, poolDetails.getPoolMonthlyTakeAway());
+        contentValues.put(Utils.pdPoolMonthlyTakeAway, poolDetails.getPoolMonthlyTakeAway());
         Date date = poolDetails.getPoolStartDate();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Utils.datePattern);
         String dateString = simpleDateFormat.format(date);
@@ -718,9 +715,9 @@ public class MemberOperations extends SQLiteOpenHelper {
 
     }
 
-    private Collection<Integer> getPoolMembersWhoWon(PoolDetails activePool) {
+    private  ArrayList<Integer> getPoolMembersWhoWon(PoolDetails activePool) {
 
-        Collection<Integer> allPoolMembers = new ArrayList<>();
+         ArrayList<Integer> allPoolMembers = new ArrayList<>();
 
         //select MemberID from pooltransactions where PoolID = ? AND CurrentCounter = ?");
         db = getWritableDatabase();
@@ -734,16 +731,16 @@ public class MemberOperations extends SQLiteOpenHelper {
         return allPoolMembers;
     }
 
-    private Collection<Integer> getPoolMemberRemainingToWin(PoolDetails activePool) {
-        Collection<Integer> allPoolMembers = getPoolMembers(activePool);
-        Collection<Integer> poolMembersWhoWon = getPoolMembersWhoWon(activePool);
+    private ArrayList<Integer> getPoolMemberRemainingToWin(PoolDetails activePool) {
+        ArrayList<Integer> allPoolMembers = getPoolMembers(activePool);
+        ArrayList<Integer> poolMembersWhoWon = getPoolMembersWhoWon(activePool);
 
         allPoolMembers.removeAll(poolMembersWhoWon);
 
         return allPoolMembers;
     }
 
-    private void addWinner(PoolDetails activePool) {
+    public int  addWinner(PoolDetails activePool) {
         ArrayList<Integer> poolMembersRemainingToWin = (ArrayList<Integer>) getPoolMemberRemainingToWin(activePool);
 
         Random rand = new Random();
@@ -755,7 +752,7 @@ public class MemberOperations extends SQLiteOpenHelper {
 
         db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Utils.poolMonthlyTakeAway, activePool.getPoolMonthlyTakeAway());
+        contentValues.put(Utils.ptPoolTakeAwayAmount, activePool.getPoolMonthlyTakeAway());
         contentValues.put(Utils.poolPickerTakeawayDate, String.valueOf(currentDate));
         contentValues.put(Utils.poolWinnerFlag, 1);
         db.update(Utils.poolTransactions, contentValues, Utils.poolId + " = " + activePool.getPoolId() + " and "
@@ -767,39 +764,42 @@ public class MemberOperations extends SQLiteOpenHelper {
         db.update(Utils.poolTransactions, contentValues, Utils.poolId + " = " + activePool.getPoolId() + " and "
                 + Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.poolWinnerFlag + " != 1", null);
 
-
+        return randomElement;
     }
 
-    public void pickWinnerForCurrentMonth(PoolDetails activePool) {
+    public int pickWinnerForCurrentMonth(PoolDetails activePool) {
         int strength = getStrenghtOfPool(activePool.getPoolId());
         int payerCount = groupPaymentDoneCount(activePool.getPoolId(), activePool.getPoolCurrentCounter());
+        int winnerMemberId = 0;
 
         if (payerCount < strength) {
             fillUpBlankTransaction(activePool);
-            addWinner(activePool);
+            winnerMemberId =    addWinner(activePool);
         } else if (payerCount == strength) {
-            addWinner(activePool);
+            winnerMemberId = addWinner(activePool);
         }
+
+        return winnerMemberId;
     }
 
 
-    private Collection<Integer> getPoolMemberForCurrentCycle(PoolDetails activePool){
-        Collection<Integer> poolMemberWhoWonForCurrentCycle = new ArrayList<>();
+    private  ArrayList<Integer> getPoolMemberForCurrentCycle(PoolDetails activePool){
+         ArrayList<Integer> poolMemberWhoWonForCurrentCycle = new ArrayList<>();
             //select MemberID from pooltransactions WHERE PoolID = ? AND WinnerFlag = ? and CurrentCounter = ?");
         db = getWritableDatabase();
           cursor = db.rawQuery(" select " + Utils.memberId + " from " + Utils.poolTransactions + " where "
                 + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.poolWinnerFlag + " = 1 ",null);
 
         while(cursor.moveToNext()){
-            poolMemberWhoWonForCurrentCycle.add(cursor.getInt(1));
+            poolMemberWhoWonForCurrentCycle.add(cursor.getInt(0));
         }
         return poolMemberWhoWonForCurrentCycle;
     }
 
-    public Collection<Integer> printPoolMemberRemainingToWin(PoolDetails activePool){
-        Collection<Integer> allPoolMembers = getPoolMembers(activePool);
-        Collection<Integer> poolMembersWhoWon = getPoolMembersWhoWon(activePool);
-        Collection<Integer> poolMemberWhoWonForCurrentCycle = getPoolMemberForCurrentCycle(activePool);
+    public  ArrayList<Integer> printPoolMemberRemainingToWin(PoolDetails activePool){
+         ArrayList<Integer> allPoolMembers = getPoolMembers(activePool);
+         ArrayList<Integer> poolMembersWhoWon = getPoolMembersWhoWon(activePool);
+         ArrayList<Integer> poolMemberWhoWonForCurrentCycle = getPoolMemberForCurrentCycle(activePool);
         allPoolMembers.removeAll(poolMembersWhoWon);
         allPoolMembers.removeAll(poolMemberWhoWonForCurrentCycle);
 
@@ -819,7 +819,7 @@ public class MemberOperations extends SQLiteOpenHelper {
 
             db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(Utils.poolMonthlyTakeAway,pickerTakeaway);
+            contentValues.put(Utils.pdPoolMonthlyTakeAway,pickerTakeaway);
             contentValues.put(Utils.poolPickerTakeawayDate, String.valueOf(currentDate));
             contentValues.put(Utils.poolPickerFlag,1);
             db.update(Utils.poolTransactions,contentValues,Utils.poolId+ " = " +activePool.getPoolId() + " and "
@@ -829,7 +829,7 @@ public class MemberOperations extends SQLiteOpenHelper {
 
             db = this.getWritableDatabase();
             ContentValues restContentValues = new ContentValues();
-            contentValues.put(Utils.poolMonthlyTakeAway,winnerTakeaway);
+            contentValues.put(Utils.pdPoolMonthlyTakeAway,winnerTakeaway);
             contentValues.put(Utils.poolPickerTakeawayDate, String.valueOf(currentDate));
 
             db.update(Utils.poolTransactions,contentValues,Utils.poolId+ " = " +activePool.getPoolId() + " and "

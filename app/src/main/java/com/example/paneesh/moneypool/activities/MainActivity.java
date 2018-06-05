@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity
                 fragment = new FragmentUpdateDetails();
                 replaceFragment(fragment);
                 break;
+            case R.id.nav_gallery:
+                break;
             default:
                 fragment = new FragmentMemberProfile();
                 replaceFragment(fragment);

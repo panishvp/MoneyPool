@@ -33,7 +33,7 @@ public class Utils {
     public static String poolDuration = "pool_duration";
     public static String poolCurrentCounter = "pool_current_counter";
     public static String poolIndividualShare = "pool_individual_share";
-    public static String poolMonthlyTakeAway = "pool_monthly_take_away";
+    public static String pdPoolMonthlyTakeAway = "pool_monthly_take_away";
     public static String poolStartDate = "pool_start_date";
     public static String poolEndDate= "pool_end_date";
     public static String poolMeetUp = "pool_meetup_date";
@@ -45,6 +45,7 @@ public class Utils {
     public static String poolDelayPaymentAmt = "pool_delay_payment_amount";
     public static String poolPickerFlag = "pool_picker_flag";
     public static String poolPickerTakeawayDate = "pool_takeaway_date";
+    public static String ptPoolTakeAwayAmount = "pool_take_away_amount";
 
 
     public static String alertUserIsPresent = "The Entered Email is already Registered \n Please Register with a different Email Id";
