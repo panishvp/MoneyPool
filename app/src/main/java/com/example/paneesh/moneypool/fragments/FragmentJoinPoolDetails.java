@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
@@ -66,7 +67,10 @@ public class FragmentJoinPoolDetails extends Fragment {
             public void onClick(View v) {
              poolTransactions.setPoolMemberId(memberId);
              poolTransactions.setPoolId(poolId);
-            dataBaseHelper.enrollMember(poolTransactions);
+             if (validateMemberAndPool(memberId, poolId)){
+                 dataBaseHelper.enrollMember(poolTransactions);
+             }
+
             }
         });
         return mView;
@@ -119,4 +123,17 @@ public class FragmentJoinPoolDetails extends Fragment {
         fragmentTransaction.commit();
     }
 
+    private boolean validateMemberAndPool(int memberId, int poolid){
+        boolean status = false;
+        if (dataBaseHelper.isValidPoolJoin(poolid)){
+            if (!dataBaseHelper.isMemberInThepool(memberId, poolid)){
+                status = true;
+            }else {
+                Toast.makeText(getContext(), "You have already enrolled in this Pool ", Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            Toast.makeText(getContext(), "Sorry The Pool Is already Full ", Toast.LENGTH_SHORT).show();
+        }
+        return status;
+    }
 }

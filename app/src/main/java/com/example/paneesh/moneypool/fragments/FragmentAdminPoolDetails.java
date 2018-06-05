@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
 
-import org.slf4j.helpers.Util;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -37,6 +37,7 @@ public class FragmentAdminPoolDetails extends Fragment {
     private TextView mTextViewPoolLateFee;
     private Button mButtonJoinPool;
     private Button mButtonSearchAnotherPool;
+    private Button mButtonRecordPayment;
     private SharedPreferences mSharedPrefs;
     private MemberOperations dataBaseHelper;
     private PoolDetails poolDetails;
@@ -52,6 +53,12 @@ public class FragmentAdminPoolDetails extends Fragment {
         int poolId = Integer.parseInt(bundle.getString(Utils.poolId));
         poolDetails = dataBaseHelper.fetchPoolDetails(poolId);
         displayPoolDetails(poolDetails);
+        mButtonRecordPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragmentRecordPayment();
+            }
+        });
         return mView;
     }
 
@@ -68,6 +75,8 @@ public class FragmentAdminPoolDetails extends Fragment {
         mTextViewPoolEndDate = mView.findViewById(R.id.tv_pool_end_date);
         mTextViewPoolMeetUpDate = mView.findViewById(R.id.tv_pool_meetup);
         mTextViewPoolDepositDate = mView.findViewById(R.id.tv_pool_deposite_date);
+        mButtonRecordPayment = mView.findViewById(R.id.bt_record_payment);
+        mButtonRecordPayment.setVisibility(View.VISIBLE);
         mTextViewPoolLateFee = mView.findViewById(R.id.tv_pool_late_fee);
         mSharedPrefs = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         adminId = mSharedPrefs.getInt(Utils.poolId, 0);
@@ -95,5 +104,19 @@ public class FragmentAdminPoolDetails extends Fragment {
         mTextViewPoolDepositDate.setText(poolDetails.getPoolDepositDate()+" of Every Month");
         mTextViewPoolLateFee.setText(poolDetails.getPoolLateFeeCharge()+"%");
     }
+
+    private void loadFragmentRecordPayment(){
+        FragmentRecordPayment fragmentRecordPayment = new FragmentRecordPayment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Utils.poolDetailsTable,poolDetails);
+        fragmentRecordPayment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fl_member_home, fragmentRecordPayment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
+
+    }
+
 
 }

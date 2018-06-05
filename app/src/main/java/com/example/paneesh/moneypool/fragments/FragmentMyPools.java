@@ -91,4 +91,6 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
+
 }

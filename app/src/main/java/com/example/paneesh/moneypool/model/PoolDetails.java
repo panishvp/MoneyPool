@@ -1,8 +1,9 @@
 package com.example.paneesh.moneypool.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class PoolDetails {
+public class PoolDetails implements Serializable {
 
     private int poolId;
     private int poolAdminId;

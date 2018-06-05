@@ -23,6 +23,8 @@ public class MemberOperations extends SQLiteOpenHelper {
 
     private static MemberOperations memberOperationsInstance = null;
     private SQLiteDatabase db;
+    private Cursor cursor;
+
 
     public static MemberOperations getInstance(Context context){
         if(memberOperationsInstance == null){
@@ -115,7 +117,7 @@ public class MemberOperations extends SQLiteOpenHelper {
     public boolean loginMember(String email, String password) {
         db = this.getWritableDatabase();
         Member member = new Member();
-        Cursor cursor = db.rawQuery("Select * from " + Utils.memberTable + " where " + Utils.memberEmail + " = ? And " + Utils.memberPassword + " = ?", new String[]{email, password});
+          cursor = db.rawQuery("Select * from " + Utils.memberTable + " where " + Utils.memberEmail + " = ? And " + Utils.memberPassword + " = ?", new String[]{email, password});
         if (cursor.getCount() > 0) {
             return true;
         } else {
@@ -127,7 +129,7 @@ public class MemberOperations extends SQLiteOpenHelper {
 
         db = this.getWritableDatabase();
         Member member = new Member();
-        Cursor cursor = db.rawQuery("Select * from " + Utils.memberTable + " where " + Utils.memberEmail + " = ? And " + Utils.memberPassword + " = ?", new String[]{email, password});
+          cursor = db.rawQuery("Select * from " + Utils.memberTable + " where " + Utils.memberEmail + " = ? And " + Utils.memberPassword + " = ?", new String[]{email, password});
 
         if (cursor.moveToFirst()) {
             member.setMemberID(cursor.getInt(0));
@@ -149,7 +151,7 @@ public class MemberOperations extends SQLiteOpenHelper {
 
     public boolean isMemberPresent(String email) {
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("Select * From " + Utils.memberTable + " Where " + Utils.memberEmail + " = ?", new String[]{email});
+          cursor = db.rawQuery("Select * From " + Utils.memberTable + " Where " + Utils.memberEmail + " = ?", new String[]{email});
         int count = cursor.getCount();
 
         if (count > 0) {
@@ -183,7 +185,7 @@ public class MemberOperations extends SQLiteOpenHelper {
     public PoolDetails fetchPoolDetails(int poolID) {
         db = this.getWritableDatabase();
         PoolDetails pool = new PoolDetails();
-        Cursor cursor = db.rawQuery("Select * from " + Utils.poolDetailsTable + " where " + Utils.poolId + " = " + poolID, null);
+          cursor = db.rawQuery("Select * from " + Utils.poolDetailsTable + " where " + Utils.poolId + " = " + poolID, null);
 
         if (cursor.moveToFirst()) {
             pool.setPoolId(cursor.getInt(0));
@@ -211,7 +213,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         boolean status = false;
 
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("Select count(*) From " + Utils.poolTransactions + " Where " + Utils.poolId + " = " + poolId + " and "
+          cursor = db.rawQuery("Select count(*) From " + Utils.poolTransactions + " Where " + Utils.poolId + " = " + poolId + " and "
                 + Utils.poolCurrentCounter + "= -1 and " + Utils.poolWinnerFlag + "= 99 and " + Utils.memberId + "= " + memberId, null);
         cursor.moveToFirst();
         int count = cursor.getInt(0);
@@ -228,7 +230,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         int numberOfMembersRegistered = 0;
 
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " " +
+          cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " " +
                 "where " + Utils.poolId + " = " + poolID + " and " + Utils.poolCurrentCounter + " =-1 " +
                 "and " + Utils.memberPayementDate + " is null ", null);
         cursor.moveToFirst();
@@ -241,7 +243,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         int strength = 0;
 
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("select " + Utils.poolStrength + " from " + Utils.poolDetailsTable + " where " + Utils.poolId + " = " + poolID, null);
+          cursor = db.rawQuery("select " + Utils.poolStrength + " from " + Utils.poolDetailsTable + " where " + Utils.poolId + " = " + poolID, null);
 
         cursor.moveToFirst();
         strength = cursor.getInt(0);
@@ -274,19 +276,22 @@ public class MemberOperations extends SQLiteOpenHelper {
         }
     }
 
+    public boolean isValidPool(int poolId){
+        boolean isValid = false;
+        db = this.getWritableDatabase();
+        cursor = db.rawQuery("Select * from "+Utils.poolDetailsTable+" where "+Utils.poolId+" = "+poolId, null);
+        if (cursor.moveToFirst()){
+            isValid = true;
+        }
+        return isValid;
+    }
+
 
     public ArrayList<PoolDetails> fetchMypools(int memberID){
         ArrayList<PoolDetails> myPools = new ArrayList<>();
 
-        /*select pd.PoolID,pd.PoolName
-            from pooltransactions pt
-              JOIN
-              pooldetails pd
-              ON pt.PoolID = pd.PoolID
-            where pt.MemberID = 8 and pt.WinnerFlag = 99 and pt.CurrentCounter = -1*/
-
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery(" select pd." + Utils.poolId + ",pd." +Utils.poolName + " from " + Utils.poolTransactions + " pt" + " JOIN " + Utils.poolDetailsTable  + " pd" +
+          cursor = db.rawQuery(" select pd." + Utils.poolId + ",pd." +Utils.poolName + " from " + Utils.poolTransactions + " pt" + " JOIN " + Utils.poolDetailsTable  + " pd" +
                 " ON " + "pt." +Utils.poolId + "= pd." + Utils.poolId +
                 " where "
                 +"pt."+ Utils.memberId + " = " + memberID + " and " +"pt."+ Utils.poolWinnerFlag + " = 99"+ " and " +"pt."+ Utils.poolCurrentCounter + " = -1" , null);
@@ -322,9 +327,9 @@ public class MemberOperations extends SQLiteOpenHelper {
         int countFetched = 0;
 
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("select " + Utils.poolCurrentCounter + " from " + Utils.poolDetailsTable + " where " + Utils.poolId + " = " + poolID, null);
+          cursor = db.rawQuery("select " + Utils.poolCurrentCounter + " from " + Utils.poolDetailsTable + " where " + Utils.poolId + " = " + poolID, null);
 
-        countFetched = cursor.getInt(1);
+        countFetched = cursor.getInt(0);
 
         return countFetched;
     }
@@ -403,7 +408,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         ArrayList<PoolDetails> poolDetailsArrayList = new ArrayList<>();
         db = this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("Select * from " + Utils.poolDetailsTable + " where " + Utils.poolAdminId + " = " + adminId, null);
+          cursor = db.rawQuery("Select * from " + Utils.poolDetailsTable + " where " + Utils.poolAdminId + " = " + adminId, null);
 
 
         if(cursor.moveToFirst()){
@@ -441,7 +446,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         int numberOfTransactions = 0;
 
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where " + Utils.poolId + " = " + poolID + " and " + Utils.poolCurrentCounter + "!=1 and" + Utils.memberPayementDate + "is not null", null);
+          cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where " + Utils.poolId + " = " + poolID + " and " + Utils.poolCurrentCounter + "!=1 and" + Utils.memberPayementDate + "is not null", null);
 
         numberOfTransactions = cursor.getInt(1);
         return numberOfTransactions;
@@ -459,12 +464,13 @@ public class MemberOperations extends SQLiteOpenHelper {
     }
 
 
+
     public boolean isValidAdmin(int poolID, int adminID) {
         boolean status = false;
         //select count(*) from pooldetails where PoolID = ? AND  PoolAdminMemberID = ?
 
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from " + Utils.poolDetailsTable + " where " + Utils.poolId + " = " + poolID + " and " + Utils.poolAdminId + "=" + adminID, null);
+          cursor = db.rawQuery("select count(*) from " + Utils.poolDetailsTable + " where " + Utils.poolId + " = " + poolID + " and " + Utils.poolAdminId + "=" + adminID, null);
 
         if (cursor.getInt(1) == 1) status = true;
         else status = false;
@@ -479,7 +485,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         //where PoolID = ? AND  MemberID = ? AND CurrentCounter = -1 and WinnerFlag = 99 ");
 
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
+          cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
                 + Utils.poolId + " = " + poolID + " and " + Utils.memberId + "=" + memberID + " and " + Utils.poolCurrentCounter + "=-1 and " + Utils.poolWinnerFlag + "=99", null);
 
         if (cursor.getInt(1) == 1) status = true;
@@ -496,16 +502,18 @@ public class MemberOperations extends SQLiteOpenHelper {
                     "where PoolID = ? and CurrentCounter = ? and PaymentDate is not null */
         if (counter != -1) {
             db = getWritableDatabase();
-            Cursor cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
+              cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
                     + Utils.poolId + " = " + poolID + " and " + Utils.poolCurrentCounter + "=" + counter + " and " + Utils.memberPayementDate + " is not null ", null);
+            cursor.moveToFirst();
 
-            payerCount = cursor.getInt(1);
+            payerCount = cursor.getInt(0);
         } else {
-            db = getWritableDatabase();
-            Cursor cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
+            db = getReadableDatabase();
+              cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
                     + Utils.poolId + " = " + poolID + " and " + Utils.poolCurrentCounter + "=" + counter, null);
 
-            payerCount = cursor.getInt(1);
+            cursor.moveToFirst();
+            payerCount = cursor.getInt(0);
         }
 
         return payerCount;
@@ -594,7 +602,7 @@ public class MemberOperations extends SQLiteOpenHelper {
 
 
         int strenght = getStrenghtOfPool(activePool.getPoolId());
-        int currentMaxCounter = getCounterFromPoolDetails(activePool.getPoolId());
+        int currentMaxCounter = activePool.getPoolCurrentCounter();
         int payersCount = groupPaymentDoneCount(activePool.getPoolId(), currentMaxCounter);
 
         System.out.println("[DEBUG](makePaymentForMember)Strenght : " + strenght);
@@ -623,7 +631,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         int numberOfWinners = 0;
         //select count(*) from pooltransactions where PoolID = ? and CurrentCounter !=-1 and WinnerFlag = 1");
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
+          cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
                 + Utils.poolId + " = " + poolID + " and " + Utils.poolCurrentCounter + "!=-1 and " + Utils.poolWinnerFlag + " = 1 ", null);
 
         numberOfWinners = cursor.getInt(1);
@@ -637,7 +645,7 @@ public class MemberOperations extends SQLiteOpenHelper {
 
         //"select count(*) from pooltransactions where PoolID = ? and CurrentCounter =? and PickerFlag = 1");
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
+          cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
                 + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + "=" + activePool.getPoolCurrentCounter() + Utils.poolWinnerFlag + " = 1 ", null);
 
         int checkIfWinner = cursor.getInt(1);
@@ -648,41 +656,41 @@ public class MemberOperations extends SQLiteOpenHelper {
 
     }
 
-    private Collection<Integer> getPoolMembers(PoolDetails activePool) {
+    private ArrayList<Integer> getPoolMembers(PoolDetails activePool) {
 
-        Collection<Integer> allPoolMembers = new ArrayList<>();
+        ArrayList<Integer> allPoolMembers = new ArrayList<>();
 
         //select MemberID from pooltransactions where PoolID = ? AND CurrentCounter = ?");
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery(" select " + Utils.memberId + " from " + Utils.poolTransactions + " where "
+          cursor = db.rawQuery(" select " + Utils.memberId + " from " + Utils.poolTransactions + " where "
                 + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + " =-1 ", null);
 
         while (cursor.moveToNext()) {
-            allPoolMembers.add(cursor.getInt(1));
+            allPoolMembers.add(cursor.getInt(0));
         }
 
         return allPoolMembers;
     }
 
-    private Collection<Integer> getPoolMembersWhoPaid(PoolDetails activePool) {
+    private ArrayList<Integer> getPoolMembersWhoPaid(PoolDetails activePool) {
 
-        Collection<Integer> allPoolMembers = new ArrayList<>();
+        ArrayList<Integer> allPoolMembers = new ArrayList<>();
 
         //select MemberID from pooltransactions where PoolID = ? AND CurrentCounter = ?");
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery(" select " + Utils.memberId + " from " + Utils.poolTransactions + " where "
-                + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter(), null);
+          cursor = db.rawQuery(" select " + Utils.memberId + " from " + Utils.poolTransactions + " where "
+                + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter()+" and "+ Utils.memberPayementDate + " is not null ", null);
 
         while (cursor.moveToNext()) {
-            allPoolMembers.add(cursor.getInt(1));
+            allPoolMembers.add(cursor.getInt(0));
         }
 
         return allPoolMembers;
     }
 
-    private Collection<Integer> getPoolMembersRemainingToPay(PoolDetails activePool) {
-        Collection<Integer> allPoolMembers = getPoolMembers(activePool);
-        Collection<Integer> poolMembersWhoPaid = getPoolMembersWhoPaid(activePool);
+    public ArrayList<Integer> getPoolMembersRemainingToPay(PoolDetails activePool) {
+        ArrayList<Integer> allPoolMembers = getPoolMembers(activePool);
+        ArrayList<Integer> poolMembersWhoPaid = getPoolMembersWhoPaid(activePool);
 
         allPoolMembers.removeAll(poolMembersWhoPaid);
 
@@ -716,11 +724,11 @@ public class MemberOperations extends SQLiteOpenHelper {
 
         //select MemberID from pooltransactions where PoolID = ? AND CurrentCounter = ?");
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery(" select " + Utils.memberId + " from " + Utils.poolTransactions + " where "
+          cursor = db.rawQuery(" select " + Utils.memberId + " from " + Utils.poolTransactions + " where "
                 + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolPickerFlag + " = 1", null);
 
         while (cursor.moveToNext()) {
-            allPoolMembers.add(cursor.getInt(1));
+            allPoolMembers.add(cursor.getInt(0));
         }
 
         return allPoolMembers;
@@ -779,7 +787,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         Collection<Integer> poolMemberWhoWonForCurrentCycle = new ArrayList<>();
             //select MemberID from pooltransactions WHERE PoolID = ? AND WinnerFlag = ? and CurrentCounter = ?");
         db = getWritableDatabase();
-        Cursor cursor = db.rawQuery(" select " + Utils.memberId + " from " + Utils.poolTransactions + " where "
+          cursor = db.rawQuery(" select " + Utils.memberId + " from " + Utils.poolTransactions + " where "
                 + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.poolWinnerFlag + " = 1 ",null);
 
         while(cursor.moveToNext()){

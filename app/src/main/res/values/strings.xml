@@ -77,4 +77,8 @@
     <string name="join_pool">Join Pool</string>
     <string name="search_another">Search Another Pool</string>
 
+    <!--- Admin Operations -->
+    <string name="record_payment">Record Payment</string>
+    <string name="select_memberid_for_payment">Select the MemberId of the person to record the Payment</string>
+
 </resources>

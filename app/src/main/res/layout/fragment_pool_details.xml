@@ -342,4 +342,13 @@
         android:layout_marginTop="10dp"
         android:text="@string/search_another"
         android:background="@drawable/button"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_record_payment"
+        android:background="@drawable/button"
+        android:text="@string/record_payment"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
 </LinearLayout>

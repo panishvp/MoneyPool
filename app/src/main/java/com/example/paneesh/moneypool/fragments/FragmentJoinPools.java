@@ -34,8 +34,13 @@ public class FragmentJoinPools extends Fragment {
         mButtonJoinPool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String poolId = mEditTextPoolId.getText().toString().trim();
                 if (mEditTextPoolId.getText().toString().trim().length()>0){
-                   loadJoinPoolFragment();
+                    if (memberOperations.isValidPool(Integer.parseInt(poolId))){
+                        loadJoinPoolFragment();
+                    }else {
+                        Toast.makeText(getContext(),"Pool doesn't exists", Toast.LENGTH_SHORT).show();
+                    }
                 }else {
                     Toast.makeText(getContext(),"Please Enter th Pool Id", Toast.LENGTH_SHORT).show();
                 }
@@ -61,4 +66,6 @@ public class FragmentJoinPools extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
+
 }
