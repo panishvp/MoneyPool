@@ -22,8 +22,9 @@
         </activity>
 
         <activity android:name=".activities.RegistrationScreen"/>
-        <activity android:name=".activities.MainActivity"/>
+        <activity android:name=".activities.LandingPage"/>
         <activity android:name=".activities.PoolDetailsContainer"/>
+        <activity android:name=".activities.PoolCreationAndJoin"/>
     </application>
 
 </manifest>

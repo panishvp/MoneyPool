@@ -12,18 +12,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
+import com.example.paneesh.moneypool.activities.PoolCreationAndJoin;
 import com.example.paneesh.moneypool.activities.PoolDetailsContainer;
 import com.example.paneesh.moneypool.adapters.MyPoolListAdapter;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -37,7 +35,8 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
     private FloatingActionButton mFloatingActionButton;
     private MemberOperations memberOperations;
     private SharedPreferences mSharedPrefs;
-    private FrameLayout frameLayout;
+    private Intent intent;
+    private Bundle bundle;
 
     @Nullable
     @Override
@@ -72,27 +71,26 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
     private void loadData() {
         mSharedPrefs = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         int memberId = mSharedPrefs.getInt(Utils.memberId, 0);
-       poolDetailsArrayList = memberOperations.fetchMypools(memberId);
+        poolDetailsArrayList = memberOperations.fetchMypools(memberId);
     }
 
     @Override
     public void onItemClick(String name) {
-        Bundle bundle = new Bundle();
+        bundle = new Bundle();
         bundle.putString(Utils.poolId, name);
-        FragmentMyPoolDetails fragmentMyPoolDetails = new FragmentMyPoolDetails();
-        fragmentMyPoolDetails.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_member_home, fragmentMyPoolDetails);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        bundle.putString("role", "member");
+        intent = new Intent(getContext(), PoolDetailsContainer.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private void loadJoinPoolFragment() {
-        FragmentJoinPools fragmentJoinPools = new FragmentJoinPools();
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_member_home, fragmentJoinPools);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+
+        intent = new Intent(getContext(), PoolCreationAndJoin.class);
+        bundle = new Bundle();
+        bundle.putString("purpose", "join");
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 

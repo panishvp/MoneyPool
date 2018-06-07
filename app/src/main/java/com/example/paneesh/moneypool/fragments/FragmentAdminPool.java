@@ -6,16 +6,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
+import com.example.paneesh.moneypool.activities.PoolCreationAndJoin;
 import com.example.paneesh.moneypool.activities.PoolDetailsContainer;
 import com.example.paneesh.moneypool.adapters.MyPoolListAdapter;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class FragmentAdminPool extends Fragment implements MyPoolListAdapter.onPoolItemClickListener{
+public class FragmentAdminPool extends Fragment implements MyPoolListAdapter.onPoolItemClickListener {
 
     private View mView;
     private RecyclerView mMyPoolRecyclerView;
@@ -35,6 +34,9 @@ public class FragmentAdminPool extends Fragment implements MyPoolListAdapter.onP
     private FloatingActionButton mFloatingActionButton;
     private MemberOperations memberOperations;
     private SharedPreferences mSharedPrefs;
+
+    private Intent intent;
+    private Bundle bundle;
 
     @Nullable
     @Override
@@ -59,10 +61,10 @@ public class FragmentAdminPool extends Fragment implements MyPoolListAdapter.onP
     private void initUI() {
         mMyPoolRecyclerView = mView.findViewById(R.id.rv_admin_pool_list);
         mFloatingActionButton = mView.findViewById(R.id.fab_create_pool);
-        memberOperations =  MemberOperations.getInstance(getContext());
+        memberOperations = MemberOperations.getInstance(getContext());
     }
 
-    private void loadData(){
+    private void loadData() {
 
         mSharedPrefs = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         int adminId = mSharedPrefs.getInt(Utils.memberId, 0);
@@ -72,24 +74,21 @@ public class FragmentAdminPool extends Fragment implements MyPoolListAdapter.onP
 
     @Override
     public void onItemClick(String name) {
-        Bundle bundle = new Bundle();
+        bundle = new Bundle();
         bundle.putString(Utils.poolId, name);
-        FragmentAdminPoolDetails fragmentAdminPoolDetails = new FragmentAdminPoolDetails();
-        fragmentAdminPoolDetails.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_member_home, fragmentAdminPoolDetails);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-
-
+        bundle.putString("role", "admin");
+        intent = new Intent(getContext(), PoolDetailsContainer.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
-    private void loadCreatePoolFragment(){
-        FragmentCreatePool fragmentCreatePool = new FragmentCreatePool();
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_member_home, fragmentCreatePool);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+    private void loadCreatePoolFragment() {
+
+        intent = new Intent(getContext(), PoolCreationAndJoin.class);
+        bundle = new Bundle();
+        bundle.putString("purpose", "create");
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 

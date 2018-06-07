@@ -122,7 +122,7 @@ public class FragmentAdminPoolDetails extends Fragment {
         bundle.putSerializable(Utils.poolDetailsTable,poolDetails);
         fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_member_home, fragment);
+        fragmentTransaction.replace(R.id.fl_pool_creation_join, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 

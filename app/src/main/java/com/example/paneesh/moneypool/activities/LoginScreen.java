@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
-import com.example.paneesh.moneypool.model.Member;
 
 public class LoginScreen extends AppCompatActivity {
 
@@ -49,7 +48,7 @@ public class LoginScreen extends AppCompatActivity {
 
                 if (databaseOperations.loginMember(stringEmail, password)){
                     saveInSharedPrefs();
-                    Intent intent = new Intent(LoginScreen.this, MainActivity.class);
+                    Intent intent = new Intent(LoginScreen.this, LandingPage.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }else{

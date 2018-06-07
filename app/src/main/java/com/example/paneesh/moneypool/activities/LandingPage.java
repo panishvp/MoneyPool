@@ -13,7 +13,7 @@ import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.fragments.FragmentMemberProfile;
 import com.example.paneesh.moneypool.fragments.FragmentUpdateDetails;
 
-public class MainActivity extends AppCompatActivity
+public class LandingPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 

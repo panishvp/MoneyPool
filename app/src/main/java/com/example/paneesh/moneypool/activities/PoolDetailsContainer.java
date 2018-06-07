@@ -7,18 +7,21 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.paneesh.moneypool.R;
+import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.fragments.FragmentAdminPoolDetails;
 import com.example.paneesh.moneypool.fragments.FragmentMyPoolDetails;
-import com.example.paneesh.moneypool.fragments.FragmentRegistrationPageOne;
 
 public class PoolDetailsContainer extends AppCompatActivity {
 
+    private Bundle mBundle;
+    private String poolId;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pool_transactions);
-        Bundle bundle = getIntent().getExtras();
-        if (bundle.getString("role").equals("member")){
+        mBundle = getIntent().getExtras();
+        poolId = mBundle.getString(Utils.poolId);
+        if (mBundle.getString("role").equals("member")){
             loadMemberFragment();
         }else{
             loadAdminFragment();
@@ -28,6 +31,8 @@ public class PoolDetailsContainer extends AppCompatActivity {
 
     private void loadMemberFragment(){
         Fragment fragment = new FragmentMyPoolDetails();
+        mBundle.putString(Utils.poolId, poolId);
+        fragment.setArguments(mBundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fl_pool_transactions_container, fragment, null);
         fragmentTransaction.commit();
@@ -36,6 +41,8 @@ public class PoolDetailsContainer extends AppCompatActivity {
     private void loadAdminFragment(){
 
         Fragment fragment = new FragmentAdminPoolDetails();
+        mBundle.putString(Utils.poolId, poolId);
+        fragment.setArguments(mBundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fl_pool_transactions_container, fragment, null);
         fragmentTransaction.commit();

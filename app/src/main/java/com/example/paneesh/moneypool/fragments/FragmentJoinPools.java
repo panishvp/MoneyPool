@@ -62,7 +62,7 @@ public class FragmentJoinPools extends Fragment {
         FragmentJoinPoolDetails fragmentJoinPools = new FragmentJoinPoolDetails();
         fragmentJoinPools.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_member_home, fragmentJoinPools);
+        fragmentTransaction.replace(R.id.fl_pool_creation_join, fragmentJoinPools);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
