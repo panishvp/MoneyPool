@@ -35,25 +35,25 @@ public class FragmentJoinPools extends Fragment {
             @Override
             public void onClick(View v) {
                 String poolId = mEditTextPoolId.getText().toString().trim();
-                if (mEditTextPoolId.getText().toString().trim().length()>0){
-                    if (memberOperations.isValidPool(Integer.parseInt(poolId))){
+                if (mEditTextPoolId.getText().toString().trim().length() > 0) {
+                    if (memberOperations.isValidPool(Integer.parseInt(poolId))) {
                         loadJoinPoolFragment();
-                    }else {
-                        Toast.makeText(getContext(),"Pool doesn't exists", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Pool doesn't exists", Toast.LENGTH_SHORT).show();
                     }
-                }else {
-                    Toast.makeText(getContext(),"Please Enter th Pool Id", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Please Enter th Pool Id", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         return mView;
     }
 
-    private void initUI(){
-    mEditTextPoolId = mView.findViewById(R.id.et_join_pool_id);
-    mButtonJoinPool = mView.findViewById(R.id.bt_search_pool);
-    memberOperations = MemberOperations.getInstance(getContext());
-    poolDetails = new PoolDetails();
+    private void initUI() {
+        mEditTextPoolId = mView.findViewById(R.id.et_join_pool_id);
+        mButtonJoinPool = mView.findViewById(R.id.bt_search_pool);
+        memberOperations = MemberOperations.getInstance(getContext());
+        poolDetails = new PoolDetails();
     }
 
     private void loadJoinPoolFragment() {

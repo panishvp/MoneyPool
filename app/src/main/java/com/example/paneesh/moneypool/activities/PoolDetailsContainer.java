@@ -31,6 +31,7 @@ public class PoolDetailsContainer extends AppCompatActivity {
 
     private void loadMemberFragment(){
         Fragment fragment = new FragmentMyPoolDetails();
+        mBundle = new Bundle();
         mBundle.putString(Utils.poolId, poolId);
         fragment.setArguments(mBundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -41,6 +42,7 @@ public class PoolDetailsContainer extends AppCompatActivity {
     private void loadAdminFragment(){
 
         Fragment fragment = new FragmentAdminPoolDetails();
+        mBundle = new Bundle();
         mBundle.putString(Utils.poolId, poolId);
         fragment.setArguments(mBundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
