@@ -11,12 +11,14 @@ import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.model.Member;
 import com.example.paneesh.moneypool.model.PoolDetails;
 import com.example.paneesh.moneypool.model.PoolTransactions;
+import com.example.paneesh.moneypool.model.WinnerPicker;
 
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MemberOperations extends SQLiteOpenHelper {
@@ -840,25 +842,88 @@ public class MemberOperations extends SQLiteOpenHelper {
     }
 
 
-    public int getPoolID(PoolDetails newPool){
+    private int getPoolID(PoolDetails newPool){
         int poolID = 0;
+
+           /* select PoolID from pooldetails " +
+                    "where PoolName = ? and Duration = ? and Strength= ? and IndividualShare = ? and MonthlyTakeaway = ? and MeetupDate =? " +
+                    "and DepositDate = ? and LateFeeCharge = ? and StartDate = ? and EndDate = ? and PoolAdminMemberID = ?");
+            */
 
             db = getWritableDatabase();
             cursor = db.rawQuery("select "+ Utils.poolId + "  from " + Utils.poolDetailsTable + " where "
-                    + Utils.poolName + " = '" + newPool.getPoolName() + "' and  " + Utils.poolDuration + " = " + newPool.getPoolDuration()+ " and  "
-                    + Utils.poolStrength + "=" + newPool.getPoolStrength() + " and  " + Utils.poolIndividualShare + " = " + newPool.getPoolIndividualShare()+ " and  "
-                    + Utils.pdPoolMonthlyTakeAway + "=" + newPool.getPoolMonthlyTakeAway() + " and  " + Utils.poolMeetUp + " = " + newPool.getPoolMeetUpDate()+ " and  "
-                    + Utils.poolDepositDate + "=" + newPool.getPoolDepositDate() + " and  " + Utils.poolLateFees + " = " + newPool.getPoolLateFeeCharge()+ " and  "
+                    + Utils.poolName + "=" + newPool.getPoolName() + " and  " + Utils.poolDuration + " = " + newPool.getPoolDuration()
+                    + Utils.poolStrength + "=" + newPool.getPoolStrength() + " and  " + Utils.poolIndividualShare + " = " + newPool.getPoolIndividualShare()
+                    + Utils.pdPoolMonthlyTakeAway + "=" + newPool.getPoolMonthlyTakeAway() + " and  " + Utils.poolMeetUp + " = " + newPool.getPoolMeetUpDate()
+                    + Utils.poolDepositDate + "=" + newPool.getPoolDepositDate() + " and  " + Utils.poolLateFees + " = " + newPool.getPoolLateFeeCharge()
+                    + Utils.poolStartDate + "=" + newPool.getPoolStartDate() + " and  " + Utils.poolEndDate + " = " + newPool.getPoolEndDate()
                     + Utils.poolAdminId + "=" + newPool.getPoolAdminId(), null);
-            if (cursor != null && cursor.getCount() >0){
-                cursor.moveToFirst();
-                poolID = cursor.getInt(0);
 
-            }
+            poolID = cursor.getInt(1);
 
 
         return poolID;
     }
+
+    private List<PoolTransactions> getPoolTransactions(int poolID){
+
+        ArrayList<PoolTransactions> allPoolMembersTransactions = new ArrayList<>();
+
+        db = getWritableDatabase();
+        cursor = db.rawQuery(" select " + Utils.poolId + ","+ Utils.memberId + "," + Utils.poolCurrentCounter  + "," +Utils.ptIndividualShare  + ","
+                + Utils.memberPayementDate  + " from " + Utils.poolTransactions + " where "
+                + Utils.poolId + " = " + poolID + " and " + Utils.poolCurrentCounter + " != -1 and " , null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    // Set agents information in model.
+                    PoolTransactions rtPool = new PoolTransactions();
+                    rtPool.setPoolId(cursor.getInt(0));
+                    rtPool.setPoolMemberId(cursor.getInt(1));
+                    rtPool.setPoolCurrentCounter(cursor.getInt(2));
+                    rtPool.setPoolIndividualShare(cursor.getDouble(3));
+                    rtPool.setPoolPaymentDate(DateCalculationsUtil.stringToSQLDate(cursor.getString(4)));
+
+                    allPoolMembersTransactions.add(rtPool);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return allPoolMembersTransactions;
+
+    }
+
+    private List<WinnerPicker> getWinnerPickerHistory(int poolID){
+        ArrayList<WinnerPicker> allPoolMembersTransactions = new ArrayList<>();
+
+        db = getWritableDatabase();
+        cursor = db.rawQuery("select ptp." + Utils.poolCurrentCounter + ",ptw." + Utils.memberId + ",ptp." +Utils.memberId+ ",ptp." +
+                Utils.poolPickerTakeawayDate + ",ptw." +Utils.ptPoolTakeAwayAmount+ ",ptp." + Utils.ptPoolTakeAwayAmount
+                + "from" + Utils.poolTransactions + "as ptw JOIN" +Utils.poolTransactions + "as ptp ON ptp." + Utils.poolId + "=ptw"
+                + Utils.poolId + "where ptw." + Utils.poolWinnerFlag + "=1 and ptp." + Utils.poolPickerFlag + " = 1 and ptp."
+                + Utils.poolId + "=" +poolID+ "ORDER BY ptp." + Utils.poolCurrentCounter, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    // Set agents information in model.
+                    WinnerPicker rtPool = new WinnerPicker();
+                    rtPool.setIteration(cursor.getInt(0));
+                    rtPool.setWinnerMemberID(cursor.getInt(1));
+                    rtPool.setPickerMemberID(cursor.getInt(2));
+                    rtPool.setTakeawayDate(DateCalculationsUtil.stringToSQLDate(cursor.getString(3)));
+                    rtPool.setWinnerTakeawayAmt(cursor.getInt(4));
+                    rtPool.setPickerTakeawatAmt(cursor.getInt(5));
+
+                    allPoolMembersTransactions.add(rtPool);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return allPoolMembersTransactions;
+    }
+
 
 }//end
 
