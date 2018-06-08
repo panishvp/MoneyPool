@@ -13,6 +13,8 @@ import com.example.paneesh.moneypool.model.PoolDetails;
 import com.example.paneesh.moneypool.model.PoolTransactions;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Random;
@@ -835,6 +837,30 @@ public class MemberOperations extends SQLiteOpenHelper {
             db.update(Utils.poolTransactions,contentValues,Utils.poolId+ " = " +activePool.getPoolId() + " and "
                     +Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.poolWinnerFlag + " = 1" ,null);
 
+    }
+
+
+    private int getPoolID(PoolDetails newPool){
+        int poolID = 0;
+
+           /* select PoolID from pooldetails " +
+                    "where PoolName = ? and Duration = ? and Strength= ? and IndividualShare = ? and MonthlyTakeaway = ? and MeetupDate =? " +
+                    "and DepositDate = ? and LateFeeCharge = ? and StartDate = ? and EndDate = ? and PoolAdminMemberID = ?");
+            */
+
+            db = getWritableDatabase();
+            cursor = db.rawQuery("select "+ Utils.poolId + "  from " + Utils.poolDetailsTable + " where "
+                    + Utils.poolName + "=" + newPool.getPoolName() + " and  " + Utils.poolDuration + " = " + newPool.getPoolDuration()
+                    + Utils.poolStrength + "=" + newPool.getPoolStrength() + " and  " + Utils.poolIndividualShare + " = " + newPool.getPoolIndividualShare()
+                    + Utils.pdPoolMonthlyTakeAway + "=" + newPool.getPoolMonthlyTakeAway() + " and  " + Utils.poolMeetUp + " = " + newPool.getPoolMeetUpDate()
+                    + Utils.poolDepositDate + "=" + newPool.getPoolDepositDate() + " and  " + Utils.poolLateFees + " = " + newPool.getPoolLateFeeCharge()
+                    + Utils.poolStartDate + "=" + newPool.getPoolStartDate() + " and  " + Utils.poolEndDate + " = " + newPool.getPoolEndDate()
+                    + Utils.poolAdminId + "=" + newPool.getPoolAdminId(), null);
+
+            poolID = cursor.getInt(1);
+
+
+        return poolID;
     }
 
 }//end
