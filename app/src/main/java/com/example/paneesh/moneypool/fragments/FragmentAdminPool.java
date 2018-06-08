@@ -92,4 +92,10 @@ public class FragmentAdminPool extends Fragment implements MyPoolListAdapter.onP
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+        adapter.notifyDataSetChanged();
+    }
 }

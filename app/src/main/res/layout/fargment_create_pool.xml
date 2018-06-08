@@ -62,27 +62,6 @@
                 style="@style/font20Black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/pool_strength" />
-
-            <EditText
-                android:id="@+id/et_create_pool_strength"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:background="@drawable/edittext_background"
-                android:inputType="number" />
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/jumbo" />
-
-
-            <TextView
-                style="@style/font20Black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/pool_individualShare" />
 
             <EditText
@@ -100,51 +79,11 @@
                 android:background="@color/jumbo" />
 
 
-            <TextView
-                style="@style/font20Black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/pool_monthly_takeaway" />
-
-            <TextView
-                android:id="@+id/tv_create_pool_takeaway"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
-            <TextView
-                style="@style/font20Black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/pool_start_date" />
-
-            <EditText
-                android:id="@+id/et_create_pool_start_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_background"
-                android:hint="@string/date_format"
-                android:padding="5dp" />
-
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/jumbo" />
-
-
-            <TextView
-                style="@style/font20Black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/pool_end_date" />
-
-            <TextView
-                android:id="@+id/tv_create_pool_end_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_background"
-                android:padding="5dp" />
 
 
             <View
@@ -210,6 +149,74 @@
                 android:background="@drawable/edittext_background"
                 android:hint="@string/only_date"
                 android:inputType="number"
+                android:padding="5dp" />
+
+            <TextView
+                style="@style/font20Black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pool_monthly_takeaway" />
+
+            <EditText
+                android:id="@+id/et_create_pool_takeaway"
+                android:layout_width="match_parent"
+                android:enabled="false"
+                android:background="@color/jumbo"
+                android:layout_height="wrap_content" />
+
+
+
+            <TextView
+                style="@style/font20Black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pool_strength" />
+
+            <EditText
+                android:id="@+id/et_create_pool_strength"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:enabled="false"
+                android:background="@color/jumbo"
+                android:inputType="number" />
+
+            <TextView
+                style="@style/font20Black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pool_start_date" />
+
+            <CalendarView
+                android:layout_width="match_parent"
+                android:id="@+id/cal_pool_start_date"
+                android:layout_height="wrap_content"/>
+
+
+
+            <EditText
+                android:id="@+id/et_create_pool_start_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:background="@color/jumbo"
+                android:hint="@string/date_format"
+                android:padding="5dp" />
+
+
+
+            <TextView
+                style="@style/font20Black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pool_end_date" />
+
+            <EditText
+                android:id="@+id/tv_create_pool_end_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:background="@color/jumbo"
                 android:padding="5dp" />
 
             <Button

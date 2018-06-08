@@ -94,4 +94,12 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+        adapter.notifyDataSetChanged();
+    }
+
+
 }

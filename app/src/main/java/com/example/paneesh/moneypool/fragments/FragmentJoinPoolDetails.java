@@ -2,6 +2,7 @@ package com.example.paneesh.moneypool.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
+import com.example.paneesh.moneypool.activities.LandingPage;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
 import com.example.paneesh.moneypool.model.PoolTransactions;
@@ -146,6 +148,9 @@ public class FragmentJoinPoolDetails extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dataBaseHelper.enrollMember(poolTransactions);
+                Intent intent = new Intent(getContext(), LandingPage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
         alertdialogBuilder.setNegativeButton("Don't Accept", new DialogInterface.OnClickListener() {

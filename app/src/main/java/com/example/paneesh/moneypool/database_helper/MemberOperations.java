@@ -840,24 +840,21 @@ public class MemberOperations extends SQLiteOpenHelper {
     }
 
 
-    private int getPoolID(PoolDetails newPool){
+    public int getPoolID(PoolDetails newPool){
         int poolID = 0;
-
-           /* select PoolID from pooldetails " +
-                    "where PoolName = ? and Duration = ? and Strength= ? and IndividualShare = ? and MonthlyTakeaway = ? and MeetupDate =? " +
-                    "and DepositDate = ? and LateFeeCharge = ? and StartDate = ? and EndDate = ? and PoolAdminMemberID = ?");
-            */
 
             db = getWritableDatabase();
             cursor = db.rawQuery("select "+ Utils.poolId + "  from " + Utils.poolDetailsTable + " where "
-                    + Utils.poolName + "=" + newPool.getPoolName() + " and  " + Utils.poolDuration + " = " + newPool.getPoolDuration()
-                    + Utils.poolStrength + "=" + newPool.getPoolStrength() + " and  " + Utils.poolIndividualShare + " = " + newPool.getPoolIndividualShare()
-                    + Utils.pdPoolMonthlyTakeAway + "=" + newPool.getPoolMonthlyTakeAway() + " and  " + Utils.poolMeetUp + " = " + newPool.getPoolMeetUpDate()
-                    + Utils.poolDepositDate + "=" + newPool.getPoolDepositDate() + " and  " + Utils.poolLateFees + " = " + newPool.getPoolLateFeeCharge()
-                    + Utils.poolStartDate + "=" + newPool.getPoolStartDate() + " and  " + Utils.poolEndDate + " = " + newPool.getPoolEndDate()
+                    + Utils.poolName + " = '" + newPool.getPoolName() + "' and  " + Utils.poolDuration + " = " + newPool.getPoolDuration()+ " and  "
+                    + Utils.poolStrength + "=" + newPool.getPoolStrength() + " and  " + Utils.poolIndividualShare + " = " + newPool.getPoolIndividualShare()+ " and  "
+                    + Utils.pdPoolMonthlyTakeAway + "=" + newPool.getPoolMonthlyTakeAway() + " and  " + Utils.poolMeetUp + " = " + newPool.getPoolMeetUpDate()+ " and  "
+                    + Utils.poolDepositDate + "=" + newPool.getPoolDepositDate() + " and  " + Utils.poolLateFees + " = " + newPool.getPoolLateFeeCharge()+ " and  "
                     + Utils.poolAdminId + "=" + newPool.getPoolAdminId(), null);
+            if (cursor != null && cursor.getCount() >0){
+                cursor.moveToFirst();
+                poolID = cursor.getInt(0);
 
-            poolID = cursor.getInt(1);
+            }
 
 
         return poolID;
