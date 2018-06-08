@@ -1,5 +1,7 @@
 package com.example.paneesh.moneypool.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -68,7 +70,7 @@ public class FragmentJoinPoolDetails extends Fragment {
              poolTransactions.setPoolMemberId(memberId);
              poolTransactions.setPoolId(poolId);
              if (validateMemberAndPool(memberId, poolId)){
-                 dataBaseHelper.enrollMember(poolTransactions);
+                    alertUser();
              }
 
             }
@@ -119,7 +121,7 @@ public class FragmentJoinPoolDetails extends Fragment {
     private void loadJoinPoolFragment() {
         FragmentJoinPools fragmentJoinPools = new FragmentJoinPools();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_member_home, fragmentJoinPools);
+        fragmentTransaction.replace(R.id.fl_pool_creation_join, fragmentJoinPools);
         fragmentTransaction.commit();
     }
 
@@ -135,5 +137,24 @@ public class FragmentJoinPoolDetails extends Fragment {
             Toast.makeText(getContext(), "Sorry The Pool Is already Full ", Toast.LENGTH_SHORT).show();
         }
         return status;
+    }
+
+    private void alertUser(){
+        AlertDialog.Builder alertdialogBuilder = new AlertDialog.Builder(getActivity());
+        alertdialogBuilder.setMessage("Terms and Conditions of the Pool");
+        alertdialogBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dataBaseHelper.enrollMember(poolTransactions);
+            }
+        });
+        alertdialogBuilder.setNegativeButton("Don't Accept", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog alertDialog = alertdialogBuilder.create();
+        alertDialog.show();
     }
 }
