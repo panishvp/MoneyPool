@@ -38,7 +38,11 @@ public class FragmentPickWinner extends Fragment {
         mButtonPickWinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            pickWinner();
+            if (memberOperations.isValidPickWinner(poolDetails)){
+                pickWinner();
+            }
+            else
+                Toast.makeText(getContext(), "Cannot Choose winner",Toast.LENGTH_SHORT).show();
             }
         });
         return mView;

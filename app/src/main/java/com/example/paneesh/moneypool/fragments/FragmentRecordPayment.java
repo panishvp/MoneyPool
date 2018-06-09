@@ -1,5 +1,8 @@
 package com.example.paneesh.moneypool.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,9 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
+import com.example.paneesh.moneypool.activities.LandingPage;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
 
@@ -27,6 +32,8 @@ public class FragmentRecordPayment extends Fragment {
     private Bundle mBundle;
     private Button mButtonSavePayment;
     private PoolDetails poolDetails;
+    private AlertDialog.Builder alertdialogBuilder;
+    private AlertDialog alertDialog;
 
     @Nullable
     @Override
@@ -36,7 +43,12 @@ public class FragmentRecordPayment extends Fragment {
         mButtonSavePayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                memberOperations.makePaymentForMember(poolDetails, Integer.parseInt(mSpinner.getSelectedItem().toString()));
+                int payed = 0;
+                payed  =  memberOperations.makePaymentForMember(poolDetails, Integer.parseInt(mSpinner.getSelectedItem().toString()));
+
+               if (payed > 0){
+                   paymentSuccess();
+               }
             }
         });
         return mView;
@@ -58,6 +70,19 @@ public class FragmentRecordPayment extends Fragment {
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(getContext(),android.R.layout.simple_spinner_item, memberIdList );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         mSpinner.setAdapter(adapter);
+    }
+
+    private void paymentSuccess() {
+        alertdialogBuilder = new AlertDialog.Builder(getActivity());
+        alertdialogBuilder.setMessage("Payment Recorded Successfully ");
+        alertdialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+               setSpinner();
+            }
+        });
+        alertDialog = alertdialogBuilder.create();
+        alertDialog.show();
     }
 
 

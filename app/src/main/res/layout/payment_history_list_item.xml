@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_payment_adapter"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow android:weightSum="1.6">
+
+            <TextView
+                android:id="@+id/tv_payment_member_id"
+                style="@style/font15Blue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:background="@drawable/edittext_background"
+                android:gravity="center_horizontal"
+                android:text="@string/pool_name" />
+
+            <TextView
+                android:id="@+id/tv_payment_current_counter"
+                style="@style/font15Blue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:background="@drawable/edittext_background"
+                android:gravity="center_horizontal"
+                android:text="@string/pool_name" />
+
+            <TextView
+                android:id="@+id/tv_payment_amount"
+                style="@style/font15Blue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:background="@drawable/edittext_background"
+                android:gravity="center_horizontal"
+                android:text="@string/member_id" />
+
+
+            <TextView
+                android:id="@+id/tv_payment_date"
+                style="@style/font15Blue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:background="@drawable/edittext_background"
+                android:gravity="center_horizontal"
+                android:text="@string/pool_name" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

@@ -63,6 +63,7 @@ public class MyPoolListAdapter extends RecyclerView.Adapter<MyPoolListAdapter.My
             super(itemView);
             this.mTextViewPoolName = mTextViewPoolName;
             this.mTextViewPoolId = mTextViewPoolId;
+
             mTextViewPoolName = itemView.findViewById(R.id.tv_admin_pool_name);
             mTextViewPoolId = itemView.findViewById(R.id.tv_admin_pool_id);
             linearLayout = itemView.findViewById(R.id.ll_my_pool_list);

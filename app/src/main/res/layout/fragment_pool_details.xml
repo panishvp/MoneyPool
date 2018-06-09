@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -328,6 +332,69 @@
 
     </TableLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        android:id="@+id/ll_admin_pool_transactions">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow android:weightSum="1.6">
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/edittext_background"
+                    android:gravity="center_horizontal"
+                    android:text="@string/member_id" />
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/edittext_background"
+                    android:gravity="center_horizontal"
+                    android:text="@string/payment_current_counter" />
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/edittext_background"
+                    android:gravity="center_horizontal"
+                    android:text="@string/pool_payment_amount" />
+
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/edittext_background"
+                    android:gravity="center_horizontal"
+                    android:text="@string/payment_date" />
+
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_payment_history"/>
+
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -362,3 +429,5 @@
         android:layout_marginTop="10dp"
         android:visibility="gone"/>
 </LinearLayout>
+
+</ScrollView>

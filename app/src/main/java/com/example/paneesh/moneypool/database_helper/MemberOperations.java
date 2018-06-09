@@ -14,8 +14,6 @@ import com.example.paneesh.moneypool.model.PoolTransactions;
 import com.example.paneesh.moneypool.model.WinnerPicker;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +24,7 @@ public class MemberOperations extends SQLiteOpenHelper {
     private static MemberOperations memberOperationsInstance = null;
     private SQLiteDatabase db;
     private Cursor cursor;
+    private DateCalculationsUtil dateCalculationsUtil = new DateCalculationsUtil();
 
 
     public static MemberOperations getInstance(Context context){
@@ -172,9 +171,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         contentValues.put(Utils.poolCurrentCounter, poolDetails.getPoolCurrentCounter());
         contentValues.put(Utils.poolIndividualShare, poolDetails.getPoolIndividualShare());
         contentValues.put(Utils.pdPoolMonthlyTakeAway, poolDetails.getPoolMonthlyTakeAway());
-        Date date = poolDetails.getPoolStartDate();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Utils.datePattern);
-        String dateString = simpleDateFormat.format(date);
+        String dateString = dateToString(poolDetails.getPoolStartDate());
         contentValues.put(Utils.poolStartDate, dateString);
         contentValues.put(Utils.poolEndDate, dateString);
         contentValues.put(Utils.poolMeetUp, poolDetails.getPoolMeetUpDate());
@@ -197,8 +194,8 @@ public class MemberOperations extends SQLiteOpenHelper {
             pool.setPoolCurrentCounter(cursor.getInt(5));
             pool.setPoolIndividualShare(cursor.getDouble(6));
             pool.setPoolMonthlyTakeAway(cursor.getDouble(7));
-            pool.setPoolStartDate(DateCalculationsUtil.stringToSQLDate(cursor.getString(8)));
-            pool.setPoolEndDate(DateCalculationsUtil.stringToSQLDate(cursor.getString(9)));
+            pool.setPoolStartDate(dateCalculationsUtil.stringToSQLDate(cursor.getString(8)));
+            pool.setPoolEndDate(dateCalculationsUtil.stringToSQLDate(cursor.getString(9)));
             pool.setPoolMeetUpDate(cursor.getInt(10));
             pool.setPoolDepositDate(cursor.getInt(11));
             pool.setPoolLateFeeCharge(cursor.getInt(12));
@@ -424,8 +421,8 @@ public class MemberOperations extends SQLiteOpenHelper {
                 pool.setPoolCurrentCounter(cursor.getInt(5));
                 pool.setPoolIndividualShare(cursor.getDouble(6));
                 pool.setPoolMonthlyTakeAway(cursor.getDouble(7));
-                pool.setPoolStartDate(DateCalculationsUtil.stringToSQLDate(cursor.getString(8)));
-                pool.setPoolEndDate(DateCalculationsUtil.stringToSQLDate(cursor.getString(9)));
+                pool.setPoolStartDate(dateCalculationsUtil.stringToSQLDate(cursor.getString(8)));
+                pool.setPoolEndDate(dateCalculationsUtil.stringToSQLDate(cursor.getString(9)));
                 pool.setPoolMeetUpDate(cursor.getInt(10));
                 pool.setPoolDepositDate(cursor.getInt(11));
                 pool.setPoolLateFeeCharge(cursor.getInt(12));
@@ -459,7 +456,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         int numberOfTransactions = getNumberOfTransaction(poolID);
         int strength = getStrenghtOfPool(poolID);
 
-        if (numberOfTransactions < (strength * strength)) valid = true;
+        if (numberOfTransactions <= (strength * strength)) valid = true;
         else valid = false;
         return valid;
     }
@@ -520,15 +517,15 @@ public class MemberOperations extends SQLiteOpenHelper {
         return payerCount;
     }
 
-    private static boolean isDelay(PoolDetails activePool) {
+    public  boolean isDelay(PoolDetails activePool) {
 
         int depositDay = activePool.getPoolDepositDate();
         int currentCounter = activePool.getPoolCurrentCounter();
         Date startDate = activePool.getPoolStartDate();
 
-        java.util.Date monthStartDate = DateCalculationsUtil.addMonth(startDate, currentCounter);
+        java.util.Date monthStartDate = dateCalculationsUtil.addMonth(startDate, currentCounter);
 
-        java.util.Date depositDate = DateCalculationsUtil.addDay(monthStartDate, depositDay);
+        java.util.Date depositDate = dateCalculationsUtil.addDay(monthStartDate, depositDay);
 
         java.util.Date currentDate = new java.util.Date();
 
@@ -537,7 +534,9 @@ public class MemberOperations extends SQLiteOpenHelper {
 
     }
 
-    private void updateDelayPayments(PoolDetails activePool, int memberID) {
+
+
+    public void updateDelayPayments(PoolDetails activePool, int memberID) {
         java.util.Date tempDate = new java.util.Date();
         Date currentDate = new Date(tempDate.getTime());
 
@@ -557,7 +556,7 @@ public class MemberOperations extends SQLiteOpenHelper {
 
     }
 
-    private int updateCurrentCounter(PoolDetails activePool) {
+    public int updateCurrentCounter(PoolDetails activePool) {
         int oldCounter = activePool.getPoolCurrentCounter();
         int newCounter;
 
@@ -566,6 +565,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         } else {
             newCounter = ++oldCounter;
         }
+        activePool.setPoolCurrentCounter(newCounter);
         setCounterInPooldetails(activePool);
         return newCounter;
     }
@@ -584,7 +584,8 @@ public class MemberOperations extends SQLiteOpenHelper {
 
         long millis = System.currentTimeMillis();
         java.sql.Date currentDate = new java.sql.Date(millis);
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Utils.datePattern);
+        String dateString = simpleDateFormat.format(currentDate);
         double individualContri = activePool.getPoolIndividualShare();
 
         db = this.getWritableDatabase();
@@ -592,8 +593,8 @@ public class MemberOperations extends SQLiteOpenHelper {
         contentValues.put(Utils.poolId, activePool.getPoolId());
         contentValues.put(Utils.memberId, memeberID);
         contentValues.put(Utils.poolCurrentCounter, activePool.getPoolCurrentCounter());
-        contentValues.put(Utils.poolIndividualShare, activePool.getPoolIndividualShare());
-        contentValues.put(Utils.memberPayementDate, String.valueOf(currentDate));
+        contentValues.put(Utils.pool_individual_monthly_share, activePool.getPoolIndividualShare());
+        contentValues.put(Utils.memberPayementDate, dateString);
 
         db.insert(Utils.poolTransactions, null, contentValues);
 
@@ -606,14 +607,11 @@ public class MemberOperations extends SQLiteOpenHelper {
         int currentMaxCounter = activePool.getPoolCurrentCounter();
         int payersCount = groupPaymentDoneCount(activePool.getPoolId(), currentMaxCounter);
 
-        System.out.println("[DEBUG](makePaymentForMember)Strenght : " + strenght);
-        System.out.println("[DEBUG](makePaymentForMember)Current Counter : " + currentMaxCounter);
-        System.out.println("[DEBUG](makePaymentForMember)Payer Count :" + payersCount);
-
-        if (isDelay(activePool))
+        //TODO replace isDelay(activePool)
+        if (false){
             updateDelayPayments(activePool, MemeberID);
-        else {
-            if ((currentMaxCounter + 1) <= strenght) {
+        } else {
+            if ((currentMaxCounter <= strenght) & (isValidPoolAdd(activePool.getPoolId())) ) {
                 if ((payersCount == strenght)) {
 
                     currentMaxCounter = updateCurrentCounter(activePool);
@@ -634,8 +632,8 @@ public class MemberOperations extends SQLiteOpenHelper {
         db = getWritableDatabase();
           cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
                 + Utils.poolId + " = " + poolID + " and " + Utils.poolCurrentCounter + "!=-1 and " + Utils.poolWinnerFlag + " = 1 ", null);
-
-        numberOfWinners = cursor.getInt(1);
+        cursor.moveToFirst();
+        numberOfWinners = cursor.getInt(0);
         return numberOfWinners;
     }
 
@@ -647,9 +645,9 @@ public class MemberOperations extends SQLiteOpenHelper {
         //"select count(*) from pooltransactions where PoolID = ? and CurrentCounter =? and PickerFlag = 1");
         db = getWritableDatabase();
           cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
-                + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + "=" + activePool.getPoolCurrentCounter() + Utils.poolWinnerFlag + " = 1 ", null);
-
-        int checkIfWinner = cursor.getInt(1);
+                + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + "=" + activePool.getPoolCurrentCounter() +" and "+ Utils.poolWinnerFlag + " = 1 ", null);
+        cursor.moveToFirst();
+        int checkIfWinner = cursor.getInt(0);
 
         if ((numberOfWinners < activePool.getPoolStrength()) & (checkIfWinner == 0)) valid = true;
         else valid = false;
@@ -677,7 +675,6 @@ public class MemberOperations extends SQLiteOpenHelper {
 
         ArrayList<Integer> allPoolMembers = new ArrayList<>();
 
-        //select MemberID from pooltransactions where PoolID = ? AND CurrentCounter = ?");
         db = getWritableDatabase();
           cursor = db.rawQuery(" select " + Utils.memberId + " from " + Utils.poolTransactions + " where "
                 + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter()+" and "+ Utils.memberPayementDate + " is not null ", null);
@@ -691,11 +688,14 @@ public class MemberOperations extends SQLiteOpenHelper {
 
     public ArrayList<Integer> getPoolMembersRemainingToPay(PoolDetails activePool) {
         ArrayList<Integer> allPoolMembers = getPoolMembers(activePool);
+        ArrayList<Integer> tempAllMembers = getPoolMembers(activePool);
         ArrayList<Integer> poolMembersWhoPaid = getPoolMembersWhoPaid(activePool);
 
         allPoolMembers.removeAll(poolMembersWhoPaid);
 
-        return allPoolMembers;
+        if (allPoolMembers.isEmpty()) return tempAllMembers;
+        else return allPoolMembers;
+
     }
 
     private void fillUpBlankTransaction(PoolDetails activePool) {
@@ -711,7 +711,7 @@ public class MemberOperations extends SQLiteOpenHelper {
             contentValues.put(Utils.poolId, activePool.getPoolId());
             contentValues.put(Utils.memberId, membersRemainingToPay.get(i));
             contentValues.put(Utils.poolCurrentCounter, activePool.getPoolCurrentCounter());
-            contentValues.put(Utils.poolIndividualShare, activePool.getPoolIndividualShare());
+            contentValues.put(Utils.pool_individual_monthly_share, activePool.getPoolIndividualShare());
 
             db.insert(Utils.poolTransactions, null, contentValues);
 
@@ -756,8 +756,9 @@ public class MemberOperations extends SQLiteOpenHelper {
 
         db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Utils.datePattern);
         contentValues.put(Utils.ptPoolTakeAwayAmount, activePool.getPoolMonthlyTakeAway());
-        contentValues.put(Utils.poolPickerTakeawayDate, String.valueOf(currentDate));
+        contentValues.put(Utils.poolPickerTakeawayDate, simpleDateFormat.format(currentDate));
         contentValues.put(Utils.poolWinnerFlag, 1);
         db.update(Utils.poolTransactions, contentValues, Utils.poolId + " = " + activePool.getPoolId() + " and "
                 + Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.memberId + " = " + randomElement, null);
@@ -765,7 +766,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
         ContentValues restContentValues = new ContentValues();
         restContentValues.put(Utils.poolWinnerFlag, 0);
-        db.update(Utils.poolTransactions, contentValues, Utils.poolId + " = " + activePool.getPoolId() + " and "
+        db.update(Utils.poolTransactions, restContentValues, Utils.poolId + " = " + activePool.getPoolId() + " and "
                 + Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.poolWinnerFlag + " != 1", null);
 
         return randomElement;
@@ -842,21 +843,16 @@ public class MemberOperations extends SQLiteOpenHelper {
     }
 
 
-    private int getPoolID(PoolDetails newPool){
+    public int getPoolID(PoolDetails newPool){
         int poolID = 0;
-
-           /* select PoolID from pooldetails " +
-                    "where PoolName = ? and Duration = ? and Strength= ? and IndividualShare = ? and MonthlyTakeaway = ? and MeetupDate =? " +
-                    "and DepositDate = ? and LateFeeCharge = ? and StartDate = ? and EndDate = ? and PoolAdminMemberID = ?");
-            */
 
             db = getWritableDatabase();
             cursor = db.rawQuery("select "+ Utils.poolId + "  from " + Utils.poolDetailsTable + " where "
-                    + Utils.poolName + "=" + newPool.getPoolName() + " and  " + Utils.poolDuration + " = " + newPool.getPoolDuration()
-                    + Utils.poolStrength + "=" + newPool.getPoolStrength() + " and  " + Utils.poolIndividualShare + " = " + newPool.getPoolIndividualShare()
-                    + Utils.pdPoolMonthlyTakeAway + "=" + newPool.getPoolMonthlyTakeAway() + " and  " + Utils.poolMeetUp + " = " + newPool.getPoolMeetUpDate()
-                    + Utils.poolDepositDate + "=" + newPool.getPoolDepositDate() + " and  " + Utils.poolLateFees + " = " + newPool.getPoolLateFeeCharge()
-                    + Utils.poolStartDate + "=" + newPool.getPoolStartDate() + " and  " + Utils.poolEndDate + " = " + newPool.getPoolEndDate()
+                    + Utils.poolName + "=" + newPool.getPoolName() + " and  " + Utils.poolDuration + " = " + newPool.getPoolDuration()+ " and  "
+                    + Utils.poolStrength + "=" + newPool.getPoolStrength() + " and  " + Utils.poolIndividualShare + " = " + newPool.getPoolIndividualShare()+ " and  "
+                    + Utils.pdPoolMonthlyTakeAway + "=" + newPool.getPoolMonthlyTakeAway() + " and  " + Utils.poolMeetUp + " = " + newPool.getPoolMeetUpDate()+ " and  "
+                    + Utils.poolDepositDate + "=" + newPool.getPoolDepositDate() + " and  " + Utils.poolLateFees + " = " + newPool.getPoolLateFeeCharge()+ " and  "
+                    + Utils.poolStartDate + "=" + newPool.getPoolStartDate() + " and  " + Utils.poolEndDate + " = " + newPool.getPoolEndDate()+ " and  "
                     + Utils.poolAdminId + "=" + newPool.getPoolAdminId(), null);
 
             poolID = cursor.getInt(1);
@@ -865,25 +861,23 @@ public class MemberOperations extends SQLiteOpenHelper {
         return poolID;
     }
 
-    private List<PoolTransactions> getPoolTransactions(int poolID){
+    public ArrayList<PoolTransactions> getPoolTransactions(int poolID){
 
         ArrayList<PoolTransactions> allPoolMembersTransactions = new ArrayList<>();
 
         db = getWritableDatabase();
-        cursor = db.rawQuery(" select " + Utils.poolId + ","+ Utils.memberId + "," + Utils.poolCurrentCounter  + "," +Utils.ptIndividualShare  + ","
+        cursor = db.rawQuery(" select " + Utils.memberId + "," + Utils.poolCurrentCounter  + "," +Utils.pool_individual_monthly_share + ","
                 + Utils.memberPayementDate  + " from " + Utils.poolTransactions + " where "
-                + Utils.poolId + " = " + poolID + " and " + Utils.poolCurrentCounter + " != -1 and " , null);
+                + Utils.poolId + " = " + poolID + " and " + Utils.poolCurrentCounter + " != -1 " , null);
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
-                    // Set agents information in model.
                     PoolTransactions rtPool = new PoolTransactions();
-                    rtPool.setPoolId(cursor.getInt(0));
-                    rtPool.setPoolMemberId(cursor.getInt(1));
-                    rtPool.setPoolCurrentCounter(cursor.getInt(2));
-                    rtPool.setPoolIndividualShare(cursor.getDouble(3));
-                    rtPool.setPoolPaymentDate(DateCalculationsUtil.stringToSQLDate(cursor.getString(4)));
+                    rtPool.setPoolMemberId(cursor.getInt(0));
+                    rtPool.setPoolCurrentCounter(cursor.getInt(1));
+                    rtPool.setPoolIndividualShare(cursor.getDouble(2));
+                    rtPool.setPoolPaymentDate(dateCalculationsUtil.stringToSQLDate(cursor.getString(3)));
 
                     allPoolMembersTransactions.add(rtPool);
                 } while (cursor.moveToNext());
@@ -912,7 +906,7 @@ public class MemberOperations extends SQLiteOpenHelper {
                     rtPool.setIteration(cursor.getInt(0));
                     rtPool.setWinnerMemberID(cursor.getInt(1));
                     rtPool.setPickerMemberID(cursor.getInt(2));
-                    rtPool.setTakeawayDate(DateCalculationsUtil.stringToSQLDate(cursor.getString(3)));
+                    rtPool.setTakeawayDate(dateCalculationsUtil.stringToSQLDate(cursor.getString(3)));
                     rtPool.setWinnerTakeawayAmt(cursor.getInt(4));
                     rtPool.setPickerTakeawatAmt(cursor.getInt(5));
 
@@ -925,6 +919,11 @@ public class MemberOperations extends SQLiteOpenHelper {
     }
 
 
+    private String dateToString(java.util.Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Utils.datePattern);
+        String dateString = simpleDateFormat.format(date);
+        return dateString;
+    }
 }//end
 
 

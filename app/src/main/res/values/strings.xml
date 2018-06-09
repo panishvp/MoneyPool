@@ -47,7 +47,8 @@
     <string name="pool_id">Pool Id</string>
     <string name="pool_duration">Pool Duration</string>
     <string name="pool_strength">Pool Strength</string>
-    <string name="pool_current_counter">Pool Current COunter</string>
+    <string name="pool_current_counter">Pool Current Counter</string>
+    <string name="payment_current_counter">Counter</string>
     <string name="pool_individualShare">Pool Individual Share</string>
     <string name="pool_start_date">Pool Start Date</string>
     <string name="pool_end_date">Pool End Date</string>
@@ -56,6 +57,9 @@
     <string name="pool_late_fee">Late Fee</string>
     <string name="pool_months">In months</string>
     <string name="pool_monthly_takeaway">Monthly TakeAway</string>
+    <string name="pool_payment_amount">Payment</string>
+    <string name="member_id">Member Id</string>
+    <string name="payment_date">Date</string>
 
     <string name="date_format">dd-mm-yyyy</string>
     <string name="only_date">date only(dd)</string>

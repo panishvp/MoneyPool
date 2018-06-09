@@ -23,6 +23,8 @@ import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
 import com.example.paneesh.moneypool.model.PoolTransactions;
 
+import java.text.SimpleDateFormat;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class FragmentJoinPoolDetails extends Fragment {
@@ -113,8 +115,9 @@ public class FragmentJoinPoolDetails extends Fragment {
         mTextViewPoolCurrentCount.setText(String.valueOf(poolDetails.getPoolCurrentCounter()));
         mTextViewPoolIndividualShare.setText(String.valueOf(poolDetails.getPoolIndividualShare()));
         mTextViewPoolMonthlyTakeAway.setText(String.valueOf(poolDetails.getPoolMonthlyTakeAway()));
-        mTextViewPoolStartDate.setText(String.valueOf(poolDetails.getPoolStartDate()));
-        mTextViewPoolEndDate.setText(String.valueOf(poolDetails.getPoolEndDate()));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Utils.datePattern);
+        mTextViewPoolStartDate.setText(simpleDateFormat.format(poolDetails.getPoolStartDate()));
+        mTextViewPoolEndDate.setText(simpleDateFormat.format(poolDetails.getPoolEndDate()));
         mTextViewPoolMeetUpDate.setText(poolDetails.getPoolMeetUpDate()+" of Every Month");
         mTextViewPoolDepositDate.setText(poolDetails.getPoolDepositDate()+" of Every Month");
         mTextViewPoolLateFee.setText(poolDetails.getPoolLateFeeCharge()+"%");

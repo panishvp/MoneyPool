@@ -7,18 +7,21 @@ import java.util.Date;
 
 public class DateCalculationsUtil {
 
-    public static Date stringToDateParse (String ipDate){
-        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+   private SimpleDateFormat format = new SimpleDateFormat(Utils.datePattern);
+
+    public Date stringToDateParse (String ipDate){
+
         Calendar IPdate = Calendar.getInstance();
         try {
             IPdate.setTime(format.parse(ipDate));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        Date ddd = IPdate.getTime();
         return IPdate.getTime();
     }
 
-    public static Date addMonth(Date date, int i) {
+    public  Date addMonth(Date date, int i) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.MONTH, i);
@@ -26,15 +29,16 @@ public class DateCalculationsUtil {
 
     }
 
-    public static Date addDay(Date date, int i) {
+    public  Date addDay(Date date, int i) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.DAY_OF_YEAR, i);
         return cal.getTime();
     }
 
-    public static java.sql.Date stringToSQLDate (String ipDate){
-        java.util.Date startDate = DateCalculationsUtil.stringToDateParse(ipDate);
+    public java.sql.Date stringToSQLDate (String ipDate){
+
+        java.util.Date startDate = stringToDateParse(ipDate);
         java.sql.Date startDateSql = new java.sql.Date(startDate.getTime());
         return startDateSql;
     }

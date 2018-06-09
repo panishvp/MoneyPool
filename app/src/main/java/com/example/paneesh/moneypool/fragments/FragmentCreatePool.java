@@ -24,11 +24,9 @@ import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.activities.LandingPage;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
-import com.example.paneesh.moneypool.model.Member;
 import com.example.paneesh.moneypool.model.PoolDetails;
 import com.example.paneesh.moneypool.model.PoolTransactions;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -60,6 +58,7 @@ public class FragmentCreatePool extends Fragment {
     private PoolTransactions poolTransactions;
     private AlertDialog.Builder alertdialogBuilder;
     private AlertDialog alertDialog;
+    private DateCalculationsUtil dateCalculationsUtil;
 
 
     @Nullable
@@ -98,7 +97,7 @@ public class FragmentCreatePool extends Fragment {
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-               startdateSelected = dayOfMonth +"-"+ month +"-"+ year;
+                startdateSelected = dayOfMonth + "-" + month + "-" + year;
                 mPoolStartDate.setText(startdateSelected);
             }
         });
@@ -114,10 +113,9 @@ public class FragmentCreatePool extends Fragment {
         mRegisterPool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            askUserToEnroll();
+                askUserToEnroll();
             }
         });
-
 
 
         return mView;
@@ -140,27 +138,28 @@ public class FragmentCreatePool extends Fragment {
         mCalendarView = mView.findViewById(R.id.cal_pool_start_date);
         initCalenderView();
         mPoolStartDate.setText(getDate());
+        dateCalculationsUtil = new DateCalculationsUtil();
     }
 
 
     private String getDate() {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            String selectedDate = sdf.format(new Date(mCalendarView.getDate()));
-            return selectedDate;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String selectedDate = sdf.format(new Date(mCalendarView.getDate()));
+        return selectedDate;
     }
 
     @NonNull
     private String calculateEndDate(String date) {
-        Date startDate = DateCalculationsUtil.stringToDateParse(date);
+        Date startDate = dateCalculationsUtil.stringToDateParse(date);
         startDateSql = new java.sql.Date(startDate.getTime());
         String duration = mPoolDuration.getText().toString();
 
         Date endDate = null;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Utils.datePattern);
-        endDate = DateCalculationsUtil.addMonth(startDate, Integer.parseInt(duration));
-         endDateSql = new java.sql.Date(endDate.getTime());
+        endDate = dateCalculationsUtil.addMonth(startDate, Integer.parseInt(duration));
+        endDateSql = new java.sql.Date(endDate.getTime());
 
-        return endDateSql.toString();
+        return simpleDateFormat.format(endDateSql);
     }
 
     private boolean validateFields() {
@@ -181,7 +180,7 @@ public class FragmentCreatePool extends Fragment {
     private void createPoolinDb() {
         mPoolDetails = new PoolDetails();
         mPoolDetails.setPoolAdminId(mSharedPreferences.getInt(Utils.memberId, 0));
-        mPoolDetails.setPoolName( mPoolName.getText().toString());
+        mPoolDetails.setPoolName(mPoolName.getText().toString());
         mPoolDetails.setPoolStrength(Integer.parseInt(mPoolStrength.getText().toString()));
         mPoolDetails.setPoolCurrentCounter(-1);
         mPoolDetails.setPoolDuration(Integer.parseInt(mPoolDuration.getText().toString()));
@@ -197,27 +196,27 @@ public class FragmentCreatePool extends Fragment {
         Toast.makeText(getContext(), "DataInserted", Toast.LENGTH_SHORT).show();
     }
 
-    private void askUserToEnroll(){
+    private void askUserToEnroll() {
         AlertDialog.Builder alertdialogBuilder = new AlertDialog.Builder(getActivity());
         alertdialogBuilder.setMessage("Do you want to enroll in this Pool as a Member");
         alertdialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-              createPoolinDb();
-              enrollAdmin(mSharedPreferences.getInt(Utils.memberId, 0), databaseHelper.getPoolID(mPoolDetails));
+                createPoolinDb();
+                enrollAdmin(mSharedPreferences.getInt(Utils.memberId, 0), databaseHelper.getPoolID(mPoolDetails));
             }
         });
         alertdialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-            createPoolinDb();
+                createPoolinDb();
             }
         });
         AlertDialog alertDialog = alertdialogBuilder.create();
         alertDialog.show();
     }
 
-    private void initCalenderView(){
+    private void initCalenderView() {
         Calendar currentCalendar = Calendar.getInstance(Locale.getDefault());
         mCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
         mCalendarView.setFirstDayOfWeek(2);
@@ -225,22 +224,22 @@ public class FragmentCreatePool extends Fragment {
         mCalendarView.getDate();
     }
 
-    private boolean validateMemberAndPool(int memberId, int poolid){
+    private boolean validateMemberAndPool(int memberId, int poolid) {
         boolean status = false;
-        if (databaseHelper.isValidPoolJoin(poolid)){
-            if (!databaseHelper.isMemberInThepool(memberId, poolid)){
+        if (databaseHelper.isValidPoolJoin(poolid)) {
+            if (!databaseHelper.isMemberInThepool(memberId, poolid)) {
                 status = true;
-            }else {
+            } else {
                 Toast.makeText(getContext(), "You have already enrolled in this Pool ", Toast.LENGTH_SHORT).show();
             }
-        }else {
+        } else {
             Toast.makeText(getContext(), "Sorry The Pool Is already Full ", Toast.LENGTH_SHORT).show();
         }
         return status;
     }
 
-    private void enrollAdmin(int memberId, int poolId){
-        if (validateMemberAndPool(memberId, poolId)){
+    private void enrollAdmin(int memberId, int poolId) {
+        if (validateMemberAndPool(memberId, poolId)) {
             poolTransactions = new PoolTransactions();
             poolTransactions.setPoolId(poolId);
             poolTransactions.setPoolMemberId(memberId);
@@ -248,14 +247,14 @@ public class FragmentCreatePool extends Fragment {
         }
     }
 
-    private void alertUser(){
+    private void alertUser() {
         alertdialogBuilder = new AlertDialog.Builder(getActivity());
         alertdialogBuilder.setMessage("Terms and Conditions of the Pool");
         alertdialogBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 databaseHelper.enrollMember(poolTransactions);
-               enrollmentSuccess();
+                enrollmentSuccess();
             }
         });
         alertdialogBuilder.setNegativeButton("Don't Accept", new DialogInterface.OnClickListener() {
@@ -268,7 +267,7 @@ public class FragmentCreatePool extends Fragment {
         alertDialog.show();
     }
 
-    private void enrollmentSuccess(){
+    private void enrollmentSuccess() {
         alertdialogBuilder = new AlertDialog.Builder(getActivity());
         alertdialogBuilder.setMessage("Congragulations! \n You are Successfully Enrolled");
         alertdialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
