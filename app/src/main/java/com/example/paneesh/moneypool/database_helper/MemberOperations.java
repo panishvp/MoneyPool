@@ -444,9 +444,10 @@ public class MemberOperations extends SQLiteOpenHelper {
         int numberOfTransactions = 0;
 
         db = getWritableDatabase();
-          cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where " + Utils.poolId + " = " + poolID + " and " + Utils.poolCurrentCounter + "!=1 and" + Utils.memberPayementDate + "is not null", null);
+          cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where " + Utils.poolId + " = " + poolID + " and " + Utils.poolCurrentCounter + "!=1 and " + Utils.memberPayementDate + " is not null", null);
 
-        numberOfTransactions = cursor.getInt(1);
+        cursor.moveToFirst();
+        numberOfTransactions = cursor.getInt(0);
         return numberOfTransactions;
     }
 
@@ -456,7 +457,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         int numberOfTransactions = getNumberOfTransaction(poolID);
         int strength = getStrenghtOfPool(poolID);
 
-        if (numberOfTransactions <= (strength * strength)) valid = true;
+        if ((numberOfTransactions+1) <= (strength * strength)) valid = true;
         else valid = false;
         return valid;
     }
@@ -606,10 +607,12 @@ public class MemberOperations extends SQLiteOpenHelper {
         int strenght = getStrenghtOfPool(activePool.getPoolId());
         int currentMaxCounter = activePool.getPoolCurrentCounter();
         int payersCount = groupPaymentDoneCount(activePool.getPoolId(), currentMaxCounter);
+        int paymentSuccess = 0;
 
         //TODO replace isDelay(activePool)
         if (false){
             updateDelayPayments(activePool, MemeberID);
+            paymentSuccess = 1;
         } else {
             if ((currentMaxCounter <= strenght) & (isValidPoolAdd(activePool.getPoolId())) ) {
                 if ((payersCount == strenght)) {
@@ -620,10 +623,14 @@ public class MemberOperations extends SQLiteOpenHelper {
                 }
                 insertNewBlankTransaction(activePool, MemeberID);
                 System.out.println("[DEBUG](makePaymentForMember)Transaction added");
+                paymentSuccess = 2;
+            }else {
+                System.out.println("[DEBUG](makePaymentForMember)Pool is Complete");
+                paymentSuccess = 3;
             }
-            System.out.println("[DEBUG](makePaymentForMember)Pool is Complete");
+
         }
-        return currentMaxCounter;
+        return paymentSuccess;
     }
 
     private int getNumberOfWinners(int poolID) {
@@ -848,7 +855,7 @@ public class MemberOperations extends SQLiteOpenHelper {
 
             db = getWritableDatabase();
             cursor = db.rawQuery("select "+ Utils.poolId + "  from " + Utils.poolDetailsTable + " where "
-                    + Utils.poolName + "=" + newPool.getPoolName() + " and  " + Utils.poolDuration + " = " + newPool.getPoolDuration()+ " and  "
+                    + Utils.poolName + "='" + newPool.getPoolName() + "' and  " + Utils.poolDuration + " = " + newPool.getPoolDuration()+ " and  "
                     + Utils.poolStrength + "=" + newPool.getPoolStrength() + " and  " + Utils.poolIndividualShare + " = " + newPool.getPoolIndividualShare()+ " and  "
                     + Utils.pdPoolMonthlyTakeAway + "=" + newPool.getPoolMonthlyTakeAway() + " and  " + Utils.poolMeetUp + " = " + newPool.getPoolMeetUpDate()+ " and  "
                     + Utils.poolDepositDate + "=" + newPool.getPoolDepositDate() + " and  " + Utils.poolLateFees + " = " + newPool.getPoolLateFeeCharge()+ " and  "

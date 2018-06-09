@@ -7,13 +7,13 @@ import java.util.Date;
 
 public class DateCalculationsUtil {
 
-   private SimpleDateFormat format = new SimpleDateFormat(Utils.datePattern);
+   private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Utils.datePattern);
 
     public Date stringToDateParse (String ipDate){
 
         Calendar IPdate = Calendar.getInstance();
         try {
-            IPdate.setTime(format.parse(ipDate));
+            IPdate.setTime(simpleDateFormat.parse(ipDate));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -38,8 +38,18 @@ public class DateCalculationsUtil {
 
     public java.sql.Date stringToSQLDate (String ipDate){
 
-        java.util.Date startDate = stringToDateParse(ipDate);
-        java.sql.Date startDateSql = new java.sql.Date(startDate.getTime());
+        Date startDate = null;
+        java.sql.Date startDateSql = null;
+        if (ipDate != null){
+            try {
+                startDate = simpleDateFormat.parse(ipDate);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            startDateSql = new java.sql.Date(startDate.getTime());
+        }
+
         return startDateSql;
     }
 

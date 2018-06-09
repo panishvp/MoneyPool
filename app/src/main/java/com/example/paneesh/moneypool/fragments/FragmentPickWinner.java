@@ -28,13 +28,12 @@ public class FragmentPickWinner extends Fragment {
     private Bundle mBundle;
     private PoolDetails poolDetails;
     private MemberOperations memberOperations;
-    private  ArrayList<Integer> membersList;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_pick_winner, container, false);
         initUI();
-        getPoolMembers();
         mButtonPickWinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,10 +52,6 @@ public class FragmentPickWinner extends Fragment {
         mBundle = getArguments();
         poolDetails = (PoolDetails) mBundle.getSerializable(Utils.poolDetailsTable);
         memberOperations = MemberOperations.getInstance(getContext());
-    }
-
-    private void getPoolMembers(){
-        membersList = memberOperations.printPoolMemberRemainingToWin(poolDetails);
     }
 
     private void pickWinner(){

@@ -43,12 +43,9 @@ public class FragmentRecordPayment extends Fragment {
         mButtonSavePayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int payed = 0;
-                payed  =  memberOperations.makePaymentForMember(poolDetails, Integer.parseInt(mSpinner.getSelectedItem().toString()));
-
-               if (payed > 0){
-                   paymentSuccess();
-               }
+                int code = 0;
+                code  =  memberOperations.makePaymentForMember(poolDetails, Integer.parseInt(mSpinner.getSelectedItem().toString()));
+                displayMessage(code);
             }
         });
         return mView;
@@ -72,9 +69,22 @@ public class FragmentRecordPayment extends Fragment {
         mSpinner.setAdapter(adapter);
     }
 
-    private void paymentSuccess() {
+    private void displayMessage(int code){
+        switch (code){
+            case 1: paymentSuccess("Transaction Updated ");
+            break;
+            case  2: paymentSuccess("Transaction added");
+            break;
+            case 3: paymentSuccess("Pool is Completed");
+            break;
+            default: paymentSuccess("Gaand marao");
+            break;
+        }
+    }
+
+    private void paymentSuccess(String message) {
         alertdialogBuilder = new AlertDialog.Builder(getActivity());
-        alertdialogBuilder.setMessage("Payment Recorded Successfully ");
+        alertdialogBuilder.setMessage(message);
         alertdialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

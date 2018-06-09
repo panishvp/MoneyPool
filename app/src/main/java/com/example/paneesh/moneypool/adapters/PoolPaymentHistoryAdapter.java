@@ -40,7 +40,12 @@ public class PoolPaymentHistoryAdapter extends RecyclerView.Adapter<PoolPaymentH
         holder.mMemberId.setText(poolTransactionsArrayList.get(position).getPoolMemberId()+"");
         holder.mCurrentCounter.setText(poolTransactionsArrayList.get(position).getPoolCurrentCounter()+" ");
         holder.mAmount.setText(String.valueOf(poolTransactionsArrayList.get(position).getPoolIndividualShare()));
-        holder.mPaymentDate.setText(simpleDateFormat.format(poolTransactionsArrayList.get(position).getPoolPaymentDate())+"");
+        if (poolTransactionsArrayList.get(position).getPoolPaymentDate() != null){
+            holder.mPaymentDate.setText(simpleDateFormat.format(poolTransactionsArrayList.get(position).getPoolPaymentDate())+"");
+        }else {
+            holder.mPaymentDate.setText("Not Paid");
+        }
+
     }
 
     @Override

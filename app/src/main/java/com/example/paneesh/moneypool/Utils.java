@@ -52,5 +52,5 @@ public class Utils {
     public static String alertUserIsPresent = "The Entered Email is already Registered \n Please Register with a different Email Id";
     public static String alertUserForValidInput = "Please fill the fields with Valid Input";
 
-    public static  String datePattern = "dd-mm-yyyy";
+    public static  String datePattern = "dd-MM-yyyy";
 }
