@@ -931,6 +931,25 @@ public class MemberOperations extends SQLiteOpenHelper {
         String dateString = simpleDateFormat.format(date);
         return dateString;
     }
+
+
+
+    private String getMemberName (int memberID){
+
+        db = getWritableDatabase();
+        cursor = db.rawQuery("select " + Utils.memberFirstName + " from " + Utils.memberTable + " where " + Utils.memberId + " = " + memberID, null);
+
+        cursor.moveToFirst();
+        String memberName = cursor.getString(0);
+
+        return memberName;
+
+
+    }
+
+
+
+
 }//end
 
 
