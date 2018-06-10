@@ -876,10 +876,16 @@ public class MemberOperations extends SQLiteOpenHelper {
                     + Utils.poolStrength + "=" + newPool.getPoolStrength() + " and  " + Utils.poolIndividualShare + " = " + newPool.getPoolIndividualShare()+ " and  "
                     + Utils.pdPoolMonthlyTakeAway + "=" + newPool.getPoolMonthlyTakeAway() + " and  " + Utils.poolMeetUp + " = " + newPool.getPoolMeetUpDate()+ " and  "
                     + Utils.poolDepositDate + "=" + newPool.getPoolDepositDate() + " and  " + Utils.poolLateFees + " = " + newPool.getPoolLateFeeCharge()+ " and  "
-                    + Utils.poolStartDate + "=" + newPool.getPoolStartDate() + " and  " + Utils.poolEndDate + " = " + newPool.getPoolEndDate()+ " and  "
+                    /*+ Utils.poolStartDate + "= " +newPool.getPoolStartDate() + " and  " + Utils.poolEndDate + " = " +newPool.getPoolEndDate()+ "' and  "*/
                     + Utils.poolAdminId + "=" + newPool.getPoolAdminId(), null);
 
-            poolID = cursor.getInt(0);
+                if(cursor != null){
+                    cursor.moveToFirst();
+                    poolID = cursor.getInt(0);
+                }
+
+            
+
 
 
         return poolID;
