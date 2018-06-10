@@ -17,9 +17,11 @@ import android.widget.TextView;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
+import com.example.paneesh.moneypool.adapters.MemberListAdapter;
 import com.example.paneesh.moneypool.adapters.PoolPaymentHistoryAdapter;
 import com.example.paneesh.moneypool.adapters.WinnersListAdapter;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
+import com.example.paneesh.moneypool.model.Member;
 import com.example.paneesh.moneypool.model.PoolDetails;
 import com.example.paneesh.moneypool.model.PoolTransactions;
 import com.example.paneesh.moneypool.model.WinnerPicker;
@@ -58,6 +60,8 @@ public class FragmentAdminPoolDetails extends Fragment {
     private WinnersListAdapter winnersListAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private LinearLayout linearLayout;
+    private RecyclerView recyclerViewMemberListOfPool;
+    private MemberListAdapter memberListAdapter;
 
 
     @Nullable
@@ -86,7 +90,7 @@ public class FragmentAdminPoolDetails extends Fragment {
         });
         setRecyclerView();
         setWinnersList();
-
+        setMemberList();
         return mView;
     }
 
@@ -119,6 +123,9 @@ public class FragmentAdminPoolDetails extends Fragment {
         paymentHistoryRecyclerView = mView.findViewById(R.id.rv_payment_history);
         linearLayout = mView.findViewById(R.id.ll_admin_pool_transactions);
         recyclerViewWinnersList = mView.findViewById(R.id.rv_winners_list);
+        recyclerViewMemberListOfPool = mView.findViewById(R.id.rv_member_list);
+
+
     }
 
 
@@ -173,5 +180,16 @@ public class FragmentAdminPoolDetails extends Fragment {
             recyclerViewWinnersList.setAdapter(winnersListAdapter);
 
         }
+    }
+
+    private void setMemberList(){
+        ArrayList<Member> arrayList = dataBaseHelper.getMemberList(poolDetails);
+        if (arrayList.size() > 0){
+            layoutManager = new LinearLayoutManager(getContext());
+            recyclerViewMemberListOfPool.setLayoutManager(layoutManager);
+            memberListAdapter = new MemberListAdapter(arrayList);
+            recyclerViewMemberListOfPool.setAdapter(memberListAdapter);
+        }
+
     }
 }

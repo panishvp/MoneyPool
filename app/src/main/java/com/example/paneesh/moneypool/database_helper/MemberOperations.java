@@ -966,13 +966,14 @@ public class MemberOperations extends SQLiteOpenHelper {
 
     public ArrayList<Member> getMemberList (PoolDetails activePool){
         ArrayList<Member> memberArrayList = new ArrayList<>();
-
+        
         db = getWritableDatabase();
         cursor = db.rawQuery(" select m." + Utils.memberId + " , m." + Utils.memberFirstName   + " from " + Utils.memberTable + " as m " +
                 " JOIN " + Utils.poolTransactions + " as pt " +
                 " ON pt." + Utils.memberId + " = m." + Utils.memberId +
-                " where "
-                + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + " != -1 " , null);
+                " where pt."
+                + Utils.poolId + " = " + activePool.getPoolId() + " and pt." + Utils.poolCurrentCounter + " = -1 " +
+                " ORDER BY m." + Utils.memberId , null);
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -1072,7 +1073,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         cursor.close();
         return sumTakeaway;
     }
-    
+
 
 
 
