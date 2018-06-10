@@ -964,6 +964,116 @@ public class MemberOperations extends SQLiteOpenHelper {
     }
 
 
+    public ArrayList<Member> getMemberList (PoolDetails activePool){
+        ArrayList<Member> memberArrayList = new ArrayList<>();
+
+        db = getWritableDatabase();
+        cursor = db.rawQuery(" select m." + Utils.memberId + " , m." + Utils.memberFirstName   + " from " + Utils.memberTable + " as m " +
+                " JOIN " + Utils.poolTransactions + " as pt " +
+                " ON pt." + Utils.memberId + " = m." + Utils.memberId +
+                " where "
+                + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + " != -1 " , null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    Member memberList = new Member();
+                    memberList.setMemberID(cursor.getInt(0));
+                    memberList.setMemberFirstName(cursor.getString(1));
+                    memberArrayList.add(memberList);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return memberArrayList;
+
+    }
+
+
+    public ArrayList<PoolTransactions> getAllMemberTransactions(int poolID,int memberID){
+
+        ArrayList<PoolTransactions> allMembersTransactions = new ArrayList<>();
+
+        db = getWritableDatabase();
+        cursor = db.rawQuery(" select " + Utils.poolCurrentCounter  + "," +Utils.pool_individual_monthly_share + ","
+                + Utils.memberPayementDate  + " from " + Utils.poolTransactions + " where "
+                 + Utils.poolCurrentCounter + " != -1 " + " and " + Utils.memberId + " = " + memberID
+                + " group by " + Utils.poolId  + " order by " + Utils.poolCurrentCounter, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    PoolTransactions rtPool = new PoolTransactions();
+
+                    rtPool.setPoolCurrentCounter(cursor.getInt(0));
+                    rtPool.setPoolIndividualShare(cursor.getDouble(1));
+                    rtPool.setPoolPaymentDate(dateCalculationsUtil.stringToSQLDate(cursor.getString(2)));
+
+                    allMembersTransactions.add(rtPool);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return allMembersTransactions;
+
+    }
+
+    public int getTotalPaymemntsForMember (int memberID) {
+
+        int sumMontlyShare = 0;
+
+        db = getWritableDatabase();
+        cursor = db.rawQuery(" select sum("  +Utils.pool_individual_monthly_share + ")"
+                + " from " + Utils.poolTransactions + " where "
+                + Utils.poolCurrentCounter + " != -1 " + " and " + Utils.memberId + " = " + memberID , null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                sumMontlyShare = cursor.getInt(0);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return sumMontlyShare;
+    }
+
+    public int getTotalLateFeeForMember (int memberID) {
+
+        int sumLateFee = 0;
+
+        db = getWritableDatabase();
+        cursor = db.rawQuery(" select sum("  +Utils.poolDelayPaymentAmt + ")"
+                + " from " + Utils.poolTransactions + " where "
+                + Utils.poolCurrentCounter + " != -1 " + " and " + Utils.memberId + " = " + memberID , null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                sumLateFee = cursor.getInt(0);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return sumLateFee;
+    }
+
+
+    public int getTotalTakeawayForMember (int memberID) {
+
+        int sumTakeaway = 0;
+
+        db = getWritableDatabase();
+        cursor = db.rawQuery(" select sum("  +Utils.ptPoolTakeAwayAmount + ")"
+                + " from " + Utils.poolTransactions + " where "
+                + Utils.poolCurrentCounter + " != -1 " + " and " + Utils.memberId + " = " + memberID , null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                sumTakeaway = cursor.getInt(0);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return sumTakeaway;
+    }
+    
+
 
 
     /*--------------------Database manager-----------------------------*/
