@@ -7,7 +7,7 @@
     <string name="button_login">Login</string>
     <string name="registration_success">Registration Successful</string>
     <string name="click_to_login">Click here to Login</string>
-    
+
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="address">Address</string>
@@ -25,12 +25,12 @@
 
     <!--array-->
     <string-array name="tab_headers">
-        <item>Home</item>
+        <item>Dashboard</item>
         <item>My Pools</item>
         <item>Admin Pools</item>
     </string-array>
 
-<!---Home Screen-->
+    <!---Home Screen-->
     <string name="my_profile">My Profile</string>
     <string name="hello">Hallo !</string>
 
@@ -63,8 +63,14 @@
 
     <string name="date_format">dd-mm-yyyy</string>
     <string name="only_date">date only(dd)</string>
+    <string name="late_fee">% of fine</string>
     <string name="create_pool">Create Pool</string>
 
+    <string name="congrats">Congratulations</string>
+    <string name="ask_for_auction">Do you wish to start Auction</string>
+
+    <string name="winners_list">Winners List</string>
+    <string name="pool_transactions_history">Pool Transactions</string>
 
     <string-array name="member_details">
         <item>Select</item>
@@ -76,7 +82,7 @@
         <item>Nominee</item>
     </string-array>
 
-<!--- Join Pool -->
+    <!--- Join Pool -->
 
     <string name="join_pool">Join Pool</string>
     <string name="search_another">Search Another Pool</string>

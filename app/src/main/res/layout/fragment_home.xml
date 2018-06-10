@@ -19,7 +19,7 @@
             android:weightSum="1">
 
             <TextView
-                style="@style/textView25Black"
+                style="@style/textView20Black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
@@ -42,10 +42,10 @@
 
 
     <TextView
-        style="@style/textView25Black"
+        style="@style/textView20Black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
         android:background="@color/green"
         android:text="@string/my_profile" />
@@ -66,7 +66,7 @@
 
 
             <TextView
-                style="@style/textView25Black"
+                style="@style/textView20Black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -91,7 +91,7 @@
             android:weightSum="1">
 
             <TextView
-                style="@style/textView25Black"
+                style="@style/textView20Black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -117,7 +117,7 @@
             android:weightSum="1">
 
             <TextView
-                style="@style/textView25Black"
+                style="@style/textView20Black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -142,7 +142,7 @@
             android:weightSum="1">
 
             <TextView
-                style="@style/textView25Black"
+                style="@style/textView20Black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -168,7 +168,7 @@
 
 
             <TextView
-                style="@style/textView25Black"
+                style="@style/textView20Black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -194,7 +194,7 @@
             android:weightSum="1">
 
             <TextView
-                style="@style/textView25Black"
+                style="@style/textView20Black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"

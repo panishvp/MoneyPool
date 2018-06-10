@@ -17,9 +17,11 @@ import android.widget.TextView;
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.adapters.PoolPaymentHistoryAdapter;
+import com.example.paneesh.moneypool.adapters.WinnersListAdapter;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
 import com.example.paneesh.moneypool.model.PoolTransactions;
+import com.example.paneesh.moneypool.model.WinnerPicker;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +50,8 @@ public class FragmentMyPoolDetails extends Fragment {
     private PoolDetails poolDetails;
     private int  adminId;
     private RecyclerView paymentHistoryRecyclerView;
+    private RecyclerView recyclerViewWinnersList;
+    private WinnersListAdapter winnersListAdapter;
     private PoolPaymentHistoryAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private LinearLayout linearLayout;
@@ -63,6 +67,7 @@ public class FragmentMyPoolDetails extends Fragment {
         poolDetails = dataBaseHelper.fetchPoolDetails(poolId);
         displayPoolDetails(poolDetails);
         setRecyclerView();
+        setWinnersList();
         return mView;
     }
 
@@ -89,6 +94,7 @@ public class FragmentMyPoolDetails extends Fragment {
         mButtonSearchAnotherPool.setVisibility(View.GONE);
         paymentHistoryRecyclerView = mView.findViewById(R.id.rv_payment_history);
         linearLayout = mView.findViewById(R.id.ll_admin_pool_transactions);
+        recyclerViewWinnersList = mView.findViewById(R.id.rv_winners_list);
     }
 
 
@@ -119,6 +125,17 @@ public class FragmentMyPoolDetails extends Fragment {
             adapter = new PoolPaymentHistoryAdapter(poolTransactionsList);
             paymentHistoryRecyclerView.setAdapter(adapter);
             linearLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setWinnersList(){
+        ArrayList<WinnerPicker> arrayList = dataBaseHelper.getWinnerPickerHistory(poolDetails.getPoolId());
+        if (arrayList.size() > 0){
+            layoutManager = new LinearLayoutManager(getContext());
+            recyclerViewWinnersList.setLayoutManager(layoutManager);
+            winnersListAdapter = new WinnersListAdapter(arrayList);
+            recyclerViewWinnersList.setAdapter(winnersListAdapter);
+
         }
     }
 

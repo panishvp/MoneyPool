@@ -3,432 +3,455 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="30dp">
-
-
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TableRow
-            android:padding="5dp"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/font15Black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_name" />
-
-            <TextView
-                style="@style/font15Blue"
-                android:id="@+id/tv_pool_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_name" />
-
-        </TableRow>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/jumbo" />
-
-        <TableRow
-            android:padding="5dp"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/font15Black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_id"/>
-
-            <TextView
-                style="@style/font15Blue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:id="@+id/tv_pool_id"
-                android:text="@string/pool_id"/>
-
-        </TableRow>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/jumbo" />
-
-
-        <TableRow
-            android:padding="5dp"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/font15Black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_duration" />
-
-            <TextView
-                style="@style/font15Blue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:id="@+id/tv_pool_duration"
-                android:text="@string/pool_duration" />
-
-        </TableRow>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/jumbo" />
-
-        <TableRow
-            android:padding="5dp"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/font15Black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_strength" />
-
-            <TextView
-                style="@style/font15Blue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:id="@+id/tv_pool_strength"
-                android:text="@string/pool_strength" />
-
-        </TableRow>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/jumbo" />
-
-        <TableRow
-            android:padding="5dp"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/font15Black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_current_counter" />
-
-            <TextView
-                style="@style/font15Blue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:id="@+id/tv_pool_current_counter"
-                android:text="@string/pool_current_counter" />
-
-        </TableRow>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/jumbo" />
-
-        <TableRow
-            android:padding="5dp"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/font15Black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_individualShare" />
-
-            <TextView
-                style="@style/font15Blue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Pool Name"
-                android:id="@+id/tv_pool_individual_share"/>
-
-        </TableRow>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/jumbo" />
-
-        <TableRow
-            android:padding="5dp"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/font15Black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_monthly_takeaway" />
-
-            <TextView
-                style="@style/font15Blue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Pool Name"
-                android:id="@+id/tv_pool_monthly_takeaway"/>
-
-        </TableRow>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/jumbo" />
-
-        <TableRow
-            android:padding="5dp"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/font15Black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_start_date" />
-
-            <TextView
-                style="@style/font15Blue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Pool Name"
-                android:id="@+id/tv_pool_start_date"/>
-
-        </TableRow>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/jumbo" />
-
-        <TableRow
-            android:padding="5dp"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/font15Black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_end_date" />
-
-            <TextView
-                style="@style/font15Blue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Pool Name"
-                android:id="@+id/tv_pool_end_date"/>
-
-        </TableRow>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/jumbo" />
-
-
-        <TableRow
-            android:padding="5dp"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/font15Black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_meet_up" />
-
-            <TextView
-                style="@style/font15Blue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Pool Name"
-                android:id="@+id/tv_pool_meetup"/>
-
-        </TableRow>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/jumbo" />
-
-        <TableRow
-            android:padding="5dp"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/font15Black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_deposit_date" />
-
-            <TextView
-                style="@style/font15Blue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Pool Name"
-                android:id="@+id/tv_pool_deposite_date"/>
-
-        </TableRow>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/jumbo" />
-
-        <TableRow
-            android:padding="5dp"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/font15Black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/pool_late_fee" />
-
-            <TextView
-                style="@style/font15Blue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Pool Name"
-                android:id="@+id/tv_pool_late_fee"/>
-
-        </TableRow>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/jumbo" />
-
-
-
-    </TableLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:visibility="gone"
-        android:id="@+id/ll_admin_pool_transactions">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp">
+
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TableRow android:weightSum="1.6">
+            <TableRow
+                android:padding="5dp"
+                android:weightSum="1">
 
                 <TextView
                     style="@style/font15Black"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:background="@drawable/edittext_background"
-                    android:gravity="center_horizontal"
-                    android:text="@string/member_id" />
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_name" />
 
                 <TextView
-                    style="@style/font15Black"
+                    android:id="@+id/tv_pool_name"
+                    style="@style/font15Blue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:background="@drawable/edittext_background"
-                    android:gravity="center_horizontal"
-                    android:text="@string/payment_current_counter" />
-
-                <TextView
-                    style="@style/font15Black"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:background="@drawable/edittext_background"
-                    android:gravity="center_horizontal"
-                    android:text="@string/pool_payment_amount" />
-
-
-                <TextView
-                    style="@style/font15Black"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:background="@drawable/edittext_background"
-                    android:gravity="center_horizontal"
-                    android:text="@string/payment_date" />
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_name" />
 
             </TableRow>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/jumbo" />
+
+            <TableRow
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_id" />
+
+                <TextView
+                    android:id="@+id/tv_pool_id"
+                    style="@style/font15Blue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_id" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/jumbo" />
+
+
+            <TableRow
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_duration" />
+
+                <TextView
+                    android:id="@+id/tv_pool_duration"
+                    style="@style/font15Blue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_duration" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/jumbo" />
+
+            <TableRow
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_strength" />
+
+                <TextView
+                    android:id="@+id/tv_pool_strength"
+                    style="@style/font15Blue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_strength" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/jumbo" />
+
+            <TableRow
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_current_counter" />
+
+                <TextView
+                    android:id="@+id/tv_pool_current_counter"
+                    style="@style/font15Blue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_current_counter" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/jumbo" />
+
+            <TableRow
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_individualShare" />
+
+                <TextView
+                    android:id="@+id/tv_pool_individual_share"
+                    style="@style/font15Blue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Pool Name" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/jumbo" />
+
+            <TableRow
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_monthly_takeaway" />
+
+                <TextView
+                    android:id="@+id/tv_pool_monthly_takeaway"
+                    style="@style/font15Blue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Pool Name" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/jumbo" />
+
+            <TableRow
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_start_date" />
+
+                <TextView
+                    android:id="@+id/tv_pool_start_date"
+                    style="@style/font15Blue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Pool Name" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/jumbo" />
+
+            <TableRow
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_end_date" />
+
+                <TextView
+                    android:id="@+id/tv_pool_end_date"
+                    style="@style/font15Blue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Pool Name" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/jumbo" />
+
+
+            <TableRow
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_meet_up" />
+
+                <TextView
+                    android:id="@+id/tv_pool_meetup"
+                    style="@style/font15Blue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Pool Name" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/jumbo" />
+
+            <TableRow
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_deposit_date" />
+
+                <TextView
+                    android:id="@+id/tv_pool_deposite_date"
+                    style="@style/font15Blue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Pool Name" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/jumbo" />
+
+            <TableRow
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/font15Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/pool_late_fee" />
+
+                <TextView
+                    android:id="@+id/tv_pool_late_fee"
+                    style="@style/font15Blue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Pool Name" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/jumbo" />
+
+
         </TableLayout>
 
+
+        <LinearLayout
+            android:id="@+id/ll_admin_pool_transactions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/font25Blue"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_horizontal"
+                android:text="@string/pool_transactions_history" />
+
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow android:weightSum="1.6">
+
+                    <TextView
+                        style="@style/font15Black"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:background="@drawable/edittext_background"
+                        android:gravity="center_horizontal"
+                        android:text="@string/member_id" />
+
+                    <TextView
+                        style="@style/font15Black"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:background="@drawable/edittext_background"
+                        android:gravity="center_horizontal"
+                        android:text="@string/payment_current_counter" />
+
+                    <TextView
+                        style="@style/font15Black"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:background="@drawable/edittext_background"
+                        android:gravity="center_horizontal"
+                        android:text="@string/pool_payment_amount" />
+
+
+                    <TextView
+                        style="@style/font15Black"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:background="@drawable/edittext_background"
+                        android:gravity="center_horizontal"
+                        android:text="@string/payment_date" />
+
+                </TableRow>
+
+            </TableLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_payment_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/font25Blue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/winners_list" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_winners_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/bt__join_pool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button"
+            android:text="@string/join_pool" />
+
+        <Button
+            android:id="@+id/bt_deny_join_pool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button"
+            android:text="@string/search_another" />
+
+        <Button
+            android:id="@+id/bt_record_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button"
+            android:text="@string/record_payment"
+            android:visibility="gone" />
+
+
+        <Button
+            android:id="@+id/bt_pick_winner_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button"
+            android:text="@string/pick_winner"
+            android:visibility="gone" />
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv_payment_history"/>
-
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bt__join_pool"
-        android:text="@string/join_pool"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/button" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bt_deny_join_pool"
-        android:layout_marginTop="10dp"
-        android:text="@string/search_another"
-        android:background="@drawable/button"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bt_record_payment"
-        android:background="@drawable/button"
-        android:text="@string/record_payment"
-        android:layout_marginTop="10dp"
-        android:visibility="gone"/>
-
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bt_pick_winner_fragment"
-        android:background="@drawable/button"
-        android:text="@string/pick_winner"
-        android:layout_marginTop="10dp"
-        android:visibility="gone"/>
-</LinearLayout>
 
 </ScrollView>

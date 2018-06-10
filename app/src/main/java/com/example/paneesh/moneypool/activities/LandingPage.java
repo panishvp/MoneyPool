@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.example.paneesh.moneypool.R;
+import com.example.paneesh.moneypool.fragments.FragmentHome;
 import com.example.paneesh.moneypool.fragments.FragmentMemberProfile;
 import com.example.paneesh.moneypool.fragments.FragmentUpdateDetails;
 
@@ -57,6 +58,12 @@ public class LandingPage extends AppCompatActivity
                 break;
             case R.id.nav_gallery:
                 break;
+
+            case R.id.nav_slideshow:
+            fragment = new FragmentHome();
+            replaceFragment(fragment);
+            break;
+
             default:
                 fragment = new FragmentMemberProfile();
                 replaceFragment(fragment);

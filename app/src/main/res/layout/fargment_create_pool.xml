@@ -147,7 +147,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext_background"
-                android:hint="@string/only_date"
+                android:hint="@string/late_fee"
                 android:inputType="number"
                 android:padding="5dp" />
 

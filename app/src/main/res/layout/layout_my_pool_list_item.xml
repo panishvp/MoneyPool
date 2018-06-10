@@ -19,13 +19,13 @@
         android:layout_margin="4dp"
         card_view:cardCornerRadius="1dp"
         card_view:cardElevation="10dp"
-        card_view:contentPadding="10dp">
+        card_view:contentPadding="1dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="1dp">
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="My Pool Name"
-                        style="@style/font25Blue" />
+                        style="@style/font15Blue" />
 
                 </TableRow>
 
@@ -63,7 +63,7 @@
                         android:id="@+id/tv_admin_pool_id"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        style="@style/font25Blue"
+                        style="@style/font15Blue"
                         android:gravity="center_horizontal"
                         android:text="8"
                         android:textSize="15dp" />

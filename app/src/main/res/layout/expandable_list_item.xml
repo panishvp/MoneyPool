@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/edittext_background">
+
+        <TableRow android:padding="10dp"
+            android:weightSum="1">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:text="Cycle"
+                style="@style/font15Black"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_current_cycle_item"
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:layout_height="wrap_content"
+                style="@style/font15Blue" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:text="Take away Date"
+                style="@style/font15Black"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_take_away_date"
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:layout_height="wrap_content"
+                android:text="Winner Id"
+                style="@style/font15Blue" />
+
+        </TableRow>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/jumbo"/>
+
+        <TableRow android:padding="10dp"
+            android:weightSum="1">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:text="Winner Id"
+                style="@style/font15Black"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_winner_name_item"
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:layout_height="wrap_content"
+                android:text="Winner Id"
+                style="@style/font15Blue" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:text="Picker Id"
+                style="@style/font15Black"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_picker_id"
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:layout_height="wrap_content"
+                android:text="Winner Id"
+                style="@style/font15Blue" />
+
+        </TableRow>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/jumbo"/>
+
+        <TableRow android:padding="10dp"
+            android:weightSum="1">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:text="Winner Amount"
+                style="@style/font15Black"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_winner_take_away"
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:layout_height="wrap_content"
+                style="@style/font15Blue" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:text="Picker Amount"
+                style="@style/font15Black"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_picker_take_away"
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:layout_height="wrap_content"
+                android:text="Winner Id"
+                style="@style/font15Blue" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

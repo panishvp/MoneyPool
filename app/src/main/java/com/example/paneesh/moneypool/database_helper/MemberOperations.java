@@ -827,13 +827,15 @@ public class MemberOperations extends SQLiteOpenHelper {
         double takeAwayAmount = activePool.getPoolMonthlyTakeAway();
         double winnerTakeaway = (auctionPercent*takeAwayAmount)/100;
         double pickerTakeaway = ((100-auctionPercent)*takeAwayAmount)/100;
+        System.out.println("Winner TakeAway Amount "+winnerTakeaway );
+        System.out.println("Picker TakeAway Amount "+pickerTakeaway );
 
             //UPDATE pooltransactions set PickerFlag = 1,TakeawayAmount = ? ,TakeawayDate = ? where PoolID = ? and CurrentCounter = ? and MemberID = ?");
 
             db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(Utils.pdPoolMonthlyTakeAway,pickerTakeaway);
-            contentValues.put(Utils.poolPickerTakeawayDate, String.valueOf(currentDate));
+            contentValues.put(Utils.ptPoolTakeAwayAmount,pickerTakeaway);
+            contentValues.put(Utils.poolPickerTakeawayDate, dateToString(currentDate));
             contentValues.put(Utils.poolPickerFlag,1);
             db.update(Utils.poolTransactions,contentValues,Utils.poolId+ " = " +activePool.getPoolId() + " and "
                     +Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.memberId + " = " + pickerMemberID  ,null);
@@ -842,10 +844,10 @@ public class MemberOperations extends SQLiteOpenHelper {
 
             db = this.getWritableDatabase();
             ContentValues restContentValues = new ContentValues();
-            contentValues.put(Utils.pdPoolMonthlyTakeAway,winnerTakeaway);
-            contentValues.put(Utils.poolPickerTakeawayDate, String.valueOf(currentDate));
+        restContentValues.put(Utils.ptPoolTakeAwayAmount,winnerTakeaway);
+        restContentValues.put(Utils.poolPickerTakeawayDate, dateToString(currentDate));
 
-            db.update(Utils.poolTransactions,contentValues,Utils.poolId+ " = " +activePool.getPoolId() + " and "
+            db.update(Utils.poolTransactions,restContentValues,Utils.poolId+ " = " +activePool.getPoolId() + " and "
                     +Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.poolWinnerFlag + " = 1" ,null);
 
     }
@@ -875,7 +877,7 @@ public class MemberOperations extends SQLiteOpenHelper {
                     + Utils.poolStartDate + "=" + newPool.getPoolStartDate() + " and  " + Utils.poolEndDate + " = " + newPool.getPoolEndDate()+ " and  "
                     + Utils.poolAdminId + "=" + newPool.getPoolAdminId(), null);
 
-            poolID = cursor.getInt(1);
+            poolID = cursor.getInt(0);
 
 
         return poolID;
@@ -908,15 +910,15 @@ public class MemberOperations extends SQLiteOpenHelper {
 
     }
 
-    private List<WinnerPicker> getWinnerPickerHistory(int poolID){
+    public ArrayList<WinnerPicker> getWinnerPickerHistory(int poolID){
         ArrayList<WinnerPicker> allPoolMembersTransactions = new ArrayList<>();
 
         db = getWritableDatabase();
         cursor = db.rawQuery("select ptp." + Utils.poolCurrentCounter + ",ptw." + Utils.memberId + ",ptp." +Utils.memberId+ ",ptp." +
                 Utils.poolPickerTakeawayDate + ",ptw." +Utils.ptPoolTakeAwayAmount+ ",ptp." + Utils.ptPoolTakeAwayAmount
-                + "from" + Utils.poolTransactions + "as ptw JOIN" +Utils.poolTransactions + "as ptp ON ptp." + Utils.poolId + "=ptw"
-                + Utils.poolId + "where ptw." + Utils.poolWinnerFlag + "=1 and ptp." + Utils.poolPickerFlag + " = 1 and ptp."
-                + Utils.poolId + "=" +poolID+ "ORDER BY ptp." + Utils.poolCurrentCounter, null);
+                + " from " + Utils.poolTransactions + " as ptw JOIN " +Utils.poolTransactions + " as ptp ON ptp." + Utils.poolId + " = ptw."
+                + Utils.poolId + " and  ptp."+ Utils.poolCurrentCounter + " = ptw." + Utils.poolCurrentCounter +" where ptw." + Utils.poolWinnerFlag + " = 1 and ptp." + Utils.poolPickerFlag + " = 1 and ptp."
+                + Utils.poolId + " = " +poolID+ " ORDER BY ptp." + Utils.poolCurrentCounter, null);
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -947,17 +949,16 @@ public class MemberOperations extends SQLiteOpenHelper {
 
 
 
-    private String getMemberName (int memberID){
+    public String getMemberName (int memberID){
+
 
         db = getWritableDatabase();
-        cursor = db.rawQuery("select " + Utils.memberFirstName + " from " + Utils.memberTable + " where " + Utils.memberId + " = " + memberID, null);
+        cursor = db.rawQuery("select " + Utils.memberFirstName +" from " + Utils.memberTable + " where " + Utils.memberId + " = " + memberID, null);
 
         cursor.moveToFirst();
         String memberName = cursor.getString(0);
 
         return memberName;
-
-
     }
 
 

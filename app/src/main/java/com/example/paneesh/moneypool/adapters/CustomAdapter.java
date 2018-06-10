@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.fragments.FragmentAdminPool;
+import com.example.paneesh.moneypool.fragments.FragmentDashBoard;
 import com.example.paneesh.moneypool.fragments.FragmentHome;
 import com.example.paneesh.moneypool.fragments.FragmentMyPools;
 
@@ -22,11 +23,11 @@ public class CustomAdapter extends android.support.v4.app.FragmentStatePagerAdap
 
     @Override
     public Fragment getItem(int position) {
-        FragmentHome fragmentHome = new FragmentHome();
+        FragmentDashBoard fragmentDashBoard = new FragmentDashBoard();
         FragmentMyPools fragmentMyPools = new FragmentMyPools();
         FragmentAdminPool fragmentAdminPool = new FragmentAdminPool();
         if (position == 0) {
-            return fragmentHome;
+            return fragmentDashBoard;
         } else if (position == 1) {
             return fragmentMyPools;
         } else {
@@ -38,7 +39,6 @@ public class CustomAdapter extends android.support.v4.app.FragmentStatePagerAdap
     @Override
     public CharSequence getPageTitle(int position) {
         String[] headers = mContext.getResources().getStringArray(R.array.tab_headers);
-
         return headers[position];
     }
 

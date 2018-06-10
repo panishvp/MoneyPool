@@ -7,7 +7,7 @@
     android:padding="20dp">
 
     <TextView
-        style="@style/textView25Black"
+        style="@style/textView20Black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
@@ -43,7 +43,7 @@
 
             <TextView
                 android:id="@+id/tv_selected_field_to_update"
-                style="@style/textView25Black"
+                style="@style/textView20Black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -52,7 +52,7 @@
 
             <TextView
                 android:id="@+id/tv_data_from_db"
-                style="@style/textView25Black"
+                style="@style/textView20Black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -74,7 +74,7 @@
 
             <TextView
                 android:id="@+id/tv_inform_user_update"
-                style="@style/textView25Black"
+                style="@style/textView20Black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
