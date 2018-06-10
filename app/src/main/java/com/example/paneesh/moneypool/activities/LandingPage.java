@@ -1,5 +1,6 @@
 package com.example.paneesh.moneypool.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.example.paneesh.moneypool.AndroidDatabaseManager;
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.fragments.FragmentHome;
 import com.example.paneesh.moneypool.fragments.FragmentMemberProfile;
@@ -57,6 +59,8 @@ public class LandingPage extends AppCompatActivity
                 replaceFragment(fragment);
                 break;
             case R.id.nav_gallery:
+                Intent dbmanager = new Intent(LandingPage.this,AndroidDatabaseManager.class);
+                startActivity(dbmanager);
                 break;
 
             case R.id.nav_slideshow:
@@ -68,7 +72,6 @@ public class LandingPage extends AppCompatActivity
                 fragment = new FragmentMemberProfile();
                 replaceFragment(fragment);
                 break;
-
 
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
