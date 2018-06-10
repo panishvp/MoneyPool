@@ -14,6 +14,7 @@ import com.example.paneesh.moneypool.model.PoolTransactions;
 import com.example.paneesh.moneypool.model.WinnerPicker;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -846,6 +847,18 @@ public class MemberOperations extends SQLiteOpenHelper {
 
             db.update(Utils.poolTransactions,contentValues,Utils.poolId+ " = " +activePool.getPoolId() + " and "
                     +Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.poolWinnerFlag + " = 1" ,null);
+
+    }
+
+    public void updatePickerFlagForWinner(PoolDetails activePool,int pickerMemberID){
+
+        db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Utils.poolPickerFlag,1);
+        db.update(Utils.poolTransactions,contentValues,Utils.poolId+ " = " +activePool.getPoolId() + " and "
+                +Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.memberId + " = " + pickerMemberID  ,null);
+
+
 
     }
 
