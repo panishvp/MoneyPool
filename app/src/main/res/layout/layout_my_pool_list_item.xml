@@ -64,7 +64,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         style="@style/font15Blue"
-                        android:gravity="center_horizontal"
                         android:text="8"
                         android:textSize="15dp" />
 

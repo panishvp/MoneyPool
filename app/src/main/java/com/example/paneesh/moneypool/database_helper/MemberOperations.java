@@ -966,7 +966,7 @@ public class MemberOperations extends SQLiteOpenHelper {
 
     public ArrayList<Member> getMemberList (PoolDetails activePool){
         ArrayList<Member> memberArrayList = new ArrayList<>();
-        
+
         db = getWritableDatabase();
         cursor = db.rawQuery(" select m." + Utils.memberId + " , m." + Utils.memberFirstName   + " from " + Utils.memberTable + " as m " +
                 " JOIN " + Utils.poolTransactions + " as pt " +
