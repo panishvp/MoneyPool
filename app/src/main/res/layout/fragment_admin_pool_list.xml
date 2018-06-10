@@ -1,21 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appBackground">
 
+    <LinearLayout
+        android:id="@+id/rl_no_admin_pools_alert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_admin_no_pools_alert"
+            style="@style/font25Blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/pool_transactions_history" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@android:drawable/ic_input_add" />
+
+        <TextView
+            style="@style/font25Blue"
+            android:id="@+id/tv_creat_new_pool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/pool_transactions_history"/>
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_admin_pool_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rv_admin_pool_list"
-        android:padding="10dp"/>
+        android:padding="10dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_create_pool"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_input_add" />
 </RelativeLayout>

@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
@@ -34,7 +36,9 @@ public class FragmentAdminPool extends Fragment implements MyPoolListAdapter.onP
     private FloatingActionButton mFloatingActionButton;
     private MemberOperations memberOperations;
     private SharedPreferences mSharedPrefs;
-
+    private TextView mTextViewNoPoolsAlert;
+    private TextView mTextViewCreatePool;
+    private LinearLayout mLinearLayout;
     private Intent intent;
     private Bundle bundle;
 
@@ -62,6 +66,9 @@ public class FragmentAdminPool extends Fragment implements MyPoolListAdapter.onP
         mMyPoolRecyclerView = mView.findViewById(R.id.rv_admin_pool_list);
         mFloatingActionButton = mView.findViewById(R.id.fab_create_pool);
         memberOperations = MemberOperations.getInstance(getContext());
+        mTextViewNoPoolsAlert = mView.findViewById(R.id.tv_admin_no_pools_alert);
+        mTextViewCreatePool = mView.findViewById(R.id.tv_creat_new_pool);
+        mLinearLayout = mView.findViewById(R.id.rl_no_admin_pools_alert);
     }
 
     private void loadData() {
@@ -70,6 +77,12 @@ public class FragmentAdminPool extends Fragment implements MyPoolListAdapter.onP
         int adminId = mSharedPrefs.getInt(Utils.memberId, 0);
         poolDetailsArrayList = new ArrayList<>();
         poolDetailsArrayList = memberOperations.getAdminPools(adminId);
+        if (poolDetailsArrayList.size() == 0){
+            mTextViewNoPoolsAlert.setText(Utils.createPoolsAlert);
+            mTextViewCreatePool.setText(Utils.createNewPool);
+        }else {
+            mLinearLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override

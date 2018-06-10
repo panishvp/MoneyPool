@@ -53,4 +53,9 @@ public class Utils {
     public static String alertUserForValidInput = "Please fill the fields with Valid Input";
 
     public static  String datePattern = "dd-MM-yyyy";
+
+    public static String joinPoolsAlert = "You have not joined to any Pools yet \n Please click on";
+    public static String createPoolsAlert = "You have not Created any Pools yet \n Please click on";
+    public  static String createNewPool = "to Create Pool";
+    public  static String  joinNewPool = "to join with the Pool ID";
 }
