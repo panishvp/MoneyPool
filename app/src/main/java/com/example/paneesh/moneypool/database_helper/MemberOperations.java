@@ -1004,7 +1004,7 @@ public class MemberOperations extends SQLiteOpenHelper {
 
         db = getWritableDatabase();
         cursor = db.rawQuery(" select " + Utils.poolCurrentCounter  + "," +Utils.pool_individual_monthly_share + ","
-                + Utils.memberPayementDate  + " from " + Utils.poolTransactions + " where "
+                + Utils.memberPayementDate +  "," + Utils.poolId + " from " + Utils.poolTransactions + " where "
                  + Utils.poolCurrentCounter + " != -1 " + " and " + Utils.memberId + " = " + memberID
                 + " group by " + Utils.poolId  + " order by " + Utils.poolCurrentCounter, null);
 
@@ -1016,6 +1016,7 @@ public class MemberOperations extends SQLiteOpenHelper {
                     rtPool.setPoolCurrentCounter(cursor.getInt(0));
                     rtPool.setPoolIndividualShare(cursor.getDouble(1));
                     rtPool.setPoolPaymentDate(dateCalculationsUtil.stringToSQLDate(cursor.getString(2)));
+                    rtPool.setPoolId(cursor.getInt(3));
 
                     allMembersTransactions.add(rtPool);
                 } while (cursor.moveToNext());
