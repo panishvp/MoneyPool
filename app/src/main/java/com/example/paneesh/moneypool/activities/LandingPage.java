@@ -50,6 +50,7 @@ public class LandingPage extends AppCompatActivity
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            finishAffinity();
         }
     }
 
@@ -98,4 +99,6 @@ public class LandingPage extends AppCompatActivity
         fragmentTransaction.replace(R.id.fl_member_home, fragment);
         fragmentTransaction.commit();
     }
+
+
 }

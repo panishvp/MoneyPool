@@ -193,7 +193,6 @@ public class FragmentCreatePool extends Fragment {
         mPoolDetails.setPoolLateFeeCharge(Integer.parseInt(mPoolLateFee.getText().toString()));
 
         databaseHelper.insertPool(mPoolDetails);
-        Toast.makeText(getContext(), "DataInserted", Toast.LENGTH_SHORT).show();
     }
 
     private void askUserToEnroll() {

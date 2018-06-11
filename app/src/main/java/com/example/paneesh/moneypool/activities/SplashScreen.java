@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
@@ -17,7 +18,9 @@ import com.example.paneesh.moneypool.database_helper.MemberOperations;
 public class SplashScreen extends AppCompatActivity {
 
     private ImageView mLogo;
+    private TextView appName;
     private Animation fromTop;
+    private Animation fromBottom;
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
     private MemberOperations memberOperations;
@@ -28,8 +31,11 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         mLogo = findViewById(R.id.iv_splash);
+        appName = findViewById(R.id.tv_app_name);
         fromTop = AnimationUtils.loadAnimation(this,R.anim.fromtop);
+        fromBottom = AnimationUtils.loadAnimation(this, R.anim.frombottom);
         mLogo.setAnimation(fromTop);
+        appName.setAnimation(fromBottom);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

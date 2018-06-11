@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Money Pool</string>
+    <string name="app_name">Sanchay</string>
     <string name="user_email">E-mail</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
@@ -39,6 +39,7 @@
     <string name="new_value_to_update">Please Enter the new Value to Update</string>
     <string name="update">Update</string>
     <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
 
 
     <!--- Create Pool-->
