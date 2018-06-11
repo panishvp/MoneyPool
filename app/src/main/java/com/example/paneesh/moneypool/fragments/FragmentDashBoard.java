@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
+import com.example.paneesh.moneypool.adapters.MyTransactionsListAdapter;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.Member;
+import com.example.paneesh.moneypool.model.PoolTransactions;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -32,9 +36,12 @@ public class FragmentDashBoard extends Fragment {
     private MemberOperations databaseHelper;
     private Member memberObject;
     private MemberOperations memberOperations;
-    private float[] yData = {25.3f, 30.6f};
+    private float[] yData = {25.3f, 20.6f};
     private String[] xData = {"Mitch", "Jessica", "Mohammad", "Kelsey", "Sam", "Robert", "Ashley"};
     private PieChart mPiechart;
+    private RecyclerView recyclerViewMyTransactions;
+    private MyTransactionsListAdapter myTransactionsListAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
 
     @Nullable
@@ -45,6 +52,7 @@ public class FragmentDashBoard extends Fragment {
         fetchDataFromDB();
         saveInSharedPrefs(memberObject.getMemberID());
         creatmPiechart();
+        setRecyclerView();
         return mVIew;
     }
 
@@ -62,10 +70,11 @@ public class FragmentDashBoard extends Fragment {
 
 
     private void initUI() {
-        memberOperations = new MemberOperations(getContext());
+        memberOperations = MemberOperations.getInstance(getContext());
         databaseHelper = MemberOperations.getInstance(getContext());
         mSharedPreferences = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         mPiechart = mVIew.findViewById(R.id.mp_pie_chart);
+        recyclerViewMyTransactions = mVIew.findViewById(R.id.rv_my_transactions);
     }
 
     private void creatmPiechart() {
@@ -122,6 +131,17 @@ public class FragmentDashBoard extends Fragment {
         PieData pieData = new PieData(pieDataSet);
         mPiechart.setData(pieData);
         mPiechart.invalidate();
+    }
+
+    private void setRecyclerView(){
+        ArrayList<PoolTransactions> poolTransactionsArrayList = memberOperations.getAllMemberTransactions(memberObject.getMemberID());
+        if (poolTransactionsArrayList.size() > 0){
+            myTransactionsListAdapter = new MyTransactionsListAdapter(poolTransactionsArrayList);
+            layoutManager = new LinearLayoutManager(getContext());
+            recyclerViewMyTransactions.setLayoutManager(layoutManager);
+            recyclerViewMyTransactions.setAdapter(myTransactionsListAdapter);
+
+        }
     }
 }
 

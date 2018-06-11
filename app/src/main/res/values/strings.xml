@@ -51,6 +51,7 @@
     <string name="pool_current_counter">Pool Current Counter</string>
     <string name="payment_current_counter">Cycle</string>
     <string name="pool_individualShare">Pool Individual Share</string>
+    <string name="pool_individual_share">Individual Share</string>
     <string name="pool_start_date">Pool Start Date</string>
     <string name="pool_end_date">Pool End Date</string>
     <string name="pool_meet_up">MeetUp Date</string>

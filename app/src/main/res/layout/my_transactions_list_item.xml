@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:layout_width="match_parent"
-        android:layout_weight="0.5"
-        android:layout_height="0dp"
-        android:id="@+id/mp_pie_chart"/>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="0.5"
-    android:orientation="vertical">
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,49 +11,45 @@
         <TableRow android:weightSum="1.6">
 
             <TextView
-                style="@style/font15Black"
+                android:id="@+id/tv_my_transactions_pool_id"
+                style="@style/font15Blue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:background="@drawable/edittext_background"
                 android:gravity="center_horizontal"
                 android:text="@string/pool_id" />
 
             <TextView
-                style="@style/font15Black"
+                android:id="@+id/tv_my_transactions_pool_counter"
+                style="@style/font15Blue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:background="@drawable/edittext_background"
                 android:gravity="center_horizontal"
                 android:text="@string/payment_current_counter" />
 
             <TextView
-                style="@style/font15Black"
+                android:id="@+id/tv_my_transactions_pool_individual_share"
+                style="@style/font15Blue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:background="@drawable/edittext_background"
                 android:gravity="center_horizontal"
-                android:text="@string/pool_payment_amount" />
-
+                android:text="@string/pool_individual_share" />
 
             <TextView
-                style="@style/font15Black"
+                android:id="@+id/tv_my_transactions_pool_payment_date"
+                style="@style/font15Blue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:background="@drawable/edittext_background"
                 android:gravity="center_horizontal"
                 android:text="@string/payment_date" />
+
 
         </TableRow>
 
     </TableLayout>
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rv_my_transactions"/>
-</LinearLayout>
+
 
 </LinearLayout>
