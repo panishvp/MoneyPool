@@ -659,7 +659,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         cursor.moveToFirst();
         int checkIfWinner = cursor.getInt(0);
 
-        if ((numberOfWinners < activePool.getPoolStrength()) & (checkIfWinner == 0)) valid = true;
+        if ((numberOfWinners < activePool.getPoolStrength()) & (checkIfWinner == 0) & (0<activePool.getPoolCurrentCounter()) & (activePool.getPoolCurrentCounter()<=activePool.getPoolStrength()) ) valid = true;
         else valid = false;
         return valid;
 
