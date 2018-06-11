@@ -16,12 +16,16 @@ import android.widget.TextView;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
+import com.example.paneesh.moneypool.adapters.MemberListAdapter;
 import com.example.paneesh.moneypool.adapters.PoolPaymentHistoryAdapter;
 import com.example.paneesh.moneypool.adapters.WinnersListAdapter;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
+import com.example.paneesh.moneypool.model.Member;
 import com.example.paneesh.moneypool.model.PoolDetails;
 import com.example.paneesh.moneypool.model.PoolTransactions;
 import com.example.paneesh.moneypool.model.WinnerPicker;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,8 +47,8 @@ public class FragmentMyPoolDetails extends Fragment {
     private TextView mTextViewPoolMeetUpDate;
     private TextView mTextViewPoolDepositDate;
     private TextView mTextViewPoolLateFee;
-    private Button mButtonJoinPool;
-    private Button mButtonSearchAnotherPool;
+    private FloatingActionButton mButtonJoinPool;
+    private FloatingActionButton mButtonSearchAnotherPool;
     private SharedPreferences mSharedPrefs;
     private MemberOperations dataBaseHelper;
     private PoolDetails poolDetails;
@@ -55,6 +59,10 @@ public class FragmentMyPoolDetails extends Fragment {
     private PoolPaymentHistoryAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private LinearLayout linearLayout;
+    private FloatingActionMenu mFabMenu;
+    private RecyclerView recyclerViewMemberListOfPool;
+    private MemberListAdapter memberListAdapter;
+    private TextView mTextViewWinnerList;
 
 
     @Nullable
@@ -68,6 +76,7 @@ public class FragmentMyPoolDetails extends Fragment {
         displayPoolDetails(poolDetails);
         setRecyclerView();
         setWinnersList();
+        setMemberList();
         return mView;
     }
 
@@ -88,13 +97,18 @@ public class FragmentMyPoolDetails extends Fragment {
         adminId = mSharedPrefs.getInt(Utils.poolId, 0);
         poolDetails = new PoolDetails();
         dataBaseHelper = MemberOperations.getInstance(getContext());
-        mButtonJoinPool = mView.findViewById(R.id.bt__join_pool);
+        mButtonJoinPool = mView.findViewById(R.id.fab__join_pool);
         mButtonJoinPool.setVisibility(View.GONE);
-        mButtonSearchAnotherPool = mView.findViewById(R.id.bt_deny_join_pool);
+        mButtonSearchAnotherPool = mView.findViewById(R.id.fab_deny_join_pool);
         mButtonSearchAnotherPool.setVisibility(View.GONE);
         paymentHistoryRecyclerView = mView.findViewById(R.id.rv_payment_history);
         linearLayout = mView.findViewById(R.id.ll_admin_pool_transactions);
         recyclerViewWinnersList = mView.findViewById(R.id.rv_winners_list);
+        mFabMenu = mView.findViewById(R.id.fab_menu);
+        mFabMenu.setVisibility(View.GONE);
+        recyclerViewWinnersList = mView.findViewById(R.id.rv_winners_list);
+        recyclerViewMemberListOfPool = mView.findViewById(R.id.rv_member_list);
+        mTextViewWinnerList = mView.findViewById(R.id.tv_winner_list);
     }
 
 
@@ -135,8 +149,20 @@ public class FragmentMyPoolDetails extends Fragment {
             recyclerViewWinnersList.setLayoutManager(layoutManager);
             winnersListAdapter = new WinnersListAdapter(arrayList);
             recyclerViewWinnersList.setAdapter(winnersListAdapter);
-
+        }else {
+            mTextViewWinnerList.setVisibility(View.GONE);
         }
+    }
+
+    private void setMemberList() {
+        ArrayList<Member> arrayList = dataBaseHelper.getMemberList(poolDetails);
+        if (arrayList.size() > 0) {
+            layoutManager = new LinearLayoutManager(getContext());
+            recyclerViewMemberListOfPool.setLayoutManager(layoutManager);
+            memberListAdapter = new MemberListAdapter(arrayList);
+            recyclerViewMemberListOfPool.setAdapter(memberListAdapter);
+        }
+
     }
 
 }

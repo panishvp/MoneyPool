@@ -111,6 +111,7 @@ public class LoginScreen extends AppCompatActivity {
         mEditor = mSharedPreferences.edit();
         mEditor.putString(Utils.memberEmail,stringEmail);
         mEditor.putString(Utils.memberPassword, password);
+        mEditor.putBoolean(Utils.isLoggedIN, true);
         mEditor.commit();
     }
 }

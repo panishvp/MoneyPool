@@ -1,6 +1,7 @@
 package com.example.paneesh.moneypool.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 
 import com.example.paneesh.moneypool.AndroidDatabaseManager;
 import com.example.paneesh.moneypool.R;
+import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.fragments.FragmentHome;
 import com.example.paneesh.moneypool.fragments.FragmentMemberProfile;
 import com.example.paneesh.moneypool.fragments.FragmentUpdateDetails;
@@ -22,6 +24,8 @@ public class LandingPage extends AppCompatActivity
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
 
 
     @Override
@@ -37,6 +41,7 @@ public class LandingPage extends AppCompatActivity
         FragmentMemberProfile fragmentMemberProfile = new FragmentMemberProfile();
         replaceFragment(fragmentMemberProfile);
         mNavigationView.setNavigationItemSelectedListener(this);
+        mSharedPreferences = getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
     }
 
     @Override
@@ -67,6 +72,16 @@ public class LandingPage extends AppCompatActivity
             fragment = new FragmentHome();
             replaceFragment(fragment);
             break;
+
+            case  R.id.nav_manage:
+                mEditor = mSharedPreferences.edit();
+                mEditor.clear();
+                mEditor.commit();
+                Intent intent = new Intent(LandingPage.this, LoginScreen.class);
+                startActivity(intent);
+                finishAffinity();
+                break;
+
 
             default:
                 fragment = new FragmentMemberProfile();

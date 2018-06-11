@@ -2,8 +2,12 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -447,6 +451,7 @@
 
             <TextView
                 style="@style/font25Blue"
+                android:id="@+id/tv_winner_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -466,10 +471,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             android:background="@drawable/button"
             android:text="@string/join_pool" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/bt_deny_join_pool"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -477,24 +484,58 @@
             android:background="@drawable/button"
             android:text="@string/search_another" />
 
-        <Button
-            android:id="@+id/bt_record_payment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button"
-            android:text="@string/record_payment"
-            android:visibility="gone" />
 
-
-        <Button
-            android:id="@+id/bt_pick_winner_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button"
-            android:text="@string/pick_winner"
-            android:visibility="gone" />
     </LinearLayout>
 
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:layout_width="wrap_content"
+            android:layout_marginTop="30dp"
+            android:id="@+id/fab_menu"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            fab:menu_labels_showShadow="true"
+            fab:menu_labels_singleLine="false"
+            fab:menu_labels_textColor="#f2f1f1"
+            fab:menu_labels_textSize="15sp"
+            fab:menu_openDirection="up"
+            fab:menu_shadowColor="#66aff198"
+            fab:menu_shadowRadius="4dp"
+            fab:menu_shadowXOffset="1dp"
+            fab:menu_shadowYOffset="4dp"
+            fab:menu_showShadow="true">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_label="Record Payment"
+                android:id="@+id/fab_record_payment"
+                android:src="@android:drawable/ic_input_add"
+                fab:fab_size="mini"/>
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_label="Pick Winner"
+                android:id="@+id/fab_pick_winner_fragment"
+                android:src="@android:drawable/ic_input_add"
+                fab:fab_size="mini"/>
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_label="Record Payment"
+                android:id="@+id/fab__join_pool"
+                android:src="@android:drawable/ic_input_add"
+                fab:fab_size="mini"/>
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_label="Pick Winner"
+                android:id="@+id/fab_deny_join_pool"
+                android:src="@android:drawable/ic_input_add"
+                fab:fab_size="mini"/>
+
+        </com.github.clans.fab.FloatingActionMenu>
+
+    </RelativeLayout>
 </ScrollView>

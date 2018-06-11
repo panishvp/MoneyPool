@@ -22,6 +22,8 @@ import com.example.paneesh.moneypool.activities.LandingPage;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
 import com.example.paneesh.moneypool.model.PoolTransactions;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.text.SimpleDateFormat;
 
@@ -48,6 +50,9 @@ public class FragmentJoinPoolDetails extends Fragment {
     private PoolTransactions poolTransactions;
     private Button mButtonJoinPool;
     private Button mButtonSearchAnotherPool;
+    private FloatingActionMenu mFabMenu;
+    private FloatingActionButton mFabButtonJoinPools;
+    private FloatingActionButton mFabButtonSearchAnotherPools;
     private int poolId;
     private int memberId;
 
@@ -102,7 +107,13 @@ public class FragmentJoinPoolDetails extends Fragment {
         poolDetails = new PoolDetails();
         dataBaseHelper = MemberOperations.getInstance(getContext());
         mButtonJoinPool = mView.findViewById(R.id.bt__join_pool);
+        mButtonJoinPool.setVisibility(View.VISIBLE);
         mButtonSearchAnotherPool = mView.findViewById(R.id.bt_deny_join_pool);
+        mButtonSearchAnotherPool.setVisibility(View.VISIBLE);
+        mFabButtonJoinPools = mView.findViewById(R.id.fab__join_pool);
+        mFabButtonSearchAnotherPools = mView.findViewById(R.id.fab_deny_join_pool);
+        mFabMenu = mView.findViewById(R.id.fab_menu);
+        mFabMenu.setVisibility(View.GONE);
     }
 
 

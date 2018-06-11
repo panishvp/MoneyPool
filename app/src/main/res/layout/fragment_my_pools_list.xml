@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-   android:background="@color/colorBackground">
+    android:background="@color/colorBackground">
 
     <LinearLayout
         android:id="@+id/ll_no_pools_alert"
@@ -48,6 +50,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        app:fab_label="@string/join_pool"
         android:src="@android:drawable/ic_input_add" />
 
 </RelativeLayout>

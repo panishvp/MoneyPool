@@ -14,13 +14,13 @@
             android:title="Profile Settings" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:icon="@drawable/ic_database"
+            android:title="Database Overview" />
 
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:icon="@drawable/ic_logout"
+            android:title="Log Out" />
     </group>
 
 </menu>

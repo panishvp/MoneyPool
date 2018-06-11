@@ -25,6 +25,7 @@ import com.example.paneesh.moneypool.model.Member;
 import com.example.paneesh.moneypool.model.PoolDetails;
 import com.example.paneesh.moneypool.model.PoolTransactions;
 import com.example.paneesh.moneypool.model.WinnerPicker;
+import com.github.clans.fab.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,10 +47,10 @@ public class FragmentAdminPoolDetails extends Fragment {
     private TextView mTextViewPoolMeetUpDate;
     private TextView mTextViewPoolDepositDate;
     private TextView mTextViewPoolLateFee;
-    private Button mButtonJoinPool;
-    private Button mButtonPickWinner;
-    private Button mButtonSearchAnotherPool;
-    private Button mButtonRecordPayment;
+    private FloatingActionButton mButtonJoinPool;
+    private FloatingActionButton mButtonPickWinner;
+    private FloatingActionButton mButtonSearchAnotherPool;
+    private FloatingActionButton mButtonRecordPayment;
     private SharedPreferences mSharedPrefs;
     private MemberOperations dataBaseHelper;
     private PoolDetails poolDetails;
@@ -62,6 +63,7 @@ public class FragmentAdminPoolDetails extends Fragment {
     private LinearLayout linearLayout;
     private RecyclerView recyclerViewMemberListOfPool;
     private MemberListAdapter memberListAdapter;
+
 
 
     @Nullable
@@ -107,18 +109,18 @@ public class FragmentAdminPoolDetails extends Fragment {
         mTextViewPoolEndDate = mView.findViewById(R.id.tv_pool_end_date);
         mTextViewPoolMeetUpDate = mView.findViewById(R.id.tv_pool_meetup);
         mTextViewPoolDepositDate = mView.findViewById(R.id.tv_pool_deposite_date);
-        mButtonRecordPayment = mView.findViewById(R.id.bt_record_payment);
+        mButtonRecordPayment = mView.findViewById(R.id.fab_record_payment);
         mButtonRecordPayment.setVisibility(View.VISIBLE);
-        mButtonPickWinner = mView.findViewById(R.id.bt_pick_winner_fragment);
+        mButtonPickWinner = mView.findViewById(R.id.fab_pick_winner_fragment);
         mButtonPickWinner.setVisibility(View.VISIBLE);
         mTextViewPoolLateFee = mView.findViewById(R.id.tv_pool_late_fee);
         mSharedPrefs = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         adminId = mSharedPrefs.getInt(Utils.poolId, 0);
         poolDetails = new PoolDetails();
         dataBaseHelper = MemberOperations.getInstance(getContext());
-        mButtonJoinPool = mView.findViewById(R.id.bt__join_pool);
+        mButtonJoinPool = mView.findViewById(R.id.fab__join_pool);
         mButtonJoinPool.setVisibility(View.GONE);
-        mButtonSearchAnotherPool = mView.findViewById(R.id.bt_deny_join_pool);
+        mButtonSearchAnotherPool = mView.findViewById(R.id.fab_deny_join_pool);
         mButtonSearchAnotherPool.setVisibility(View.GONE);
         paymentHistoryRecyclerView = mView.findViewById(R.id.rv_payment_history);
         linearLayout = mView.findViewById(R.id.ll_admin_pool_transactions);

@@ -9,6 +9,7 @@ public class Utils {
 
     public static String memberObject = "Member";
 
+    public static String isLoggedIN = "IsLoggedIN";
     public static String databaseName = "MoneyPool";
     public static String memberTable = "member";
     public static String poolDetailsTable = "pool_details";
