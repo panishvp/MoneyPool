@@ -5,11 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<include layout="@layout/content_main" />-->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/drawerLayout_"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+
+    </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
+        android:id="@+id/fl_member_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fl_member_home"/>
+        android:layout_marginTop="40dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
