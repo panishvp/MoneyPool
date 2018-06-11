@@ -227,7 +227,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         return status;
     }
 
-    private int getCountRegisteredMembers(int poolID) {
+    public int getCountRegisteredMembers(int poolID) {
         int numberOfMembersRegistered = 0;
 
         db = getWritableDatabase();
@@ -860,7 +860,8 @@ public class MemberOperations extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Utils.poolPickerFlag,1);
         db.update(Utils.poolTransactions,contentValues,Utils.poolId+ " = " +activePool.getPoolId() + " and "
-                +Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.memberId + " = " + pickerMemberID  ,null);
+                +Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.memberId + " = " + pickerMemberID
+                + " and " + Utils.poolWinnerFlag + " = 1"  ,null);
 
 
 

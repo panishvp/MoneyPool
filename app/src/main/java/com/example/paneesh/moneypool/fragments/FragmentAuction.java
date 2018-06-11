@@ -1,10 +1,13 @@
 package com.example.paneesh.moneypool.fragments;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +40,9 @@ public class FragmentAuction extends Fragment {
     private MemberOperations memberOperations;
     private PoolDetails poolDetails;
     private ProgressDialog progressDialog;
-    private String memberName;
+    private int memberId;
+    private AlertDialog.Builder alertdialogBuilder;
+    private AlertDialog alertDialog;
 
 
     @Nullable
@@ -56,7 +61,8 @@ public class FragmentAuction extends Fragment {
         denyAuction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                memberOperations.updatePickerFlagForWinner(poolDetails, memberId);
+                pickerAdded("Transaction for " + memberId + " has been Updated Successfully");
             }
         });
 
@@ -64,6 +70,7 @@ public class FragmentAuction extends Fragment {
             @Override
             public void onClick(View v) {
                 memberOperations.addPicker(poolDetails, Integer.parseInt(spinnerBidders.getSelectedItem().toString()), Double.parseDouble(editTextAuctionPercentage.getText().toString()));
+                pickerAdded("Transaction for " + spinnerBidders.getSelectedItem().toString() + " has been Updated Successfully");
             }
         });
         setSpinner();
@@ -72,7 +79,7 @@ public class FragmentAuction extends Fragment {
 
     private void initUI() {
         Bundle bundle = getArguments();
-        int memberId = bundle.getInt(Utils.memberId);
+        memberId = bundle.getInt(Utils.memberId);
         poolDetails = (PoolDetails) bundle.getSerializable(Utils.poolDetailsTable);
         mTextViewWinnerName = mView.findViewById(R.id.tv_winner_name);
         buttonAcceptAuction = mView.findViewById(R.id.bt_accept_auction);
@@ -87,6 +94,9 @@ public class FragmentAuction extends Fragment {
 
     private void setWinnerName(int memberId) {
         mTextViewWinnerName.setText(memberOperations.getMemberName(memberId));
+        if (poolDetails.getPoolCurrentCounter() == poolDetails.getPoolStrength()) {
+            buttonAcceptAuction.setEnabled(false);
+        }
     }
 
     private void setSpinner() {
@@ -112,4 +122,25 @@ public class FragmentAuction extends Fragment {
         progressDialog.setIcon(R.drawable.rolling_dice);
         progressDialog.show();
     }
+
+    private void loadAdminPoolDetailsFragment() {
+        FragmentAdminPoolDetails fragmentAdminPoolDetails = new FragmentAdminPoolDetails();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fl_pool_transactions_container, fragmentAdminPoolDetails);
+        fragmentTransaction.commit();
+    }
+
+    private void pickerAdded(String message) {
+        alertdialogBuilder = new AlertDialog.Builder(getActivity());
+        alertdialogBuilder.setMessage(message);
+        alertdialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                loadAdminPoolDetailsFragment();
+            }
+        });
+        alertDialog = alertdialogBuilder.create();
+        alertDialog.show();
+    }
+
 }

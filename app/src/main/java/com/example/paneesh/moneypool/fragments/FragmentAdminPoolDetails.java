@@ -161,7 +161,7 @@ public class FragmentAdminPoolDetails extends Fragment {
     private void setRecyclerView() {
 
         ArrayList<PoolTransactions> poolTransactionsList = dataBaseHelper.getPoolTransactions(poolDetails.getPoolId());
-        if (poolTransactionsList.size() > 0){
+        if (poolTransactionsList.size() > 0) {
 
             layoutManager = new LinearLayoutManager(getContext());
             paymentHistoryRecyclerView.setLayoutManager(layoutManager);
@@ -171,9 +171,9 @@ public class FragmentAdminPoolDetails extends Fragment {
         }
     }
 
-    private void setWinnersList(){
+    private void setWinnersList() {
         ArrayList<WinnerPicker> arrayList = dataBaseHelper.getWinnerPickerHistory(poolDetails.getPoolId());
-        if (arrayList.size() > 0){
+        if (arrayList.size() > 0) {
             layoutManager = new LinearLayoutManager(getContext());
             recyclerViewWinnersList.setLayoutManager(layoutManager);
             winnersListAdapter = new WinnersListAdapter(arrayList);
@@ -182,9 +182,9 @@ public class FragmentAdminPoolDetails extends Fragment {
         }
     }
 
-    private void setMemberList(){
+    private void setMemberList() {
         ArrayList<Member> arrayList = dataBaseHelper.getMemberList(poolDetails);
-        if (arrayList.size() > 0){
+        if (arrayList.size() > 0) {
             layoutManager = new LinearLayoutManager(getContext());
             recyclerViewMemberListOfPool.setLayoutManager(layoutManager);
             memberListAdapter = new MemberListAdapter(arrayList);

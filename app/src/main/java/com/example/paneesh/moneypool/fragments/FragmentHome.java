@@ -1,10 +1,8 @@
 package com.example.paneesh.moneypool.fragments;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,15 +56,15 @@ public class FragmentHome extends Fragment {
 
     }
 
-    private void fetchDataFromDB(){
-        String email = mSharedPreferences.getString(Utils.memberEmail,"");
+    private void fetchDataFromDB() {
+        String email = mSharedPreferences.getString(Utils.memberEmail, "");
         String password = mSharedPreferences.getString(Utils.memberPassword, "");
-        memberObject = databaseHelper.fetchMemberDetails(email,password);
+        memberObject = databaseHelper.fetchMemberDetails(email, password);
         displayData(memberObject);
     }
 
-    private void displayData(Member member){
-        mTextViewMemberName.setText(member.getMemberFirstName()+" "+member.getMemberLastName());
+    private void displayData(Member member) {
+        mTextViewMemberName.setText(member.getMemberFirstName() + " " + member.getMemberLastName());
         mTextViewEmail.setText(member.getMemberEmail());
         mTextViewAddress.setText(member.getMemberAddress());
         mTextViewIban.setText(member.getMemberIban());
@@ -78,10 +76,10 @@ public class FragmentHome extends Fragment {
 
     }
 
-    private void saveInSharedPrefs(int memberID){
+    private void saveInSharedPrefs(int memberID) {
         mSharedPreferences = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         mEditor = mSharedPreferences.edit();
-        mEditor.putInt(Utils.memberId,memberID);
+        mEditor.putInt(Utils.memberId, memberID);
         mEditor.commit();
     }
 }

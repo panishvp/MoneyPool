@@ -2,7 +2,6 @@ package com.example.paneesh.moneypool.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,11 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
-import com.example.paneesh.moneypool.activities.LandingPage;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
 
@@ -43,9 +40,12 @@ public class FragmentRecordPayment extends Fragment {
         mButtonSavePayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int code = 0;
-                code  =  memberOperations.makePaymentForMember(poolDetails, Integer.parseInt(mSpinner.getSelectedItem().toString()));
-                displayMessage(code);
+               if (memberOperations.getCountRegisteredMembers(poolDetails.getPoolId()) == poolDetails.getPoolStrength()){
+                   recordPayment();
+               }else {
+                   poolIsNotFull("Pool is not full, There are members who are yet to join!");
+               }
+
             }
         });
         return mView;
@@ -96,5 +96,23 @@ public class FragmentRecordPayment extends Fragment {
     }
 
 
+    private void recordPayment(){
+        int code = 0;
+        code  =  memberOperations.makePaymentForMember(poolDetails, Integer.parseInt(mSpinner.getSelectedItem().toString()));
+        displayMessage(code);
+    }
+
+    private void poolIsNotFull(String message) {
+        alertdialogBuilder = new AlertDialog.Builder(getActivity());
+        alertdialogBuilder.setMessage(message);
+        alertdialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alertDialog = alertdialogBuilder.create();
+        alertDialog.show();
+    }
 
 }
