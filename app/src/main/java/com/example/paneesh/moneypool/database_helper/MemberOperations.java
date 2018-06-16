@@ -1039,7 +1039,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         cursor = db.rawQuery(" select " + Utils.poolCurrentCounter  + "," +Utils.pool_individual_monthly_share + ","
                 + Utils.memberPayementDate+", "+Utils.poolId  + " from " + Utils.poolTransactions + " where "
                  + Utils.poolCurrentCounter + " != -1 " + " and " + Utils.memberId + " = " + memberID
-                + " group by " + Utils.poolId  + " order by " + Utils.poolCurrentCounter, null);
+                + " order by " + Utils.poolId + ',' + Utils.poolCurrentCounter, null);
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {
