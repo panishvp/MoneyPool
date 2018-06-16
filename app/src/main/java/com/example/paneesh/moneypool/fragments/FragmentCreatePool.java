@@ -1,9 +1,12 @@
 package com.example.paneesh.moneypool.fragments;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +31,7 @@ import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
 import com.example.paneesh.moneypool.model.PoolTransactions;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,7 +48,7 @@ public class FragmentCreatePool extends Fragment {
     private EditText mPoolStrength;
     private EditText mPoolDuration;
     private EditText mPoolIndividualShare;
-    private EditText mPoolStartDate;
+    private TextView mPoolStartDate;
     private EditText mPoolDepositDate;
     private EditText mPoolMeetUpDate;
     private EditText mPoolLateFee;
@@ -52,13 +57,12 @@ public class FragmentCreatePool extends Fragment {
     private java.sql.Date startDateSql;
     private SharedPreferences mSharedPreferences;
     private MemberOperations databaseHelper;
-    private CalendarView mCalendarView;
-    private String startdateSelected;
     private PoolDetails mPoolDetails;
     private PoolTransactions poolTransactions;
     private AlertDialog.Builder alertdialogBuilder;
     private AlertDialog alertDialog;
     private DateCalculationsUtil dateCalculationsUtil;
+    private DatePickerDialog.OnDateSetListener dateSetListener;
 
 
     @Nullable
@@ -78,7 +82,7 @@ public class FragmentCreatePool extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (validateFields()) {
+                if (validateFields() && isDateValid(mPoolStartDate.getText().toString())) {
                     mRegisterPool.setEnabled(true);
                     mEndDate.setText(calculateEndDate(mPoolStartDate.getText().toString()));
                     mMonthlyTakeAway.setText(calaulateMonthlytakeAway());
@@ -94,13 +98,28 @@ public class FragmentCreatePool extends Fragment {
             }
         };
 
-        mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        mPoolStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                startdateSelected = dayOfMonth + "-" + month + "-" + year;
-                mPoolStartDate.setText(startdateSelected);
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance(Locale.getDefault());
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,dateSetListener, year, month, day);
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.show();
             }
         });
+
+        dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month+1 ;
+                mPoolStartDate.setText(dayOfMonth+"-"+month+"-"+year);
+            }
+        };
+
 
         //mPoolStartDate.addTextChangedListener(textWatcher);
         mPoolName.addTextChangedListener(textWatcher);
@@ -108,6 +127,7 @@ public class FragmentCreatePool extends Fragment {
         mPoolMeetUpDate.addTextChangedListener(textWatcher);
         mPoolDepositDate.addTextChangedListener(textWatcher);
         mPoolLateFee.addTextChangedListener(textWatcher);
+        mPoolStartDate.addTextChangedListener(textWatcher);
 
 
         mRegisterPool.setOnClickListener(new View.OnClickListener() {
@@ -135,18 +155,9 @@ public class FragmentCreatePool extends Fragment {
         mRegisterPool = mView.findViewById(R.id.bt_create_pool);
         mSharedPreferences = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         databaseHelper = MemberOperations.getInstance(getContext());
-        mCalendarView = mView.findViewById(R.id.cal_pool_start_date);
-        initCalenderView();
-        mPoolStartDate.setText(getDate());
         dateCalculationsUtil = new DateCalculationsUtil();
     }
 
-
-    private String getDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        String selectedDate = sdf.format(new Date(mCalendarView.getDate()));
-        return selectedDate;
-    }
 
     @NonNull
     private String calculateEndDate(String date) {
@@ -164,7 +175,8 @@ public class FragmentCreatePool extends Fragment {
 
     private boolean validateFields() {
         if (mPoolName.getText().toString().trim().isEmpty() || mPoolDuration.getText().toString().isEmpty() ||
-                mPoolIndividualShare.getText().toString().isEmpty() || mPoolMeetUpDate.getText().toString().isEmpty() || mPoolDepositDate.getText().toString().isEmpty() || mPoolLateFee.getText().toString().isEmpty()) {
+                mPoolIndividualShare.getText().toString().isEmpty() || mPoolMeetUpDate.getText().toString().isEmpty() || mPoolDepositDate.getText().toString().isEmpty()
+                || mPoolLateFee.getText().toString().isEmpty() ) {
             return false;
         } else {
             return true;
@@ -215,13 +227,7 @@ public class FragmentCreatePool extends Fragment {
         alertDialog.show();
     }
 
-    private void initCalenderView() {
-        Calendar currentCalendar = Calendar.getInstance(Locale.getDefault());
-        mCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
-        mCalendarView.setFirstDayOfWeek(2);
-        mCalendarView.setMinDate(System.currentTimeMillis() - 1000);
-        mCalendarView.getDate();
-    }
+
 
     private boolean validateMemberAndPool(int memberId, int poolid) {
         boolean status = false;
@@ -280,6 +286,22 @@ public class FragmentCreatePool extends Fragment {
         });
         alertDialog = alertdialogBuilder.create();
         alertDialog.show();
+    }
+
+    private boolean isDateValid(String date){
+       boolean status = false;
+        SimpleDateFormat sdfrmt = new SimpleDateFormat(Utils.datePattern);
+        try {
+            if (sdfrmt.parse(date).before(new Date())){
+                status = false;
+            }else {
+                status = true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return status;
     }
 
 

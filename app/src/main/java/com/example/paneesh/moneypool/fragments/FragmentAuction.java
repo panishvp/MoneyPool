@@ -3,6 +3,7 @@ package com.example.paneesh.moneypool.fragments;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,8 +23,10 @@ import android.widget.TextView;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
+import com.example.paneesh.moneypool.activities.PoolDetailsContainer;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
+import com.example.paneesh.moneypool.model.PoolTransactions;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -39,6 +44,7 @@ public class FragmentAuction extends Fragment {
     private LinearLayout linearLayout;
     private MemberOperations memberOperations;
     private PoolDetails poolDetails;
+    private LinearLayout linearLayoutMain;
     private ProgressDialog progressDialog;
     private int memberId;
     private AlertDialog.Builder alertdialogBuilder;
@@ -89,6 +95,7 @@ public class FragmentAuction extends Fragment {
         buttonAddBidder = mView.findViewById(R.id.bt_add_picker);
         linearLayout = mView.findViewById(R.id.ll_auction_segment);
         memberOperations = MemberOperations.getInstance(getActivity());
+        linearLayoutMain = mView.findViewById(R.id.ll_auction);
         setWinnerName(memberId);
     }
 
@@ -108,7 +115,6 @@ public class FragmentAuction extends Fragment {
     }
 
     private void setProgressDialog() {
-
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Picking the Winner");
 
@@ -117,20 +123,24 @@ public class FragmentAuction extends Fragment {
             public void run() {
                 progressDialog.dismiss(); // when the task active then close the dialog
                 t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+
             }
         }, 5000);
         progressDialog.setIcon(R.drawable.rolling_dice);
+        progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         progressDialog.show();
+        Window window = progressDialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
     }
 
     private void loadAdminPoolDetailsFragment() {
-        FragmentAdminPoolDetails fragmentAdminPoolDetails = new FragmentAdminPoolDetails();
         Bundle bundle = new Bundle();
+        bundle.putString("role", "admin");
         bundle.putString(Utils.poolId,String.valueOf(poolDetails.getPoolId()));
-        fragmentAdminPoolDetails.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_pool_transactions_container, fragmentAdminPoolDetails);
-        fragmentTransaction.commit();
+        Intent intent = new Intent(getContext(), PoolDetailsContainer.class);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void pickerAdded(String message) {

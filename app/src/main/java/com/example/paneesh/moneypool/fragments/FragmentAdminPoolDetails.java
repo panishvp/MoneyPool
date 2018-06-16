@@ -1,5 +1,6 @@
 package com.example.paneesh.moneypool.fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
+import com.example.paneesh.moneypool.activities.ActivityPickWinner;
 import com.example.paneesh.moneypool.adapters.MemberListAdapter;
 import com.example.paneesh.moneypool.adapters.PoolPaymentHistoryAdapter;
 import com.example.paneesh.moneypool.adapters.WinnersListAdapter;
@@ -92,8 +94,11 @@ public class FragmentAdminPoolDetails extends Fragment {
         mButtonPickWinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentPickWinner fragmentPickWinner = new FragmentPickWinner();
-                loadFragmentPayment(fragmentPickWinner);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Utils.poolDetailsTable, poolDetails);
+                Intent intent = new Intent(getContext(), ActivityPickWinner.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         setRecyclerView();

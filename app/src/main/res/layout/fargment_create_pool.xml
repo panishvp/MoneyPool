@@ -159,18 +159,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/pool_start_date" />
 
-            <CalendarView
-                android:layout_width="match_parent"
-                android:id="@+id/cal_pool_start_date"
-                android:layout_height="wrap_content"/>
 
 
-
-            <EditText
+            <TextView
                 android:id="@+id/et_create_pool_start_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:background="@color/jumbo"
                 android:hint="@string/date_format"
                 android:padding="5dp" />

@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="30dp">
+        android:padding="30dp"
+        android:id="@+id/ll_details_container">
 
 
         <TableLayout
@@ -505,7 +506,8 @@
             fab:menu_shadowRadius="4dp"
             fab:menu_shadowXOffset="1dp"
             fab:menu_shadowYOffset="4dp"
-            fab:menu_showShadow="true">
+            fab:menu_showShadow="true"
+            android:layout_below="@+id/ll_details_container">
 
             <com.github.clans.fab.FloatingActionButton
                 android:layout_width="wrap_content"

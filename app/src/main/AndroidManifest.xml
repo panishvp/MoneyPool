@@ -27,6 +27,7 @@
         <activity android:name=".activities.PoolDetailsContainer"/>
         <activity android:name=".activities.PoolCreationAndJoin"/>
         <activity android:name="com.example.paneesh.moneypool.AndroidDatabaseManager" android:label="@string/app_name"/>
+        <activity android:name=".activities.ActivityPickWinner"/>
     </application>
 
 </manifest>

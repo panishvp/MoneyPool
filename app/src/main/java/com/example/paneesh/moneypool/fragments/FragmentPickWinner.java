@@ -58,7 +58,7 @@ public class FragmentPickWinner extends Fragment {
         FragmentAuction fragment = new FragmentAuction();
         fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_pool_transactions_container, fragment);
+        fragmentTransaction.replace(R.id.fl_activity_pick_winner, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 

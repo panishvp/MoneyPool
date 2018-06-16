@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +20,7 @@ import com.example.paneesh.moneypool.activities.PoolDetailsContainer;
 import com.example.paneesh.moneypool.adapters.MyPoolListAdapter;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
+import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -80,10 +79,10 @@ public class FragmentMyPools extends Fragment implements MyPoolListAdapter.onPoo
         mSharedPrefs = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         int memberId = mSharedPrefs.getInt(Utils.memberId, 0);
         poolDetailsArrayList = memberOperations.fetchMypools(memberId);
-        if (poolDetailsArrayList.size() == 0){
+        if (poolDetailsArrayList.size() == 0) {
             mTextViewNoPoolsAlert.setText(Utils.joinPoolsAlert);
             mTextViewCreatePool.setText(Utils.joinNewPool);
-        }else {
+        } else {
             mLinearLayout.setVisibility(View.GONE);
         }
     }

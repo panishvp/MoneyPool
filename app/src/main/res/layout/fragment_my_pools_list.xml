@@ -44,7 +44,7 @@
         android:id="@+id/rv_my_pool_list"
         android:padding="10dp"/>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fab_join_pool"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

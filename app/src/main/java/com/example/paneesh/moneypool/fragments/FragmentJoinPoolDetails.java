@@ -76,18 +76,18 @@ public class FragmentJoinPoolDetails extends Fragment {
         mButtonJoinPool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             poolTransactions.setPoolMemberId(memberId);
-             poolTransactions.setPoolId(poolId);
-             if (validateMemberAndPool(memberId, poolId)){
+                poolTransactions.setPoolMemberId(memberId);
+                poolTransactions.setPoolId(poolId);
+                if (validateMemberAndPool(memberId, poolId)) {
                     alertUser();
-             }
+                }
 
             }
         });
         return mView;
     }
 
-    private void initUI(){
+    private void initUI() {
         mTextViewPoolName = mView.findViewById(R.id.tv_pool_name);
         mTextViewPoolId = mView.findViewById(R.id.tv_pool_id);
         mTextViewPoolDuration = mView.findViewById(R.id.tv_pool_duration);
@@ -117,7 +117,7 @@ public class FragmentJoinPoolDetails extends Fragment {
     }
 
 
-    private void displayPoolDetails(PoolDetails poolDetails){
+    private void displayPoolDetails(PoolDetails poolDetails) {
 
         mTextViewPoolName.setText(poolDetails.getPoolName());
         mTextViewPoolId.setText(String.valueOf(poolDetails.getPoolId()));
@@ -129,9 +129,9 @@ public class FragmentJoinPoolDetails extends Fragment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Utils.datePattern);
         mTextViewPoolStartDate.setText(simpleDateFormat.format(poolDetails.getPoolStartDate()));
         mTextViewPoolEndDate.setText(simpleDateFormat.format(poolDetails.getPoolEndDate()));
-        mTextViewPoolMeetUpDate.setText(poolDetails.getPoolMeetUpDate()+" of Every Month");
-        mTextViewPoolDepositDate.setText(poolDetails.getPoolDepositDate()+" of Every Month");
-        mTextViewPoolLateFee.setText(poolDetails.getPoolLateFeeCharge()+"%");
+        mTextViewPoolMeetUpDate.setText(poolDetails.getPoolMeetUpDate() + " of Every Month");
+        mTextViewPoolDepositDate.setText(poolDetails.getPoolDepositDate() + " of Every Month");
+        mTextViewPoolLateFee.setText(poolDetails.getPoolLateFeeCharge() + "%");
     }
 
     private void loadJoinPoolFragment() {
@@ -141,21 +141,21 @@ public class FragmentJoinPoolDetails extends Fragment {
         fragmentTransaction.commit();
     }
 
-    private boolean validateMemberAndPool(int memberId, int poolid){
+    private boolean validateMemberAndPool(int memberId, int poolid) {
         boolean status = false;
-        if (dataBaseHelper.isValidPoolJoin(poolid)){
-            if (!dataBaseHelper.isMemberInThepool(memberId, poolid)){
+        if (dataBaseHelper.isValidPoolJoin(poolid)) {
+            if (!dataBaseHelper.isMemberInThepool(memberId, poolid)) {
                 status = true;
-            }else {
+            } else {
                 Toast.makeText(getContext(), "You have already enrolled in this Pool ", Toast.LENGTH_SHORT).show();
             }
-        }else {
+        } else {
             Toast.makeText(getContext(), "Sorry The Pool Is already Full ", Toast.LENGTH_SHORT).show();
         }
         return status;
     }
 
-    private void alertUser(){
+    private void alertUser() {
         AlertDialog.Builder alertdialogBuilder = new AlertDialog.Builder(getActivity());
         alertdialogBuilder.setMessage("Terms and Conditions of the Pool");
         alertdialogBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
