@@ -648,20 +648,29 @@ public class MemberOperations extends SQLiteOpenHelper {
     }
 
 
+
     public boolean isValidPickWinner(PoolDetails activePool) {
         boolean valid;
         int numberOfWinners = getNumberOfWinners(activePool.getPoolId());
 
+        boolean checkIfWinner = checkIfWinnerForCurrentCycle(activePool);
+
+        if ((numberOfWinners < activePool.getPoolStrength()) & (!checkIfWinner) & (0 < activePool.getPoolCurrentCounter()) & (activePool.getPoolCurrentCounter() <= activePool.getPoolStrength()))
+            valid = true;
+        else valid = false;
+        return valid;
+
+    }
+
+    public boolean checkIfWinnerForCurrentCycle (PoolDetails activePool){
         //"select count(*) from pooltransactions where PoolID = ? and CurrentCounter =? and PickerFlag = 1");
         db = getWritableDatabase();
-          cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
+        cursor = db.rawQuery("select count(*) from " + Utils.poolTransactions + " where "
                 + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + "=" + activePool.getPoolCurrentCounter() +" and "+ Utils.poolWinnerFlag + " = 1 ", null);
         cursor.moveToFirst();
         int checkIfWinner = cursor.getInt(0);
 
-        if ((numberOfWinners < activePool.getPoolStrength()) & (checkIfWinner == 0) & (0<activePool.getPoolCurrentCounter()) & (activePool.getPoolCurrentCounter()<=activePool.getPoolStrength()) ) valid = true;
-        else valid = false;
-        return valid;
+        return checkIfWinner == 1;
 
     }
 
