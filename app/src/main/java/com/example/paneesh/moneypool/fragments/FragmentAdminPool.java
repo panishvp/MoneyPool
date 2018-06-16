@@ -77,10 +77,10 @@ public class FragmentAdminPool extends Fragment implements MyPoolListAdapter.onP
         int adminId = mSharedPrefs.getInt(Utils.memberId, 0);
         poolDetailsArrayList = new ArrayList<>();
         poolDetailsArrayList = memberOperations.getAdminPools(adminId);
-        if (poolDetailsArrayList.size() == 0){
+        if (poolDetailsArrayList.size() == 0) {
             mTextViewNoPoolsAlert.setText(Utils.createPoolsAlert);
             mTextViewCreatePool.setText(Utils.createNewPool);
-        }else {
+        } else {
             mLinearLayout.setVisibility(View.GONE);
         }
     }
@@ -111,4 +111,6 @@ public class FragmentAdminPool extends Fragment implements MyPoolListAdapter.onP
         loadData();
         adapter.notifyDataSetChanged();
     }
+
+
 }

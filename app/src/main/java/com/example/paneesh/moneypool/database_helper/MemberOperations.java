@@ -669,8 +669,12 @@ public class MemberOperations extends SQLiteOpenHelper {
                 + Utils.poolId + " = " + activePool.getPoolId() + " and " + Utils.poolCurrentCounter + "=" + activePool.getPoolCurrentCounter() +" and "+ Utils.poolWinnerFlag + " = 1 ", null);
         cursor.moveToFirst();
         int checkIfWinner = cursor.getInt(0);
+            if(checkIfWinner == 1){
+                return  true;
+            }else {
+                return false;
+            }
 
-        return checkIfWinner == 1;
 
     }
 

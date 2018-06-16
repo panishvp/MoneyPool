@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Sanchay</string>
+    <string name="app_caption">MoneyPool made Easy!!</string>
     <string name="user_email">E-mail</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
@@ -31,7 +32,7 @@
     </string-array>
 
     <!---Home Screen-->
-    <string name="my_profile">My Profile</string>
+    <string name="my_profile">My Profile Details</string>
     <string name="hello">Hallo !</string>
 
     <!--MemberValues Update -->
@@ -74,6 +75,8 @@
 
     <string name="winners_list">Winners List</string>
     <string name="pool_transactions_history">Pool Transactions</string>
+
+    <string name="my_current_transactions">My Current Transactions</string>
 
     <string-array name="member_details">
         <item>Select</item>

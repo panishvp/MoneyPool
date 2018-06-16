@@ -1,5 +1,7 @@
 package com.example.paneesh.moneypool.fragments;
 
+
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,8 @@ import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
 import com.example.paneesh.moneypool.model.PoolDetails;
+
+import org.w3c.dom.Text;
 
 public class FragmentJoinPools extends Fragment {
 
@@ -54,6 +58,8 @@ public class FragmentJoinPools extends Fragment {
         mButtonJoinPool = mView.findViewById(R.id.bt_search_pool);
         memberOperations = MemberOperations.getInstance(getContext());
         poolDetails = new PoolDetails();
+        //setActionBar();
+
     }
 
     private void loadJoinPoolFragment() {
@@ -65,6 +71,19 @@ public class FragmentJoinPools extends Fragment {
         fragmentTransaction.replace(R.id.fl_pool_creation_join, fragmentJoinPools);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    private void setActionBar() {
+        ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setCustomView(R.layout.custome_action_bar);
+        View view = actionBar.getCustomView();
+       actionBar.setDisplayOptions(android.app.ActionBar.DISPLAY_SHOW_CUSTOM);
+       actionBar.setDisplayShowCustomEnabled(true);
+
+        TextView textView = view.findViewById(R.id.ac_text);
+        textView.setText("Join");
+
+
     }
 
 

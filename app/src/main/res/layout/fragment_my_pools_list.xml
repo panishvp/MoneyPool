@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
+
+
     <LinearLayout
         android:id="@+id/ll_no_pools_alert"
         android:layout_width="match_parent"

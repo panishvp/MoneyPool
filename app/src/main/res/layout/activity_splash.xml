@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/iv_splash"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="85dp"
         android:layout_centerInParent="true"
         android:src="@drawable/app_logo" />
 
@@ -23,5 +23,13 @@
         android:text="Sanchay"
         android:textColor="@color/black"
         android:textSize="25dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_caption"
+        android:id="@+id/tv_app_caption"
+        android:layout_below="@+id/tv_app_name"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"/>
 
 </RelativeLayout>

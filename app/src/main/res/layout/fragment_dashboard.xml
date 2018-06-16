@@ -5,6 +5,13 @@
     android:weightSum="1"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Overview"
+        style="@style/font25Blue"
+        android:gravity="center_horizontal"/>
+
     <com.github.mikephil.charting.charts.PieChart
         android:layout_width="match_parent"
         android:layout_weight="0.5"
@@ -16,6 +23,12 @@
     android:layout_height="0dp"
     android:layout_weight="0.5"
     android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/my_current_transactions"
+        android:gravity="center_horizontal"
+        style="@style/font25Blue"/>
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

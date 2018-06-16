@@ -20,9 +20,11 @@ import com.example.paneesh.moneypool.model.Member;
 import com.example.paneesh.moneypool.model.PoolTransactions;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
@@ -37,7 +39,7 @@ public class FragmentDashBoard extends Fragment {
     private Member memberObject;
     private MemberOperations memberOperations;
     private float[] yData = {25.3f, 20.6f};
-    private String[] xData = {"Mitch", "Jessica", "Mohammad", "Kelsey", "Sam", "Robert", "Ashley"};
+    private String[] xData = {"Mitch", "Jessica"};
     private PieChart mPiechart;
     private RecyclerView recyclerViewMyTransactions;
     private MyTransactionsListAdapter myTransactionsListAdapter;
@@ -78,15 +80,15 @@ public class FragmentDashBoard extends Fragment {
     }
 
     private void creatmPiechart() {
-        // mPiechart.setDescription("Sales by employee (In Thousands $) ");
+        //mPiechart.setDescription("Sales by employee (In Thousands $) ");
         mPiechart.setRotationEnabled(true);
         //mPiechart.setUsePercentValues(true);
         //mPiechart.setHoleColor(Color.BLUE);
         //mPiechart.setCenterTextColor(Color.BLACK);
-        mPiechart.setHoleRadius(25f);
+        mPiechart.setHoleRadius(45f);
         mPiechart.setTransparentCircleAlpha(0);
-        mPiechart.setCenterText("Super Cool Chart");
-        mPiechart.setCenterTextSize(10);
+        mPiechart.setCenterText("Investments \nvs\nReturns");
+        mPiechart.setCenterTextSize(15);
         //mPiechart.setDrawEntryLabels(true);
         //mPiechart.setEntryLabelTextSize(20);
         //More options just check out the documentation!
@@ -98,22 +100,30 @@ public class FragmentDashBoard extends Fragment {
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
         ArrayList<String> xEntrys = new ArrayList<>();
 
-        for (int i = 0; i < yData.length; i++) {
-            yEntrys.add(new PieEntry(yData[i], i));
-        }
+        int getTotalInvestments = memberOperations.getTotalPaymemntsForMember(memberObject.getMemberID()) + memberOperations.getTotalLateFeeForMember(memberObject.getMemberID());
+        int getTakeAwayReturns = memberOperations.getTotalTakeawayForMember(memberObject.getMemberID());
 
-        for (int i = 1; i < xData.length; i++) {
-            xEntrys.add(xData[i]);
+        yEntrys.add(new PieEntry((float)getTotalInvestments, "Investments"));
+        yEntrys.add(new PieEntry((float)getTakeAwayReturns, "Returns"));
+
+        System.out.println("Data "+getTotalInvestments+" "+getTakeAwayReturns);
+
+        ArrayList<LegendEntry> legendEntryArrayList = new ArrayList<>();
+
+        for (int i = 0; i < xData.length; i++) {
+            LegendEntry entry = new LegendEntry();
+            entry.label = xData[i];
+            legendEntryArrayList.add(entry);
         }
 
         //create the data set
-        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Employee Sales");
-        pieDataSet.setSliceSpace(2);
+        PieDataSet pieDataSet = new PieDataSet(yEntrys,"");
+        pieDataSet.setSliceSpace(12);
         pieDataSet.setValueTextSize(12);
 
         //add colors to dataset
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.BLUE);
+        colors.add(Color.parseColor("#FF9A23C2"));
         if (yData[0]> yData[1]){
             colors.add(Color.RED);
         }else {
@@ -123,9 +133,17 @@ public class FragmentDashBoard extends Fragment {
         pieDataSet.setColors(colors);
 
         //add legend to chart
-        Legend legend = mPiechart.getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setPosition(Legend.LegendPosition.LEFT_OF_CHART);
+        Legend l = mPiechart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
+
+
+
 
         //create pie data object
         PieData pieData = new PieData(pieDataSet);

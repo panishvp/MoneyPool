@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
@@ -72,14 +73,19 @@ public class FragmentAdminPoolDetails extends Fragment {
         mView = inflater.inflate(R.layout.fragment_pool_details, container, false);
         initUI();
         Bundle bundle = getArguments();
-        int poolId = Integer.parseInt(bundle.getString(Utils.poolId));
-        poolDetails = dataBaseHelper.fetchPoolDetails(poolId);
+
+            int poolId = Integer.parseInt(bundle.getString(Utils.poolId));
+            poolDetails = dataBaseHelper.fetchPoolDetails(poolId);
+
         displayPoolDetails(poolDetails);
         mButtonRecordPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 FragmentRecordPayment fragmentRecordPayment = new FragmentRecordPayment();
                 loadFragmentPayment(fragmentRecordPayment);
+
+
             }
         });
 

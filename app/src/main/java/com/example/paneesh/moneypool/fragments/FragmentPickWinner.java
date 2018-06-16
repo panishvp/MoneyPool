@@ -61,7 +61,6 @@ public class FragmentPickWinner extends Fragment {
         fragmentTransaction.replace(R.id.fl_pool_transactions_container, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-        Toast.makeText(getContext(), "Winner is "+winner,Toast.LENGTH_SHORT).show();
 
     }
 }

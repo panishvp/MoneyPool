@@ -18,19 +18,18 @@
             android:padding="10dp"
             android:weightSum="1">
 
-            <TextView
-                style="@style/textView20Black"
+            <ImageView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:text="@string/hello" />
+                android:layout_height="35dp"
+                android:layout_weight="0.2"
+                android:src="@drawable/profile"/>
 
             <TextView
                 android:id="@+id/tv_member_name"
                 style="@style/font25Blue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7" />
+                android:layout_weight="0.8" />
         </TableRow>
 
     </TableLayout>
@@ -42,12 +41,11 @@
 
 
     <TextView
-        style="@style/textView20Black"
+        style="@style/font25Blue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
-        android:background="@color/green"
         android:text="@string/my_profile" />
 
     <View

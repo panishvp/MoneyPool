@@ -125,6 +125,9 @@ public class FragmentAuction extends Fragment {
 
     private void loadAdminPoolDetailsFragment() {
         FragmentAdminPoolDetails fragmentAdminPoolDetails = new FragmentAdminPoolDetails();
+        Bundle bundle = new Bundle();
+        bundle.putString(Utils.poolId,String.valueOf(poolDetails.getPoolId()));
+        fragmentAdminPoolDetails.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fl_pool_transactions_container, fragmentAdminPoolDetails);
         fragmentTransaction.commit();

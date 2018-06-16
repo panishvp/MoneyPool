@@ -19,6 +19,7 @@ public class SplashScreen extends AppCompatActivity {
 
     private ImageView mLogo;
     private TextView appName;
+    private TextView caption;
     private Animation fromTop;
     private Animation fromBottom;
     private SharedPreferences mSharedPreferences;
@@ -34,15 +35,17 @@ public class SplashScreen extends AppCompatActivity {
         appName = findViewById(R.id.tv_app_name);
         fromTop = AnimationUtils.loadAnimation(this,R.anim.fromtop);
         fromBottom = AnimationUtils.loadAnimation(this, R.anim.frombottom);
+        caption = findViewById(R.id.tv_app_caption);
         mLogo.setAnimation(fromTop);
         appName.setAnimation(fromBottom);
+        caption.setAnimation(fromBottom);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 checkForLogin();
             }
-        }, 5000);
+        }, 3000);
 
     }
 

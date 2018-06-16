@@ -17,13 +17,25 @@
         android:orientation="vertical"
         android:padding="35dp">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/app_logo"
+            android:layout_gravity="center_horizontal" />
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:text="@string/app_name"
             android:textAlignment="center"
             android:textSize="65dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_caption"
+            android:layout_gravity="center_horizontal"/>
 
         <EditText
             android:id="@+id/et_login_username"

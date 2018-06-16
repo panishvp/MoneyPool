@@ -92,11 +92,10 @@ public class LandingPage extends AppCompatActivity
                 break;
 
 
-            default:
-              /*  fragment = new FragmentMemberProfile();
+            case R.id.nav_home:
+                fragment = new FragmentMemberProfile();
                 replaceFragment(fragment);
                 break;
-*/
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;

@@ -16,30 +16,30 @@ public class PoolCreationAndJoin extends AppCompatActivity {
     private FrameLayout frameLayoutPoolCreationJoin;
     private Bundle mBundle;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pool_creation_join);
         initUI();
-        if (mBundle.getString("purpose").equals("join")){
+        if (mBundle.getString("purpose").equals("join")) {
             FragmentJoinPools fragmentJoinPools = new FragmentJoinPools();
             loadFragment(fragmentJoinPools);
-        }else {
+        } else {
             FragmentCreatePool fragmentCreatePool = new FragmentCreatePool();
             loadFragment(fragmentCreatePool);
         }
     }
 
-    private void initUI(){
+    private void initUI() {
         frameLayoutPoolCreationJoin = findViewById(R.id.fl_pool_creation_join);
         mBundle = getIntent().getExtras();
     }
 
-    private void loadFragment(Fragment fragment){
+    private void loadFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fl_pool_creation_join, fragment);
         fragmentTransaction.commit();
     }
+
 
 }
