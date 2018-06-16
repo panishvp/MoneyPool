@@ -77,7 +77,9 @@ public class FragmentRecordPayment extends Fragment {
             break;
             case 3: paymentSuccess("Pool is Completed");
             break;
-            default: paymentSuccess("Gaand marao");
+            case 4: paymentSuccess("Pick winner for Current Cycle first");
+                break;
+            default: paymentSuccess(" test 123");
             break;
         }
     }

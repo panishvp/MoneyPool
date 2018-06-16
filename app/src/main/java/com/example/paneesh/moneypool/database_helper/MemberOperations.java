@@ -617,13 +617,19 @@ public class MemberOperations extends SQLiteOpenHelper {
             updateDelayPayments(activePool, MemeberID);
             paymentSuccess = 1;
         } else {
-            if ((currentMaxCounter <= strenght) & (isValidPoolAdd(activePool.getPoolId())) ) {
-                if ((payersCount == strenght)) {
+            if ((currentMaxCounter <= strenght) & (isValidPoolAdd(activePool.getPoolId())) & !checkIfWinnerForCurrentCycle(activePool) ) {
+                     if ((payersCount == strenght)) {
+                             if (currentMaxCounter ==-1) {
+                                 currentMaxCounter = updateCurrentCounter(activePool);
+                                 activePool.setPoolCurrentCounter(currentMaxCounter);
+                                 System.out.println("[DEBUG](makePaymentForMember)Updated current counter:" + currentMaxCounter);
+                             }
+                             else {
+                                 paymentSuccess=4;
+                                 return paymentSuccess;
+                             }
 
-                    currentMaxCounter = updateCurrentCounter(activePool);
-                    activePool.setPoolCurrentCounter(currentMaxCounter);
-                    System.out.println("[DEBUG](makePaymentForMember)Updated current counter:" + currentMaxCounter);
-                }
+                     }
                 insertNewBlankTransaction(activePool, MemeberID);
                 System.out.println("[DEBUG](makePaymentForMember)Transaction added");
                 paymentSuccess = 2;
@@ -803,7 +809,8 @@ public class MemberOperations extends SQLiteOpenHelper {
         if (payerCount < strength) {
             fillUpBlankTransaction(activePool);
             winnerMemberId =    addWinner(activePool);
-        } else if (payerCount == strength) {
+        }
+        else if (payerCount == strength) {
             winnerMemberId = addWinner(activePool);
         }
 
@@ -865,6 +872,8 @@ public class MemberOperations extends SQLiteOpenHelper {
             db.update(Utils.poolTransactions,restContentValues,Utils.poolId+ " = " +activePool.getPoolId() + " and "
                     +Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.poolWinnerFlag + " = 1" ,null);
 
+        cycleComplete(activePool);
+
     }
 
     public void updatePickerFlagForWinner(PoolDetails activePool,int pickerMemberID){
@@ -876,8 +885,19 @@ public class MemberOperations extends SQLiteOpenHelper {
                 +Utils.poolCurrentCounter + " = " + activePool.getPoolCurrentCounter() + " and " + Utils.memberId + " = " + pickerMemberID
                 + " and " + Utils.poolWinnerFlag + " = 1"  ,null);
 
+        cycleComplete(activePool);
 
+    }
 
+    private void cycleComplete(PoolDetails activePool){
+        int strength = activePool.getPoolStrength();
+        int payerCount = groupPaymentDoneCount(activePool.getPoolId(), activePool.getPoolCurrentCounter());
+
+        if (payerCount == strength) {
+            int currentMaxCounter = updateCurrentCounter(activePool);
+            activePool.setPoolCurrentCounter(currentMaxCounter);
+            System.out.println("[DEBUG](makePaymentForMember)Updated current counter:" + currentMaxCounter);
+        }
     }
 
 
