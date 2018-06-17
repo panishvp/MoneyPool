@@ -69,7 +69,8 @@ public class MemberOperations extends SQLiteOpenHelper {
                 " pool_end_date datetime," +
                 " pool_meetup_date INTEGER not null," +
                 " pool_deposit_date INTEGER not null," +
-                " pool_late_fee_charge INTEGER not null)");
+                " pool_late_fee_charge INTEGER not null," +
+                " rules TEXT not null)");
 
         db.execSQL("create table " + Utils.poolTransactions +
                 "(uid INTEGER unique primary key AUTOINCREMENT," +
@@ -180,6 +181,7 @@ public class MemberOperations extends SQLiteOpenHelper {
         contentValues.put(Utils.poolMeetUp, poolDetails.getPoolMeetUpDate());
         contentValues.put(Utils.poolDepositDate, poolDetails.getPoolDepositDate());
         contentValues.put(Utils.poolLateFees, poolDetails.getPoolLateFeeCharge());
+        contentValues.put(Utils.rules,poolDetails.getRules());
         db.insert(Utils.poolDetailsTable, null, contentValues);
     }
 
@@ -202,6 +204,7 @@ public class MemberOperations extends SQLiteOpenHelper {
             pool.setPoolMeetUpDate(cursor.getInt(10));
             pool.setPoolDepositDate(cursor.getInt(11));
             pool.setPoolLateFeeCharge(cursor.getInt(12));
+            pool.setRules(cursor.getString(13));
 
         } else {
 
@@ -1154,6 +1157,7 @@ public class MemberOperations extends SQLiteOpenHelper {
 
 
     /*--------------------Database manager-----------------------------*/
+
 
 
 

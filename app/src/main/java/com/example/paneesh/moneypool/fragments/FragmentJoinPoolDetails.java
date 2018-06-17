@@ -157,7 +157,7 @@ public class FragmentJoinPoolDetails extends Fragment {
 
     private void alertUser() {
         AlertDialog.Builder alertdialogBuilder = new AlertDialog.Builder(getActivity());
-        alertdialogBuilder.setMessage("Terms and Conditions of the Pool");
+        alertdialogBuilder.setMessage("Terms and Conditions of the Pool \n" + poolDetails.getRules());
         alertdialogBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

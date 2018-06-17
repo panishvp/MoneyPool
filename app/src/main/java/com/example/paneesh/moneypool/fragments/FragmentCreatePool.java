@@ -62,6 +62,7 @@ public class FragmentCreatePool extends Fragment {
     private AlertDialog.Builder alertdialogBuilder;
     private AlertDialog alertDialog;
     private DateCalculationsUtil dateCalculationsUtil;
+    private EditText poolRules;
     private DatePickerDialog.OnDateSetListener dateSetListener;
 
 
@@ -128,6 +129,7 @@ public class FragmentCreatePool extends Fragment {
         mPoolDepositDate.addTextChangedListener(textWatcher);
         mPoolLateFee.addTextChangedListener(textWatcher);
         mPoolStartDate.addTextChangedListener(textWatcher);
+        poolRules.addTextChangedListener(textWatcher);
 
 
         mRegisterPool.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +154,7 @@ public class FragmentCreatePool extends Fragment {
         mPoolLateFee = mView.findViewById(R.id.et_create_pool_late_fee);
         mEndDate = mView.findViewById(R.id.tv_create_pool_end_date);
         mMonthlyTakeAway = mView.findViewById(R.id.et_create_pool_takeaway);
+        poolRules = mView.findViewById(R.id.et_pool_rules);
         mRegisterPool = mView.findViewById(R.id.bt_create_pool);
         mSharedPreferences = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         databaseHelper = MemberOperations.getInstance(getContext());
@@ -176,7 +179,7 @@ public class FragmentCreatePool extends Fragment {
     private boolean validateFields() {
         if (mPoolName.getText().toString().trim().isEmpty() || mPoolDuration.getText().toString().isEmpty() ||
                 mPoolIndividualShare.getText().toString().isEmpty() || mPoolMeetUpDate.getText().toString().isEmpty() || mPoolDepositDate.getText().toString().isEmpty()
-                || mPoolLateFee.getText().toString().isEmpty() ) {
+                || mPoolLateFee.getText().toString().isEmpty()|| poolRules.getText().toString().isEmpty() ) {
             return false;
         } else {
             return true;
@@ -203,7 +206,7 @@ public class FragmentCreatePool extends Fragment {
         mPoolDetails.setPoolMonthlyTakeAway(Integer.parseInt(mMonthlyTakeAway.getText().toString()));
         mPoolDetails.setPoolIndividualShare(Double.parseDouble(mPoolIndividualShare.getText().toString()));
         mPoolDetails.setPoolLateFeeCharge(Integer.parseInt(mPoolLateFee.getText().toString()));
-
+        mPoolDetails.setRules(poolRules.getText().toString());
         databaseHelper.insertPool(mPoolDetails);
     }
 
@@ -254,7 +257,7 @@ public class FragmentCreatePool extends Fragment {
 
     private void alertUser() {
         alertdialogBuilder = new AlertDialog.Builder(getActivity());
-        alertdialogBuilder.setMessage("Terms and Conditions of the Pool");
+        alertdialogBuilder.setMessage("Terms and Conditions of the Pool\n" + poolRules.getText().toString());
         alertdialogBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

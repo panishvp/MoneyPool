@@ -18,6 +18,17 @@ public class PoolDetails implements Serializable {
     private int poolMeetUpDate;
     private int poolDepositDate;
     private int poolLateFeeCharge;
+    private String rules;
+
+    public String getRules() {
+        return rules;
+    }
+
+    public void setRules(String rules) {
+        this.rules = rules;
+    }
+
+
 
     public PoolDetails() {
 

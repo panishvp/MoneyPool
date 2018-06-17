@@ -48,6 +48,7 @@ public class Utils {
     public static String poolPickerTakeawayDate = "pool_takeaway_date";
     public static String ptPoolTakeAwayAmount = "pool_take_away_amount";
     public static String pool_individual_monthly_share = "pool_individual_monthly_share";
+    public static String rules = "rules";
 
 
     public static String alertUserIsPresent = "The Entered Email is already Registered \n Please Register with a different Email Id";
