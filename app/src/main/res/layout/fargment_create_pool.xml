@@ -152,6 +152,22 @@
                 android:padding="5dp" />
 
 
+            <TextView
+                style="@style/font20Black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Pool Rules" />
+
+            <EditText
+                android:id="@+id/et_pool_rules"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:padding="5dp"
+                android:enabled="true"
+                android:inputType="text" />
+
 
             <TextView
                 style="@style/font20Black"
@@ -165,7 +181,7 @@
                 android:id="@+id/et_create_pool_start_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/jumbo"
+                android:background="@drawable/edittext_background"
                 android:hint="@string/date_format"
                 android:padding="5dp" />
 
@@ -214,21 +230,7 @@
                 android:enabled="false"
                 android:background="@color/jumbo"
                 android:inputType="number" />
-            <TextView
-                style="@style/font20Black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/pool_monthly_takeaway" />
 
-            <EditText
-                android:id="@+id/et_pool_rules"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:enabled="true"
-                android:background="@color/jumbo"
-                android:inputType="text" />
 
             <Button
                 android:id="@+id/bt_create_pool"
