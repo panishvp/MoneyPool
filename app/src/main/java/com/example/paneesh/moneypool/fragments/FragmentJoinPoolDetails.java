@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +21,16 @@ import android.widget.Toast;
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.activities.LandingPage;
+import com.example.paneesh.moneypool.adapters.MemberListAdapter;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
+import com.example.paneesh.moneypool.model.Member;
 import com.example.paneesh.moneypool.model.PoolDetails;
 import com.example.paneesh.moneypool.model.PoolTransactions;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -48,12 +53,14 @@ public class FragmentJoinPoolDetails extends Fragment {
     private MemberOperations dataBaseHelper;
     private PoolDetails poolDetails;
     private PoolTransactions poolTransactions;
+    private RecyclerView recyclerViewMemberList;
     private Button mButtonJoinPool;
     private Button mButtonSearchAnotherPool;
     private FloatingActionMenu mFabMenu;
     private FloatingActionButton mFabButtonJoinPools;
     private FloatingActionButton mFabButtonSearchAnotherPools;
     private int poolId;
+    private RecyclerView.LayoutManager layoutManager;
     private int memberId;
 
 
@@ -66,6 +73,7 @@ public class FragmentJoinPoolDetails extends Fragment {
         final int poolId = Integer.parseInt(bundle.getString(Utils.poolId));
         poolDetails = dataBaseHelper.fetchPoolDetails(poolId);
         displayPoolDetails(poolDetails);
+        setRecyclerViewMemberList();
         mButtonSearchAnotherPool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +122,7 @@ public class FragmentJoinPoolDetails extends Fragment {
         mFabButtonSearchAnotherPools = mView.findViewById(R.id.fab_deny_join_pool);
         mFabMenu = mView.findViewById(R.id.fab_menu);
         mFabMenu.setVisibility(View.GONE);
+        recyclerViewMemberList = mView.findViewById(R.id.rv_member_list);
     }
 
 
@@ -175,5 +184,17 @@ public class FragmentJoinPoolDetails extends Fragment {
         });
         AlertDialog alertDialog = alertdialogBuilder.create();
         alertDialog.show();
+    }
+
+    private void setRecyclerViewMemberList(){
+        ArrayList<Member> arrayList = dataBaseHelper.getMemberList(poolDetails);
+        MemberListAdapter memberListAdapter;
+        if (arrayList.size() > 0) {
+            layoutManager = new LinearLayoutManager(getContext());
+            recyclerViewMemberList.setLayoutManager(layoutManager);
+            memberListAdapter = new MemberListAdapter(arrayList);
+            recyclerViewMemberList.setAdapter(memberListAdapter);
+        }
+
     }
 }

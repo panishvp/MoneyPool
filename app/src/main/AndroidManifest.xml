@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.paneesh.moneypool">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -21,13 +21,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LoginScreen"/>
-        <activity android:name=".activities.RegistrationScreen"/>
-        <activity android:name=".activities.LandingPage"/>
-        <activity android:name=".activities.PoolDetailsContainer"/>
-        <activity android:name=".activities.PoolCreationAndJoin"/>
-        <activity android:name="com.example.paneesh.moneypool.AndroidDatabaseManager" android:label="@string/app_name"/>
-        <activity android:name=".activities.ActivityPickWinner"/>
+        <activity
+            android:name=".activities.LoginScreen"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activities.RegistrationScreen"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activities.LandingPage"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activities.PoolDetailsContainer"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activities.PoolCreationAndJoin"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.example.paneesh.moneypool.AndroidDatabaseManager"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".activities.ActivityPickWinner"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

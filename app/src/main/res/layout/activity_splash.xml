@@ -6,30 +6,38 @@
     android:layout_height="match_parent"
     android:background="@color/appBackground">
 
-    <ImageView
-        android:id="@+id/iv_splash"
-        android:layout_width="wrap_content"
-        android:layout_height="85dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/app_logo" />
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_splash"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:id="@+id/tv_app_name"
-        android:text="Sanchay"
-        android:textColor="@color/black"
-        android:textSize="25dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_caption"
-        android:id="@+id/tv_app_caption"
-        android:layout_below="@+id/tv_app_name"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/black"/>
+        <ImageView
+            android:id="@+id/iv_splash"
+            android:layout_width="wrap_content"
+            android:layout_height="85dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/app_logo" />
+
+        <TextView
+            android:id="@+id/tv_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/pacifico"
+            android:text="Sanchay"
+            android:textColor="#5869cc"
+            android:textSize="35dp" />
+
+        <TextView
+            android:id="@+id/tv_app_caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/app_caption"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

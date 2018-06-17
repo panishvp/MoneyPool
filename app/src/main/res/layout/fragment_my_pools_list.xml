@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
-
 
 
     <LinearLayout
@@ -23,35 +23,37 @@
             android:gravity="center_horizontal"
             android:text="@string/pool_transactions_history" />
 
-        <android.support.design.widget.FloatingActionButton
+        <com.github.clans.fab.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:src="@android:drawable/ic_input_add" />
+            android:src="@drawable/ic_add"
+            fab:menu_shadowColor="#66aff198" />
 
         <TextView
-            style="@style/font25Blue"
             android:id="@+id/tv_join_new_pool"
+            style="@style/font25Blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/pool_transactions_history"/>
+            android:text="@string/pool_transactions_history" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_my_pool_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rv_my_pool_list"
-        android:padding="10dp"/>
+        android:padding="10dp" />
 
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fab_join_pool"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_add"
         app:fab_label="@string/join_pool"
-        android:src="@android:drawable/ic_input_add" />
+        fab:menu_shadowColor="#66aff198" />
 
 </RelativeLayout>

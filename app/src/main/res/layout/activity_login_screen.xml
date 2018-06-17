@@ -13,36 +13,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
+        android:layout_centerInParent="true"
         android:orientation="vertical"
         android:padding="35dp">
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/app_logo"
-            android:layout_gravity="center_horizontal" />
+            android:layout_height="85dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/app_logo" />
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/pacifico"
             android:text="@string/app_name"
             android:textAlignment="center"
-            android:textSize="65dp" />
+            android:textColor="#5869cc"
+            android:textSize="60dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:text="@string/app_caption"
-            android:layout_gravity="center_horizontal"/>
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/et_login_username"
             style="@style/EditTextStyle"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:hint="@string/user_email"
             android:inputType="textEmailAddress" />
 
@@ -81,9 +85,9 @@
         android:id="@+id/tv_alert_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="25dp"
         android:layout_below="@id/tv_register"
+        android:layout_marginTop="25dp"
+        android:gravity="center_horizontal"
         android:textColor="@color/primary_darker"
         android:textSize="20dp" />
 </RelativeLayout>

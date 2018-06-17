@@ -102,6 +102,7 @@
                 android:id="@+id/et_create_pool_meet_up_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="2"
                 android:background="@drawable/edittext_background"
                 android:hint="@string/only_date"
                 android:inputType="number"
@@ -127,6 +128,7 @@
                 android:background="@drawable/edittext_background"
                 android:hint="@string/only_date"
                 android:inputType="number"
+                android:maxLength="2"
                 android:padding="5dp" />
 
 
@@ -145,6 +147,7 @@
             <EditText
                 android:id="@+id/et_create_pool_late_fee"
                 android:layout_width="match_parent"
+                android:maxLength="2"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext_background"
                 android:hint="@string/late_fee"

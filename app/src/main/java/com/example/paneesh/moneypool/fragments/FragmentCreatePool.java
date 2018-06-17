@@ -84,10 +84,15 @@ public class FragmentCreatePool extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (validateFields() && isDateValid(mPoolStartDate.getText().toString())) {
-                    mRegisterPool.setEnabled(true);
-                    mEndDate.setText(calculateEndDate(mPoolStartDate.getText().toString()));
-                    mMonthlyTakeAway.setText(calaulateMonthlytakeAway());
-                    mPoolStrength.setText(mPoolDuration.getText().toString());
+                    if (isvalidDepositandMeetupDate()){
+                        mRegisterPool.setEnabled(true);
+                        mEndDate.setText(calculateEndDate(mPoolStartDate.getText().toString()));
+                        mMonthlyTakeAway.setText(calaulateMonthlytakeAway());
+                        mPoolStrength.setText(mPoolDuration.getText().toString());
+                    }else {
+                        Toast.makeText(getContext(), "Meet Up and Deposit dates must be less than 28, Please ensure that Meetup date must always be greated than deposit date ", Toast.LENGTH_LONG).show();
+                    }
+
                 } else {
                     mRegisterPool.setEnabled(false);
                 }
@@ -305,6 +310,16 @@ public class FragmentCreatePool extends Fragment {
         }
 
         return status;
+    }
+
+
+    private boolean isvalidDepositandMeetupDate(){
+        int meetup = Integer.parseInt(mPoolMeetUpDate.getText().toString());
+        int deposit = Integer.parseInt(mPoolDepositDate.getText().toString());
+        if (meetup <= 31 && deposit <= 31 && meetup > deposit){
+            return true;
+        }
+        else return false;
     }
 
 

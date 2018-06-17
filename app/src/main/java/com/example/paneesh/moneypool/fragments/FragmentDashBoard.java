@@ -20,11 +20,9 @@ import com.example.paneesh.moneypool.model.Member;
 import com.example.paneesh.moneypool.model.PoolTransactions;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
@@ -38,8 +36,6 @@ public class FragmentDashBoard extends Fragment {
     private MemberOperations databaseHelper;
     private Member memberObject;
     private MemberOperations memberOperations;
-    private float[] yData = {25.3f, 20.6f};
-    private String[] xData = {"Mitch", "Jessica"};
     private PieChart mPiechart;
     private RecyclerView recyclerViewMyTransactions;
     private MyTransactionsListAdapter myTransactionsListAdapter;
@@ -53,7 +49,7 @@ public class FragmentDashBoard extends Fragment {
         initUI();
         fetchDataFromDB();
         saveInSharedPrefs(memberObject.getMemberID());
-        creatmPiechart();
+        createPieChart();
         setRecyclerView();
         return mVIew;
     }
@@ -79,60 +75,45 @@ public class FragmentDashBoard extends Fragment {
         recyclerViewMyTransactions = mVIew.findViewById(R.id.rv_my_transactions);
     }
 
-    private void creatmPiechart() {
-        //mPiechart.setDescription("Sales by employee (In Thousands $) ");
+    private void createPieChart() {
+
         mPiechart.setRotationEnabled(true);
-        //mPiechart.setUsePercentValues(true);
-        //mPiechart.setHoleColor(Color.BLUE);
-        //mPiechart.setCenterTextColor(Color.BLACK);
         mPiechart.setHoleRadius(45f);
         mPiechart.setTransparentCircleAlpha(0);
         mPiechart.setCenterText("Investments \nvs\nReturns");
         mPiechart.setCenterTextSize(15);
-        //mPiechart.setDrawEntryLabels(true);
-        //mPiechart.setEntryLabelTextSize(20);
-        //More options just check out the documentation!
 
         addDataSet();
     }
 
     private void addDataSet() {
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
-        ArrayList<String> xEntrys = new ArrayList<>();
 
         int getTotalInvestments = memberOperations.getTotalPaymemntsForMember(memberObject.getMemberID()) + memberOperations.getTotalLateFeeForMember(memberObject.getMemberID());
         int getTakeAwayReturns = memberOperations.getTotalTakeawayForMember(memberObject.getMemberID());
 
-        yEntrys.add(new PieEntry((float)getTotalInvestments, "Investments"));
-        yEntrys.add(new PieEntry((float)getTakeAwayReturns, "Returns"));
+        yEntrys.add(new PieEntry((float) getTotalInvestments, "Investments"));
+        yEntrys.add(new PieEntry((float) getTakeAwayReturns, "Returns"));
 
-        System.out.println("Data "+getTotalInvestments+" "+getTakeAwayReturns);
-
-        ArrayList<LegendEntry> legendEntryArrayList = new ArrayList<>();
-
-        for (int i = 0; i < xData.length; i++) {
-            LegendEntry entry = new LegendEntry();
-            entry.label = xData[i];
-            legendEntryArrayList.add(entry);
-        }
+        System.out.println("Data " + getTotalInvestments + " " + getTakeAwayReturns);
 
         //create the data set
-        PieDataSet pieDataSet = new PieDataSet(yEntrys,"");
+        PieDataSet pieDataSet = new PieDataSet(yEntrys, "");
         pieDataSet.setSliceSpace(12);
         pieDataSet.setValueTextSize(12);
 
         //add colors to dataset
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(Color.parseColor("#FF9A23C2"));
-        if (yData[0]> yData[1]){
-            colors.add(Color.RED);
-        }else {
-            colors.add(Color.GREEN);
+        if (yEntrys.get(0).getValue() > yEntrys.get(1).getValue()) {
+            colors.add(Color.parseColor("#FFF42828"));
+        } else {
+            colors.add(Color.parseColor("#FF06B114"));
         }
 
         pieDataSet.setColors(colors);
 
-        //add legend to chart
+
         Legend l = mPiechart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
@@ -143,17 +124,15 @@ public class FragmentDashBoard extends Fragment {
         l.setYOffset(0f);
 
 
-
-
         //create pie data object
         PieData pieData = new PieData(pieDataSet);
         mPiechart.setData(pieData);
         mPiechart.invalidate();
     }
 
-    private void setRecyclerView(){
+    private void setRecyclerView() {
         ArrayList<PoolTransactions> poolTransactionsArrayList = memberOperations.getAllMemberTransactions(memberObject.getMemberID());
-        if (poolTransactionsArrayList.size() > 0){
+        if (poolTransactionsArrayList.size() > 0) {
             myTransactionsListAdapter = new MyTransactionsListAdapter(poolTransactionsArrayList);
             layoutManager = new LinearLayoutManager(getContext());
             recyclerViewMyTransactions.setLayoutManager(layoutManager);
