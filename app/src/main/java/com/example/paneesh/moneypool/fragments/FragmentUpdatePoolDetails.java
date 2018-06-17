@@ -1,6 +1,5 @@
 package com.example.paneesh.moneypool.fragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import com.example.paneesh.moneypool.R;
 import com.example.paneesh.moneypool.Utils;
 import com.example.paneesh.moneypool.database_helper.MemberOperations;
-import com.example.paneesh.moneypool.model.Member;
 import com.example.paneesh.moneypool.model.PoolDetails;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -34,11 +32,7 @@ public class FragmentUpdatePoolDetails extends Fragment {
     private TextView mTextFieldToUpdate;
     private TextView mTextViewDataOfField;
     private EditText mEditTextVakueToUpdate;
-    private EditText mEditTextOldPassword;
     private MemberOperations databaseOperations;
-    private SharedPreferences mSharedPreferences;
-    private TextView mTextViewInformUser;
-    private String columnName;
     private Button mButtonUpdate;
     private PoolDetails poolDetails;
 
@@ -48,13 +42,13 @@ public class FragmentUpdatePoolDetails extends Fragment {
         mView = inflater.inflate(R.layout.fragment_update_pool_details, container, false);
         initUI();
         setSpinner();
-        if (poolDetails.getPoolCurrentCounter() == -1){
+        if (poolDetails.getPoolCurrentCounter() == -1) {
             mButtonUpdate.setEnabled(true);
         }
         mButtonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mEditTextVakueToUpdate.getText().toString().trim().length() >0) {
+                if (mEditTextVakueToUpdate.getText().toString().trim().length() > 0) {
                     updatePoolDetails(mEditTextVakueToUpdate.getText().toString());
                 }
             }
@@ -62,15 +56,13 @@ public class FragmentUpdatePoolDetails extends Fragment {
         return mView;
     }
 
-    private void initUI(){
+    private void initUI() {
         mSpinnerUpdateField = mView.findViewById(R.id.sp_update_pool_details);
         mLinearLayout = mView.findViewById(R.id.ll_update_dialog);
         databaseOperations = MemberOperations.getInstance(getContext());
         mTextFieldToUpdate = mView.findViewById(R.id.tv_selected_field_to_update_pool_details);
         mTextViewDataOfField = mView.findViewById(R.id.tv_data_from_db_pool_details);
-        mSharedPreferences = getActivity().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         mButtonUpdate = mView.findViewById(R.id.bt_update_pool_details);
-        mTextViewInformUser = mView.findViewById(R.id.tv_inform_user_update_pool_details);
         mEditTextVakueToUpdate = mView.findViewById(R.id.et_update_value_pool_details);
         poolDetails = new PoolDetails();
         Bundle bundle = getArguments();
@@ -103,14 +95,17 @@ public class FragmentUpdatePoolDetails extends Fragment {
 
     private void collectUpdateDetails(String fieldToUpdate) {
 
-        switch (fieldToUpdate){
-            case "PoolName": mTextViewDataOfField.setText(poolDetails.getPoolName());
+        switch (fieldToUpdate) {
+            case "PoolName":
+                mTextViewDataOfField.setText(poolDetails.getPoolName());
                 mEditTextVakueToUpdate.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 break;
-            case "Pool Individual Share": mTextViewDataOfField.setText(" "+poolDetails.getPoolIndividualShare());
+            case "Pool Individual Share":
+                mTextViewDataOfField.setText(" " + poolDetails.getPoolIndividualShare());
                 mEditTextVakueToUpdate.setInputType(InputType.TYPE_CLASS_NUMBER);
                 break;
-            case "Pool Late Fee": mTextViewDataOfField.setText(" "+poolDetails.getPoolLateFeeCharge());
+            case "Pool Late Fee":
+                mTextViewDataOfField.setText(" " + poolDetails.getPoolLateFeeCharge());
                 mEditTextVakueToUpdate.setInputType(InputType.TYPE_CLASS_NUMBER);
                 break;
         }
@@ -118,14 +113,14 @@ public class FragmentUpdatePoolDetails extends Fragment {
     }
 
 
-    private void updatePoolDetails(String value){
-        if (mSpinnerUpdateField.getSelectedItem().toString().equals("PoolName")){
-            databaseOperations.updatePoolName(value,poolDetails.getPoolId());
+    private void updatePoolDetails(String value) {
+        if (mSpinnerUpdateField.getSelectedItem().toString().equals("PoolName")) {
+            databaseOperations.updatePoolName(value, poolDetails.getPoolId());
             replaceFragment();
-        }else if (mSpinnerUpdateField.getSelectedItem().toString().equals("Pool Individual Share")){
+        } else if (mSpinnerUpdateField.getSelectedItem().toString().equals("Pool Individual Share")) {
             databaseOperations.updateIndividualShare(Double.parseDouble(value), poolDetails.getPoolId());
             replaceFragment();
-        }else {
+        } else {
             databaseOperations.updateLateFeeCharge(Double.parseDouble(value), poolDetails.getPoolId());
             replaceFragment();
         }
