@@ -349,14 +349,12 @@ public class MemberOperations extends SQLiteOpenHelper {
     }
 
     public void updateIndividualShare(double newShare, int poolID) {
-        int currentCounter = getCounterFromPoolDetails(poolID);
-        if (currentCounter == -1) {
             db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(Utils.poolIndividualShare, newShare);
             db.update(Utils.poolDetailsTable, contentValues, Utils.poolId + " = " + poolID, null);
 
-        }
+
     }
 
     public void updateStartDate(String newStartDate, int poolID) {
@@ -394,14 +392,11 @@ public class MemberOperations extends SQLiteOpenHelper {
 
 
     public void updateLateFeeCharge(double newLateFeeCharge, int poolID) {
-        int currentCounter = getCounterFromPoolDetails(poolID);
-        if (currentCounter == -1) {
+
             db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(Utils.poolLateFees, newLateFeeCharge);
             db.update(Utils.poolDetailsTable, contentValues, Utils.poolId + " = " + poolID, null);
-
-        }
     }
 
 

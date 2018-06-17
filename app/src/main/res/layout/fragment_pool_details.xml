@@ -537,6 +537,14 @@
                 android:id="@+id/fab_deny_join_pool"
                 android:src="@android:drawable/ic_input_add"
                 fab:fab_size="mini"/>
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_label="Update Pool"
+                android:visibility="gone"
+                android:id="@+id/fab_update_pool_details"
+                android:src="@android:drawable/ic_input_add"
+                fab:fab_size="mini"/>
 
         </com.github.clans.fab.FloatingActionMenu>
 

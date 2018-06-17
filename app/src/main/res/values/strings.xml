@@ -41,6 +41,7 @@
     <string name="update">Update</string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
+    <string name="new_value">New Value</string>
 
 
     <!--- Create Pool-->
@@ -86,6 +87,12 @@
         <item>SwiftCode</item>
         <item>Phone Number</item>
         <item>Nominee</item>
+    </string-array>
+
+    <string-array name="pool_details">
+        <item>PoolName</item>
+        <item>Pool Individual Share</item>
+        <item>Pool Late Fee</item>
     </string-array>
 
     <!--- Join Pool -->

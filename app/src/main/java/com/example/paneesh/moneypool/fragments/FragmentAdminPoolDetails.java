@@ -51,6 +51,7 @@ public class FragmentAdminPoolDetails extends Fragment {
     private TextView mTextViewPoolDepositDate;
     private TextView mTextViewPoolLateFee;
     private FloatingActionButton mButtonJoinPool;
+    private FloatingActionButton mButtonUpdatePool;
     private FloatingActionButton mButtonPickWinner;
     private FloatingActionButton mButtonSearchAnotherPool;
     private FloatingActionButton mButtonRecordPayment;
@@ -101,6 +102,14 @@ public class FragmentAdminPoolDetails extends Fragment {
                 startActivity(intent);
             }
         });
+
+        mButtonUpdatePool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentUpdatePoolDetails fragmentUpdatePoolDetails = new FragmentUpdatePoolDetails();
+                loadFragmentPayment(fragmentUpdatePoolDetails);
+            }
+        });
         setRecyclerView();
         setWinnersList();
         setMemberList();
@@ -137,7 +146,8 @@ public class FragmentAdminPoolDetails extends Fragment {
         linearLayout = mView.findViewById(R.id.ll_admin_pool_transactions);
         recyclerViewWinnersList = mView.findViewById(R.id.rv_winners_list);
         recyclerViewMemberListOfPool = mView.findViewById(R.id.rv_member_list);
-
+        mButtonUpdatePool = mView.findViewById(R.id.fab_update_pool_details);
+        mButtonUpdatePool.setVisibility(View.VISIBLE);
 
     }
 
